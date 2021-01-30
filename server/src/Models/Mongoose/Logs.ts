@@ -8,12 +8,13 @@ interface Log extends Document {
   date: Date;
 }
 
-const LogsSchema: Schema = new Schema({
-  enteredBy: { type: Number, required: true },
-  enteredDoor: { type: Number, required: true },
-  date: { type: Date, required: true },
-});
-
-const Logs: Model<Log> = model('logs', LogsSchema);
+const Logs: Model<Log> = model(
+  'logs',
+  new Schema({
+    enteredBy: { type: Number, required: true },
+    enteredDoor: { type: Number, required: true },
+    date: { type: Date, required: true },
+  }),
+);
 
 module.exports = Logs;

@@ -9,13 +9,14 @@ interface Issue extends Document {
   createdOn: Date;
 }
 
-const IssuesSchema: Schema = new Schema({
-  type: { type: String, required: true },
-  active: { type: Number, required: true, default: true },
-  reportedBy: { type: Number, required: true },
-  createdOn: { type: Date, required: true },
-});
-
-const Issues: Model<Issue> = model('issues', IssuesSchema);
+const Issues: Model<Issue> = model(
+  'issues',
+  new Schema({
+    type: { type: String, required: true },
+    active: { type: Number, required: true, default: true },
+    reportedBy: { type: Number, required: true },
+    createdOn: { type: Date, required: true },
+  }),
+);
 
 module.exports = Issues;
