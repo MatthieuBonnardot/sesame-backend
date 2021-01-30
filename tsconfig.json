@@ -5,7 +5,6 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "target": "ES6",
     "outDir": "./server/dist"
   },
   "include": ["server/src/**/*.ts", "server/src/**/*.tsx"],
