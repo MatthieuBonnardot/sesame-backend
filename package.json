@@ -4,6 +4,7 @@
     "lint:fix": "eslint . --ext .ts --fix"
   },
   "dependencies": {
+    "@types/mongoose": "^5.10.3",
     "express": "^4.17.1",
     "mongoose": "^5.11.14",
     "pq": "^0.0.3",
