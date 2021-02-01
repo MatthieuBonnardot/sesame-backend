@@ -17,4 +17,4 @@ const Logs: Model<Log> = model(
   }),
 );
 
-module.exports = Logs;
+export default Logs;
