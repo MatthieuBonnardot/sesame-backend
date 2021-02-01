@@ -1,3 +1,5 @@
+/* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
@@ -11,10 +13,10 @@ const sequelize = new Sequelize('sesame-test', 'peter', '', {
 const db = {};
 
 const allFiles = fs.readdirSync(__dirname);
-const filteredFiles = allFiles.filter((file) => file.indexOf('.') !== 0 && file !== 'index.model.js' && file.slice(-3) === '.ts');
+const filteredFiles = allFiles.filter((file: string) => file.indexOf('.') !== 0 && file !== 'index.model.ts' && file.slice(-3) === '.ts');
 
-filteredFiles.forEach(file => {
-  const model = require(path.join(__dirname,file))(sequelize, Sequelize.DataTypes);
+filteredFiles.forEach((file: any) => {
+  const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
   db[model.name] = model;
 });
 

@@ -3,6 +3,7 @@ import {
 } from 'sequelize';
 import db from './index.models';
 import { SQL_HOST, SQL_PORT, SQL_NAME } from '../../../../config';
+import User from './user.model';
 
 export default class Group extends Model {
   public gid!: number;
@@ -50,4 +51,6 @@ Group.init({
   sequelize,
 });
 
-Group.sync({ alter: true });
+Group.hasMany(User, { foreignKey: 'gid' });
+
+Group.sync({ alter: true }).then(() => console.log('group table created'));

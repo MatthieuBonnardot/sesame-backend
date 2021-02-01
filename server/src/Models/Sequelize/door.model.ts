@@ -36,4 +36,4 @@ Door.init({
   sequelize,
 });
 
-Door.sync({ alter: true });
+Door.sync({ alter: true }).then(() => console.log('door table created'));

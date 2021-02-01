@@ -3,6 +3,7 @@ import {
 } from 'sequelize';
 import db from './index.models';
 import { SQL_HOST, SQL_PORT, SQL_NAME } from '../../../../config';
+import Group from './group.model';
 
 export default class User extends Model {
   public uid!: number;
@@ -68,4 +69,6 @@ User.init({
   sequelize,
 });
 
-User.sync({ alter: true });
+User.belongsTo(Group);
+
+User.sync({ alter: true }).then(() => console.log('user table created'));
