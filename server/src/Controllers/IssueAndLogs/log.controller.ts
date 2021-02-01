@@ -19,4 +19,4 @@ const getLogs: Function = async (_: any, res: Response) => {
   });
 };
 
-export default getLogs;
+module.exports = { getLogs };

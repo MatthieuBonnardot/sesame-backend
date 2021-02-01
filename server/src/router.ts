@@ -1,28 +1,32 @@
-// //Native endpoints
+import { Router } from 'express';
+import Door from './Controllers/Door/door.controller';
+import Group from './Controllers/Group/group.controller';
+import Issue from './Controllers/IssueAndLogs/issue.controller';
+import Log from './Controllers/IssueAndLogs/log.controller';
+import User from './Controllers/User/user.controller';
+const router: Router = Router();
+
+//Native endpoints
 // router.get('/api/user/:code');
 // router.put('/api/user/images/:UID');
 // router.get('/api/user/identify/:faceID');
 
+router.get('/api/user', User.getUsers);
+router.put('/api/user', User.updatedUser);
+router.delete('/api/user', User.deleteUser);
+router.post('/api/user', User.createUser);
 
-//user routes
-router.get('/api/user/')
-router.put('/api/user/')
-router.delete('/api/user/')
-router.post('/api/user/')
+router.get('/api/door', Door.getDoors);
+router.post('/api/door', Door.createDoor);
+router.delete('/api/door', Door.deleteDoor);
 
-// //door endpoints
-// router.get('/api/door');
-// router.post('/api/door/create')
-// router.delete('/api/door/delete/:DID')
+router.get('/api/logs', Log.getLogs);
+router.get('/api/issues', Issue.getIssues);
+router.put('/api/issue', Issue.toggleIssueStatus);
 
-// //Issue and Logs endpoints
-// router.get('/api/logs/');
-// router.get('/api/issues/')
-// router.put('/api/issue/resolve');
-// router.post('/api/group/create');
+router.get('/api/groups', Group.getGroups);
+router.post('/api/group', Group.createGroup);
+router.delete('/api/group', Group.deleteGroup);
+router.put('/api/group', Group.updateGroup);
 
-// //group endpoints
-// router.get('/api/group/groups')
-// router.delete('/api/group/delete/:GID');
-// router.put('/api/group/update/:GID');
-
+export default router;

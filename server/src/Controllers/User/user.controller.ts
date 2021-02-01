@@ -3,7 +3,7 @@ const getUsers: Function = async (req: Request, res: Response) => {
   } catch (error) {}
 };
 
-const createUser = async (req: Request, res: Response) => {
+const createUser: Function = async (req: Request, res: Response) => {
   try {
   } catch (error) {}
 };
