@@ -1,6 +1,4 @@
-const env = process.env.NODE_ENV;
-
-module.exports = {
+export default {
   MONGO_URI = process.env.MONGO_DB_URI_TEST1,
   SQL_HOST = process.env.SQL_DB_HOST,
   SQL_PORT = process.env.SQL_DB_PORT,
