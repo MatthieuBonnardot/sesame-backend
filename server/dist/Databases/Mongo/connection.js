@@ -10,12 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
-const MONGOPWD = 'codeworks';
-const connection = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield mongoose_1.connect(`mongodb+srv://aas:${MONGOPWD}@aas.pwwb5.mongodb.net/Sesame?retryWrites=true&w=majority`, {
+require("dotenv/config");
+const { MONGO_DB_URI_TEST } = process.env;
+const MongoConnection = () => __awaiter(void 0, void 0, void 0, function* () {
+    yield mongoose_1.connect(MONGO_DB_URI_TEST, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
 });
-module.exports = connection;
+exports.default = MongoConnection;
 //# sourceMappingURL=connection.js.map
