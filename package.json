@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "start": "node -r dotenv/config server/src/index.ts",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix"
   },
