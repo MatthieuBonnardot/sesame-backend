@@ -11,7 +11,7 @@ const sequelize = new Sequelize('sesame-test', 'peter', '', {
 const db = {};
 
 const allFiles = fs.readdirSync(__dirname);
-const filteredFiles = allFiles.filter((file) => file.indexOf('.') !== 0 && file !== 'index.model.js' && file.slice(-3) === '.js' );
+const filteredFiles = allFiles.filter((file) => file.indexOf('.') !== 0 && file !== 'index.model.js' && file.slice(-3) === '.ts');
 
 filteredFiles.forEach(file => {
   const model = require(path.join(__dirname,file))(sequelize, Sequelize.DataTypes);
