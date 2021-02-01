@@ -19,4 +19,4 @@ const Issues: Model<Issue> = model(
   }),
 );
 
-module.exports = Issues;
+export default Issues;
