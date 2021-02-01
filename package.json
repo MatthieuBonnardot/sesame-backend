@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "npm run build cd server/src nodemon",
+    "start": "cd server/src nodemon",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "build": "tsc",
