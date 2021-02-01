@@ -7,5 +7,5 @@ const Issues = mongoose_1.model('issues', new mongoose_1.Schema({
     reportedBy: { type: Number, required: true },
     createdOn: { type: Date, required: true },
 }));
-module.exports = Issues;
+exports.default = Issues;
 //# sourceMappingURL=Issues.js.map

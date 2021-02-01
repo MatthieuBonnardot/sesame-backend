@@ -12,22 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const node_fetch_1 = __importDefault(require("node-fetch"));
 const pino_1 = __importDefault(require("pino"));
+const Logs_1 = __importDefault(require("../../Models/Mongoose/Logs"));
 const logger = pino_1.default({
     prettyPrint: true,
 });
-function AzureFetch(url, options = {}) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const response = yield node_fetch_1.default(url, options);
-            const data = yield response.json();
-            return data;
+const getLogs = (_, res) => __awaiter(void 0, void 0, void 0, function* () {
+    Logs_1.default.find({}, (err, docs) => {
+        if (err) {
+            logger.error(`Error: ${err}`);
         }
-        catch (error) {
-            logger.error(error);
+        else if (docs.length === 0) {
+            logger.info('The list of issues is empty');
+            res.status(200).send('The list of issues is empty');
+        }
+        else {
+            res.send(docs);
         }
     });
-}
-exports.default = AzureFetch;
-//# sourceMappingURL=index.js.map
+});
+exports.default = getLogs;
+//# sourceMappingURL=log.controller.js.map

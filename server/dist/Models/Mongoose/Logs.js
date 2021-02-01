@@ -6,5 +6,5 @@ const Logs = mongoose_1.model('logs', new mongoose_1.Schema({
     enteredDoor: { type: Number, required: true },
     date: { type: Date, required: true },
 }));
-module.exports = Logs;
+exports.default = Logs;
 //# sourceMappingURL=Logs.js.map

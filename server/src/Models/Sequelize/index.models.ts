@@ -10,7 +10,7 @@ const sequelize = new Sequelize('sesame-test', 'peter', '', {
   logging: false,
 });
 
-const db = {};
+const db: any = {};
 
 const allFiles = fs.readdirSync(__dirname);
 const filteredFiles = allFiles.filter((file: string) => file.indexOf('.') !== 0 && file !== 'index.model.ts' && file.slice(-3) === '.ts');
@@ -20,7 +20,7 @@ filteredFiles.forEach((file: any) => {
   db[model.name] = model;
 });
 
-Object.keys(db).forEach(modelName => {
+Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
@@ -29,4 +29,4 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+export default db;

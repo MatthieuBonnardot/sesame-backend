@@ -12,22 +12,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const node_fetch_1 = __importDefault(require("node-fetch"));
 const pino_1 = __importDefault(require("pino"));
+const Issues_1 = __importDefault(require("../../Models/Mongoose/Issues"));
 const logger = pino_1.default({
     prettyPrint: true,
 });
-function AzureFetch(url, options = {}) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const response = yield node_fetch_1.default(url, options);
-            const data = yield response.json();
-            return data;
+const getIssues = (_, res) => __awaiter(void 0, void 0, void 0, function* () {
+    Issues_1.default.find({}, (err, docs) => {
+        if (err) {
+            logger.error(`Error: ${err}`);
         }
-        catch (error) {
-            logger.error(error);
+        else if (docs.length === 0) {
+            logger.info('Empty list of issues');
+        }
+        else {
+            res.send(docs);
         }
     });
-}
-exports.default = AzureFetch;
-//# sourceMappingURL=index.js.map
+});
+const toggleIssueStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    Issues_1.default.findOneAndUpdate({
+        _id: req.params.UID,
+    }, {
+        active: false,
+    }, (err, doc) => {
+        if (err) {
+            logger.error(`Error: ${err}`);
+        }
+        else {
+            res.send(doc);
+        }
+    });
+});
+module.exports = {
+    getIssues,
+    toggleIssueStatus,
+};
+//# sourceMappingURL=issue.controller.js.map

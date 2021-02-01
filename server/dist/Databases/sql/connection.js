@@ -8,26 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const node_fetch_1 = __importDefault(require("node-fetch"));
-const pino_1 = __importDefault(require("pino"));
-const logger = pino_1.default({
-    prettyPrint: true,
-});
-function AzureFetch(url, options = {}) {
+const db = require('../../Models/Sequelize/index.models');
+function SQLconnection() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield node_fetch_1.default(url, options);
-            const data = yield response.json();
-            return data;
+            yield db.sequelize.sync({
+                force: true,
+            });
         }
         catch (error) {
-            logger.error(error);
+            console.log('error :>> ', error);
         }
     });
 }
-exports.default = AzureFetch;
-//# sourceMappingURL=index.js.map
+exports.default = SQLconnection;
+//# sourceMappingURL=connection.js.map

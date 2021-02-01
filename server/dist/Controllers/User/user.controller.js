@@ -7,8 +7,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const identifyUser = (faceId) => __awaiter(this, void 0, void 0, function* () {
-    console.log(faceId);
+const getUsers = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    try {
+    }
+    catch (error) { }
 });
-module.exports = identifyUser;
-//# sourceMappingURL=identify.js.map
+const createUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    try {
+    }
+    catch (error) { }
+});
+const updateUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    try {
+    }
+    catch (error) { }
+});
+const deleteUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    try {
+    }
+    catch (error) { }
+});
+module.exports = {
+    getUsers,
+    createUser,
+    deleteUser,
+    updateUser,
+};
+//# sourceMappingURL=user.controller.js.map
