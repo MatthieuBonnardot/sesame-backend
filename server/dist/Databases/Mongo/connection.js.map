@@ -1,0 +1,1 @@
+{"version":3,"file":"connection.js","sourceRoot":"","sources":["../../../src/Databases/Mongo/connection.ts"],"names":[],"mappings":";;;;;;;;;;;AAAA,uCAAmC;AAEnC,MAAM,QAAQ,GAAW,WAAW,CAAC;AAErC,MAAM,UAAU,GAAG,GAAS,EAAE;IAC5B,MAAM,kBAAO,CAAC,qBAAqB,QAAQ,2DAA2D,EAAE;QACtG,eAAe,EAAE,IAAI;QACrB,kBAAkB,EAAE,IAAI;KACzB,CAAC,CAAC;AACL,CAAC,CAAA,CAAC;AAEF,MAAM,CAAC,OAAO,GAAG,UAAU,CAAC"}
