@@ -8,6 +8,7 @@ dotenv.config();
 const logger = pino({
   prettyPrint: true,
 });
+
 const app: express.Application = express();
 const port: any = process.env.PORT || 4001;
 
