@@ -2,6 +2,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import pino from 'pino';
 import AzureFetch from './index';
+import env from '../config/config';
 
 const logger = pino({
   prettyPrint: true,
@@ -10,14 +11,14 @@ const logger = pino({
 const createPerson: Function = async (name: string): Promise<Object> => {
   try {
     return await AzureFetch(
-      `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${process.env.AZURE_PERSONS_GROUP_ID}/persons`,
+      `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/persons`,
       {
         method: 'POST',
         body: {
           name,
         },
         headers: {
-          'Ocp-Apim-Subscription-Key': `${process.env.AZURE_KEY}`,
+          'Ocp-Apim-Subscription-Key': `${env.azure.key}`,
         },
       },
     );
@@ -32,7 +33,7 @@ const addFace: Function = async (
 ) => {
   try {
     AzureFetch(
-      `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${process.env.AZURE_PERSONS_GROUP_ID}/persons/${personId}/persistedFaces?detectionModel=detection_03`,
+      `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/persons/${personId}/persistedFaces?detectionModel=detection_03`,
       {
         method: 'POST',
         body: {
@@ -40,7 +41,7 @@ const addFace: Function = async (
         },
         headers: {
           'content-type': 'application/octet-stream',
-          'Ocp-Apim-Subscription-Key': `${process.env.AZURE_KEY}`,
+          'Ocp-Apim-Subscription-Key': `${env.azure.key}`,
         },
       },
     );
@@ -52,11 +53,11 @@ const addFace: Function = async (
 const getFacesPerPerson: Function = async (personId: string): Promise<Object> => {
   try {
     return await AzureFetch(
-      `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${process.env.AZURE_PERSONS_GROUP_ID}/persons/${personId}`,
+      `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/persons/${personId}`,
       {
         method: 'GET',
         headers: {
-          'Ocp-Apim-Subscription-Key': `${process.env.AZURE_KEY}`,
+          'Ocp-Apim-Subscription-Key': `${env.azure.key}`,
         },
       },
     );
@@ -68,11 +69,11 @@ const getFacesPerPerson: Function = async (personId: string): Promise<Object> =>
 const deletePerson: Function = async (personId: string) => {
   try {
     AzureFetch(
-      `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${process.env.AZURE_PERSONS_GROUP_ID}/persons/${personId}`,
+      `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/persons/${personId}`,
       {
         method: 'DELETE',
         headers: {
-          'Ocp-Apim-Subscription-Key': `${process.env.AZURE_KEY}`,
+          'Ocp-Apim-Subscription-Key': `${env.azure.key}`,
         },
       },
     );

@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import pino from 'pino';
 import AzureFetch from './index';
+import env from '../config/config';
 
 const logger = pino({
   prettyPrint: true,
@@ -9,11 +10,11 @@ const logger = pino({
 const deletePersonsGroup: Function = async () => {
   try {
     AzureFetch(
-      `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${process.env.AZURE_PERSONS_GROUP_ID}`,
+      `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}`,
       {
         method: 'DELETE',
         headers: {
-          'Ocp-Apim-Subscription-Key': `${process.env.AZURE_KEY}`,
+          'Ocp-Apim-Subscription-Key': `${env.azure.key}`,
         },
       },
     );
@@ -25,11 +26,11 @@ const deletePersonsGroup: Function = async () => {
 const trainPersonsGroup: Function = async () => {
   try {
     AzureFetch(
-      `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${process.env.AZURE_PERSONS_GROUP_ID}/train`,
+      `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/train`,
       {
         method: 'POST',
         headers: {
-          'Ocp-Apim-Subscription-Key': `${process.env.AZURE_KEY}`,
+          'Ocp-Apim-Subscription-Key': `${env.azure.key}`,
         },
       },
     );
@@ -41,11 +42,11 @@ const trainPersonsGroup: Function = async () => {
 const getTrainingStatus: Function = async () => {
   try {
     AzureFetch(
-      `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${process.env.AZURE_PERSONS_GROUP_ID}/training`,
+      `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/training`,
       {
         method: 'GET',
         headers: {
-          'Ocp-Apim-Subscription-Key': `${process.env.AZURE_KEY}`,
+          'Ocp-Apim-Subscription-Key': `${env.azure.key}`,
         },
       },
     );

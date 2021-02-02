@@ -10,6 +10,7 @@ const config = {
   azure: {
     key: process.env.AZURE_KEY,
     backup_key: process.env.AZURE_KEY2,
+    group_name: process.env.AZURE_PERSONS_GROUP_ID,
     enpoint: process.env.AZURE_ENDPOINT,
     location: process.env.AZURE_LOCATION,
   },
