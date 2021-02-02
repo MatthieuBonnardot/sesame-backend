@@ -62,8 +62,9 @@ var http = __importStar(require("http"));
 var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var pino_1 = __importDefault(require("pino"));
-require("reflect-metadata");
 var typeorm_1 = require("typeorm");
+var config_1 = __importDefault(require("./config/config"));
+require("reflect-metadata");
 var ormconfig_1 = __importDefault(require("./Models/Typeorm/ormconfig"));
 var connection_1 = __importDefault(require("./Databases/Mongo/connection"));
 var status_1 = __importDefault(require("./Routes/status"));
@@ -98,14 +99,14 @@ router.use('/door', door_1.default);
 router.use('/group', group_1.default);
 router.use('/user', user_1.default);
 router.use('/azure', azure_1.default);
-router.use(function (req, res) {
+router.use(function (_, res) {
     var error = new Error('not found');
     return res.status(404).json({
         message: error.message,
     });
 });
 var httpServer = http.createServer(router);
-httpServer.listen(5000, function () { return __awaiter(void 0, void 0, void 0, function () {
+httpServer.listen(config_1.default.server.port, function () { return __awaiter(void 0, void 0, void 0, function () {
     var error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -119,7 +120,7 @@ httpServer.listen(5000, function () { return __awaiter(void 0, void 0, void 0, f
             case 2:
                 _a.sent();
                 logger.info('Connected to SQL DB');
-                logger.info("Listening at http://localhost:" + 5000 + "/");
+                logger.info("Listening at http://" + config_1.default.server.hostname + ":" + config_1.default.server.port + "/");
                 return [3, 4];
             case 3:
                 error_1 = _a.sent();

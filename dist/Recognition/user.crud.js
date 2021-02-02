@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var pino_1 = __importDefault(require("pino"));
 var index_1 = __importDefault(require("./index"));
+var config_1 = __importDefault(require("../config/config"));
 var logger = pino_1.default({
     prettyPrint: true,
 });
@@ -50,13 +51,13 @@ var createPerson = function (name) { return __awaiter(void 0, void 0, void 0, fu
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4, index_1.default("https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/" + process.env.AZURE_PERSONS_GROUP_ID + "/persons", {
+                return [4, index_1.default("https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/" + config_1.default.azure.group_name + "/persons", {
                         method: 'POST',
                         body: {
                             name: name,
                         },
                         headers: {
-                            'Ocp-Apim-Subscription-Key': "" + process.env.AZURE_KEY,
+                            'Ocp-Apim-Subscription-Key': "" + config_1.default.azure.key,
                         },
                     })];
             case 1: return [2, _a.sent()];
@@ -71,14 +72,14 @@ var createPerson = function (name) { return __awaiter(void 0, void 0, void 0, fu
 var addFace = function (personId, octetStream) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
-            index_1.default("https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/" + process.env.AZURE_PERSONS_GROUP_ID + "/persons/" + personId + "/persistedFaces?detectionModel=detection_03", {
+            index_1.default("https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/" + config_1.default.azure.group_name + "/persons/" + personId + "/persistedFaces?detectionModel=detection_03", {
                 method: 'POST',
                 body: {
                     octetStream: octetStream,
                 },
                 headers: {
                     'content-type': 'application/octet-stream',
-                    'Ocp-Apim-Subscription-Key': "" + process.env.AZURE_KEY,
+                    'Ocp-Apim-Subscription-Key': "" + config_1.default.azure.key,
                 },
             });
         }
@@ -94,10 +95,10 @@ var getFacesPerPerson = function (personId) { return __awaiter(void 0, void 0, v
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4, index_1.default("https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/" + process.env.AZURE_PERSONS_GROUP_ID + "/persons/" + personId, {
+                return [4, index_1.default("https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/" + config_1.default.azure.group_name + "/persons/" + personId, {
                         method: 'GET',
                         headers: {
-                            'Ocp-Apim-Subscription-Key': "" + process.env.AZURE_KEY,
+                            'Ocp-Apim-Subscription-Key': "" + config_1.default.azure.key,
                         },
                     })];
             case 1: return [2, _a.sent()];
@@ -112,10 +113,10 @@ var getFacesPerPerson = function (personId) { return __awaiter(void 0, void 0, v
 var deletePerson = function (personId) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
-            index_1.default("https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/" + process.env.AZURE_PERSONS_GROUP_ID + "/persons/" + personId, {
+            index_1.default("https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/" + config_1.default.azure.group_name + "/persons/" + personId, {
                 method: 'DELETE',
                 headers: {
-                    'Ocp-Apim-Subscription-Key': "" + process.env.AZURE_KEY,
+                    'Ocp-Apim-Subscription-Key': "" + config_1.default.azure.key,
                 },
             });
         }
