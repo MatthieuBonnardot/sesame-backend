@@ -1,12 +1,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import pino from 'pino';
+import express from 'express';
 import Logs from '../../Models/Mongoose/Logs';
 
 const logger = pino({
   prettyPrint: true,
 });
 
-const getLogs: Function = async (_: any, res: Response) => {
+const getLogs: Function = async (_: any, res: express.Response) => {
   Logs.find({}, (err: Error, docs: Array<any>) => {
     if (err) {
       logger.error(`Error: ${err}`);
