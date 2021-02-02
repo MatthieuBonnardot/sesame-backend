@@ -8,6 +8,9 @@ const MongoConnection = async () => {
   await connect(MONGO_DB_URI_TEST, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+  }, (err) => {
+    if (err) console.error(err);
+    console.log('success');
   });
 };
 

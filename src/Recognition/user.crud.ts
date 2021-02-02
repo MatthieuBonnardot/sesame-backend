@@ -7,14 +7,14 @@ const logger = pino({
   prettyPrint: true,
 });
 
-const createPerson: Function = async (UID: number): Promise<Object> => {
+const createPerson: Function = async (name: string): Promise<Object> => {
   try {
     return await AzureFetch(
       `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${process.env.AZURE_PERSONS_GROUP_ID}/persons`,
       {
         method: 'POST',
         body: {
-          name: UID,
+          name,
         },
         headers: {
           'Ocp-Apim-Subscription-Key': `${process.env.AZURE_KEY}`,
