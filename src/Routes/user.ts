@@ -8,5 +8,4 @@ users.put('/update', userController.updateUser);
 users.delete('/delete', userController.deleteUser);
 users.post('/create', userController.createUser);
 
-// userController.createUser
 export default users;

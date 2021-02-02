@@ -8,6 +8,7 @@ const logger = pino({
 
 const getGroups = async (req: Request, res: Response) => {
   try {
+    console.log(req);
   } catch (error) {}
 };
 

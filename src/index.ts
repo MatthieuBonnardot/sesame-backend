@@ -47,7 +47,6 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Methods', 'GET POST PUT DELETE');
     return res.status(200).json({});
   }
-  console.log('so far');
 
   next();
 });
@@ -56,7 +55,6 @@ app.use(router);
 
 /* Error handling */
 app.use((_:any, res: any, __: any, err: any): void => {
-  console.log(err);
   const error = new Error('not found');
   res.status(404).json({
     message: error.message,
