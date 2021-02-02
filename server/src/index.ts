@@ -9,15 +9,10 @@ import groupRoutes from './Routes/group';
 import userRoutes from './Routes/user';
 import azureRoutes from './Routes/azure';
 import MongoConnection from './Databases/Mongo/connection';
-// import * as dotenv from 'dotenv';
-
-
-// dotenv.config();
 
 const logger = pino({
   prettyPrint: true,
 });
-
 
 const router = express();
 

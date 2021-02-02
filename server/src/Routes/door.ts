@@ -1,10 +1,10 @@
 import express from 'express';
 import * as doorController from '../Controllers/Door/door.controller';
 
-const router = express.Router();
+const door = express.Router();
 
-router.get('/list', doorController.getDoors);
-router.post('/create', doorController.createDoor);
-router.delete('/delete', doorController.deleteDoor);
+door.get('/list', doorController.getDoors);
+door.post('/create', doorController.createDoor);
+door.delete('/delete', doorController.deleteDoor);
 
-export default router;
+export default door;
