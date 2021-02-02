@@ -1,35 +1,40 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import express from 'express';
+import { Request, Response } from 'express';
 import pino from 'pino';
 
 const logger = pino({
   prettyPrint: true,
 });
 
-
-const getUsers: Function = async (req: express.Request, res: express.Response) => {
+const getUsers = async (req: Request, res: Response) => {
   try {
   } catch (error) {}
 };
 
-const createUser: Function = async (req: express.Request, res: express.Response) => {
+const createUser = async (
+  req: Request,
+  res: Response,
+) => {
   try {
   } catch (error) {}
 };
 
-const updateUser: Function = async (req: express.Request, res: express.Response) => {
+const updateUser = async (
+  req: Request,
+  res: Response,
+) => {
   try {
   } catch (error) {}
 };
 
-const deleteUser: Function = async (req: express.Request, res: express.Response) => {
+const deleteUser = async (
+  req: Request,
+  res: Response,
+) => {
   try {
   } catch (error) {}
 };
 
-module.exports = {
-  getUsers,
-  createUser,
-  deleteUser,
-  updateUser,
+export {
+  getUsers, createUser, deleteUser, updateUser,
 };

@@ -1,32 +1,32 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import express from 'express';
+import {Request, Response} from 'express';
 import pino from 'pino';
 
 const logger = pino({
   prettyPrint: true,
 });
 
-const getGroups: Function = async (req: express.Request, res: express.Response) => {
+const getGroups = async (req: Request, res: Response) => {
   try {
   } catch (error) {}
 };
 
-const updateGroup: Function = async (req: express.Request, res: express.Response) => {
+const updateGroup = async (req: Request, res: Response) => {
   try {
   } catch (error) {}
 };
 
-const createGroup: Function = async (req: express.Request, res: express.Response) => {
+const createGroup = async (req: Request, res: Response) => {
   try {
   } catch (error) {}
 };
 
-const deleteGroup: Function = async (req: express.Request, res: express.Response) => {
+const deleteGroup = async (req: Request, res: Response) => {
   try {
   } catch (error) {}
 };
 
-module.exports = {
+export {
   createGroup,
   getGroups,
   deleteGroup,

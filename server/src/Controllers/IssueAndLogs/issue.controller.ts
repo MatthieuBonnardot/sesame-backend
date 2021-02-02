@@ -7,7 +7,7 @@ const logger = pino({
   prettyPrint: true,
 });
 
-const getIssues: Function = async (_: any, res: express.Response) => {
+const getIssues = async (_: any, res: express.Response) => {
   Issues.find({}, (err: Error, docs: Array<any>) => {
     if (err) {
       logger.error(`Error: ${err}`);
@@ -19,7 +19,7 @@ const getIssues: Function = async (_: any, res: express.Response) => {
   });
 };
 
-const toggleIssueStatus: Function = async (req: express.Request, res: express.Response) => {
+const toggleIssueStatus = async (req: express.Request, res: express.Response) => {
   Issues.findOneAndUpdate(
     {
       _id: req.params.UID,
@@ -37,7 +37,7 @@ const toggleIssueStatus: Function = async (req: express.Request, res: express.Re
   );
 };
 
-module.exports = {
+export {
   getIssues,
   toggleIssueStatus,
 };

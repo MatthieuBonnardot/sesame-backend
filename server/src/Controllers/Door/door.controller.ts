@@ -1,33 +1,33 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import express from "express";
-import pino from "pino";
+import {Request, Response} from 'express';
+import pino from 'pino';
 
 const logger = pino({
   prettyPrint: true,
 });
 
-const getDoors: Function = async (
-  req: express.Request,
-  res: express.Response
+const getDoors = async (
+  req: Request,
+  res: Response,
 ) => {
   try {
   } catch (err) {}
 };
 
-const createDoor: Function = async (
-  req: express.Request,
-  res: express.Response
+const createDoor = async (
+  req: Request,
+  res: Response,
 ) => {
   try {
   } catch (err) {}
 };
 
-const deleteDoor: Function = async (
-  req: express.Request,
-  res: express.Response
+const deleteDoor = async (
+  req: Request,
+  res: Response,
 ) => {
   try {
   } catch (err) {}
 };
 
-export default { getDoors, createDoor, deleteDoor };
+export { getDoors, createDoor, deleteDoor };

@@ -1,33 +1,85 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import * as http from 'http';
 import express from 'express';
-import * as dotenv from 'dotenv';
-import 'reflect-metadata';
-import { createConnection } from 'typeorm';
+import bodyParser from 'body-parser';
 import pino from 'pino';
-import config from './Models/Typeorm/ormconfig';
+import statusRoutes from './Routes/status';
+import doorRoutes from './Routes/door';
+import groupRoutes from './Routes/group';
+import userRoutes from './Routes/user';
+import azureRoutes from './Routes/azure';
 import MongoConnection from './Databases/Mongo/connection';
-import PostController from './post/post.controller';
-import validateEnv from './utils/validateEnv';
-// import SQLconnection from './Databases/sql/connection';
+// import * as dotenv from 'dotenv';
 
-dotenv.config();
-validateEnv();
+
+// dotenv.config();
+
 const logger = pino({
   prettyPrint: true,
 });
 
-const app: express.Application = express();
-const port: any = process.env.PORT || 4001;
 
-app.listen(port, async () => {
+const router = express();
+
+/* Logging the request */
+router.use((req, res, next) => {
+  logger.info(
+    `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}]`,
+  );
+
+  res.on('finish', () => {
+    logger.info(
+      `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}], STATUS - [${req.statusCode}]`,
+    );
+  });
+
+  next();
+});
+
+/* Parse the request */
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
+
+/* Rules of our API */
+router.use((req, res, next) => {
+  res.header('Acces-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+  );
+
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'GET POST PUT DELETE');
+    return res.status(200).json({});
+  }
+
+  next();
+});
+
+/* Routes */
+router.use('/status', statusRoutes);
+router.use('/door', doorRoutes);
+router.use('/group', groupRoutes);
+router.use('/user', userRoutes);
+router.use('/azure', azureRoutes);
+
+/* Error handling */
+router.use((req, res) => {
+  const error = new Error('not found');
+  return res.status(404).json({
+    message: error.message,
+  });
+});
+
+/* Create the server */
+const httpServer = http.createServer(router);
+httpServer.listen(5000, async () => {
   try {
     await MongoConnection;
-    await createConnection(config);
     logger.info('Connected to Mongo DB');
-    // await SQLconnection;
-    logger.info('Connected to typeOrm');
-    logger.info(`Listening at http://localhost:${port}/`);
-  } catch (e) {
-    console.log(e);
+    // logger.info('Connected to SQL DB');
+    logger.info(`Listening at http://localhost:${5000}/`);
+  } catch (error) {
+    logger.error(error.message);
   }
 });

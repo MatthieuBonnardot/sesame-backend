@@ -31,9 +31,5 @@ const deleteDoor = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     catch (err) { }
 });
-module.exports = {
-    getDoors,
-    createDoor,
-    deleteDoor,
-};
+exports.default = { getDoors, createDoor, deleteDoor };
 //# sourceMappingURL=door.controller.js.map

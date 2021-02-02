@@ -1,23 +1,25 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import { Request, Response } from 'express';
 import pino from 'pino';
-import express from 'express';
 import Logs from '../../Models/Mongoose/Logs';
 
 const logger = pino({
   prettyPrint: true,
 });
 
-const getLogs: Function = async (_: any, res: express.Response) => {
+const getLogs = async (_: Request, res: Response) => {
+  logger.info('GetLogs');
   Logs.find({}, (err: Error, docs: Array<any>) => {
     if (err) {
-      logger.error(`Error: ${err}`);
+      res.status(501).json({
+        error: err.message,
+      });
     } else if (docs.length === 0) {
-      logger.info('The list of issues is empty');
       res.status(200).send('The list of issues is empty');
     } else {
-      res.send(docs);
+      res.status(200).send(docs);
     }
   });
 };
 
-module.exports = { getLogs };
+export default { getLogs };
