@@ -11,5 +11,7 @@ Permissions.init({
     doorId: {
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
     },
-}, {});
+}, {
+    tableName: 'permissions',
+});
 //# sourceMappingURL=permissions.model.js.map

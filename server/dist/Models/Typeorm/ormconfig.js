@@ -8,7 +8,8 @@ const config = {
     type: 'postgres',
     host: process.env.POSTGRES_HOST,
     port: Number(process.env.POSTGRES_PORT),
-    username: process.env.POSTGRES_USER,
+    username: 'postgres',
+    password: 'password',
     database: process.env.POSTGRES_DB,
     entities: [
         path_1.default.join(__dirname, '/*.entity{.ts,.js}'),

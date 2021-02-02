@@ -18,5 +18,5 @@ Permissions.init({
     type: DataTypes.INTEGER.UNSIGNED,
   },
 }, {
-
+  tableName: 'permissions',
 });

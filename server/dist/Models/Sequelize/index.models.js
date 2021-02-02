@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
-const sequelize = new Sequelize('sesame-test', 'peter', '', {
+const sequelize = new Sequelize('sesame-test', 'aligato1', '', {
     host: 'localhost',
     dialect: 'postgres',
     logging: false,
