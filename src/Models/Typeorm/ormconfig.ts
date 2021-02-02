@@ -3,8 +3,8 @@ import path from 'path';
 
 const config: ConnectionOptions = {
   type: 'postgres',
-  host: process.env.POSTGRES_HOST,
-  port: Number(process.env.POSTGRES_PORT),
+  host: '35.189.255.98',
+  // port: Number(process.env.POSTGRES_PORT),
   // username: process.env.POSTGRES_USER,
   username: 'postgres',
   // password: process.env.POSTGRES_PASSWORD,

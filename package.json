@@ -48,7 +48,14 @@
     "type": "git",
     "url": "git+https://github.com/MatthieuBonnardot/sesame-backend.git"
   },
-  "keywords": ["Typescript", "FR", "JavaScript", "Express", "SQL", "Mongodb"],
+  "keywords": [
+    "Typescript",
+    "FR",
+    "JavaScript",
+    "Express",
+    "SQL",
+    "Mongodb"
+  ],
   "author": "Matthieu Bonnardot and Peter French",
   "license": "ISC",
   "bugs": {

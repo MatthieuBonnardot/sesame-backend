@@ -6,8 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var path_1 = __importDefault(require("path"));
 var config = {
     type: 'postgres',
-    host: process.env.POSTGRES_HOST,
-    port: Number(process.env.POSTGRES_PORT),
+    host: '35.189.255.98',
     username: 'postgres',
     password: 'password',
     database: process.env.POSTGRES_DB,
