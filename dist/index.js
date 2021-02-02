@@ -62,6 +62,7 @@ var http = __importStar(require("http"));
 var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var pino_1 = __importDefault(require("pino"));
+var config_1 = __importDefault(require("./config/config"));
 require("reflect-metadata");
 var typeorm_1 = require("typeorm");
 var ormconfig_1 = __importDefault(require("./Models/Typeorm/ormconfig"));
@@ -77,7 +78,7 @@ var logger = pino_1.default({
 var router = express_1.default();
 router.use(function (req, res, next) {
     logger.info("METHOD - [" + req.method + "], URL - [" + req.url + "], IP - [" + req.socket.remoteAddress + "]");
-    res.on('finish', function () {
+    res.on("finish", function () {
         logger.info("METHOD - [" + req.method + "], URL - [" + req.url + "], IP - [" + req.socket.remoteAddress + "], STATUS - [" + req.statusCode + "]");
     });
     next();
@@ -85,27 +86,27 @@ router.use(function (req, res, next) {
 router.use(body_parser_1.default.urlencoded({ extended: false }));
 router.use(body_parser_1.default.json());
 router.use(function (req, res, next) {
-    res.header('Acces-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods', 'GET POST PUT DELETE');
+    res.header("Acces-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    if (req.method === "OPTIONS") {
+        res.header("Access-Control-Allow-Methods", "GET POST PUT DELETE");
         return res.status(200).json({});
     }
     next();
 });
-router.use('/status', status_1.default);
-router.use('/door', door_1.default);
-router.use('/group', group_1.default);
-router.use('/user', user_1.default);
-router.use('/azure', azure_1.default);
+router.use("/status", status_1.default);
+router.use("/door", door_1.default);
+router.use("/group", group_1.default);
+router.use("/user", user_1.default);
+router.use("/azure", azure_1.default);
 router.use(function (req, res) {
-    var error = new Error('not found');
+    var error = new Error("not found");
     return res.status(404).json({
         message: error.message,
     });
 });
 var httpServer = http.createServer(router);
-httpServer.listen(5000, function () { return __awaiter(void 0, void 0, void 0, function () {
+httpServer.listen(config_1.default.server.port, function () { return __awaiter(void 0, void 0, void 0, function () {
     var error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -114,12 +115,12 @@ httpServer.listen(5000, function () { return __awaiter(void 0, void 0, void 0, f
                 return [4, connection_1.default];
             case 1:
                 _a.sent();
-                logger.info('Connected to Mongo DB');
+                logger.info("Connected to Mongo DB");
                 return [4, typeorm_1.createConnection(ormconfig_1.default)];
             case 2:
                 _a.sent();
-                logger.info('Connected to SQL DB');
-                logger.info("Listening at http://localhost:" + 5000 + "/");
+                logger.info("Connected to SQL DB");
+                logger.info("Listening at http://" + config_1.default.server.hostname + ":" + config_1.default.server.port + "/");
                 return [3, 4];
             case 3:
                 error_1 = _a.sent();

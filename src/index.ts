@@ -57,6 +57,7 @@ router.use((req, res, next) => {
 });
 
 /* Routes */
+router.get('/', () => console.log('hi🐷'));
 router.use("/status", statusRoutes);
 router.use("/door", doorRoutes);
 router.use("/group", groupRoutes);
@@ -72,8 +73,7 @@ router.use((req, res) => {
 });
 
 /* Create the server */
-const httpServer = http.createServer(router);
-httpServer.listen(env.server.port, async () => {
+router.listen(env.server.port, async () => {
   try {
     await MongoConnection;
     logger.info("Connected to Mongo DB");

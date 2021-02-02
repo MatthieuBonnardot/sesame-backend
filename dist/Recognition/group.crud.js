@@ -41,16 +41,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var pino_1 = __importDefault(require("pino"));
 var index_1 = __importDefault(require("./index"));
+var config_1 = __importDefault(require("../config/config"));
 var logger = pino_1.default({
     prettyPrint: true,
 });
 var deletePersonsGroup = function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
-            index_1.default("https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/" + process.env.AZURE_PERSONS_GROUP_ID, {
+            index_1.default("https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/" + config_1.default.azure.group_name, {
                 method: 'DELETE',
                 headers: {
-                    'Ocp-Apim-Subscription-Key': "" + process.env.AZURE_KEY,
+                    'Ocp-Apim-Subscription-Key': "" + config_1.default.azure.key,
                 },
             });
         }
@@ -63,10 +64,10 @@ var deletePersonsGroup = function () { return __awaiter(void 0, void 0, void 0, 
 var trainPersonsGroup = function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
-            index_1.default("https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/" + process.env.AZURE_PERSONS_GROUP_ID + "/train", {
+            index_1.default("https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/" + config_1.default.azure.group_name + "/train", {
                 method: 'POST',
                 headers: {
-                    'Ocp-Apim-Subscription-Key': "" + process.env.AZURE_KEY,
+                    'Ocp-Apim-Subscription-Key': "" + config_1.default.azure.key,
                 },
             });
         }
@@ -79,10 +80,10 @@ var trainPersonsGroup = function () { return __awaiter(void 0, void 0, void 0, f
 var getTrainingStatus = function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
-            index_1.default("https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/" + process.env.AZURE_PERSONS_GROUP_ID + "/training", {
+            index_1.default("https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/" + config_1.default.azure.group_name + "/training", {
                 method: 'GET',
                 headers: {
-                    'Ocp-Apim-Subscription-Key': "" + process.env.AZURE_KEY,
+                    'Ocp-Apim-Subscription-Key': "" + config_1.default.azure.key,
                 },
             });
         }

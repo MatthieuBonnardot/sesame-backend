@@ -4,16 +4,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var path_1 = __importDefault(require("path"));
+var config_1 = __importDefault(require("../../config/config"));
 var config = {
     type: 'postgres',
-    host: '35.189.255.98',
-    username: 'postgres',
-    password: 'password',
-    database: process.env.POSTGRES_DB,
+    url: config_1.default.postgres.uri,
     entities: [
         path_1.default.join(__dirname, '/*.entity{.ts,.js}'),
     ],
     synchronize: true,
+    logging: false,
 };
 exports.default = config;
 //# sourceMappingURL=ormconfig.js.map

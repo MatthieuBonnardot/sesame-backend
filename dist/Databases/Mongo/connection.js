@@ -35,14 +35,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = require("mongoose");
-require("dotenv/config");
-var MONGO_DB_URI_TEST = process.env.MONGO_DB_URI_TEST;
+var config_1 = __importDefault(require("../../config/config"));
 var MongoConnection = function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4, mongoose_1.connect(MONGO_DB_URI_TEST, {
+            case 0: return [4, mongoose_1.connect(config_1.default.mongo.uri, {
                     useNewUrlParser: true,
                     useUnifiedTopology: true,
                 }, function (err) {
