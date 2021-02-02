@@ -38,9 +38,7 @@ const typeorm_1 = require("typeorm");
 const pino_1 = __importDefault(require("pino"));
 const ormconfig_1 = __importDefault(require("./Models/Typeorm/ormconfig"));
 const connection_1 = __importDefault(require("./Databases/Mongo/connection"));
-const validateEnv_1 = __importDefault(require("./utils/validateEnv"));
 dotenv.config();
-validateEnv_1.default();
 const logger = pino_1.default({
     prettyPrint: true,
 });
