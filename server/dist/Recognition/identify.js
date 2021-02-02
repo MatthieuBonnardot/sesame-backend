@@ -7,30 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const getGroups = (req, res) => __awaiter(this, void 0, void 0, function* () {
-    try {
-    }
-    catch (error) { }
+const identifyUser = (faceId) => __awaiter(this, void 0, void 0, function* () {
+    console.log(faceId);
 });
-const updateGroup = (req, res) => __awaiter(this, void 0, void 0, function* () {
-    try {
-    }
-    catch (error) { }
-});
-const createGroup = (req, res) => __awaiter(this, void 0, void 0, function* () {
-    try {
-    }
-    catch (error) { }
-});
-const deleteGroup = (req, res) => __awaiter(this, void 0, void 0, function* () {
-    try {
-    }
-    catch (error) { }
-});
-module.exports = {
-    getGroups,
-    deleteGroup,
-    updateGroup,
-    createGroup,
-};
-//# sourceMappingURL=group.controller.js.map
+module.exports = identifyUser;
+//# sourceMappingURL=identify.js.map
