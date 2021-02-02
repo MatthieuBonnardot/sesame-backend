@@ -9,6 +9,7 @@ import groupRoutes from './Routes/group';
 import userRoutes from './Routes/user';
 import azureRoutes from './Routes/azure';
 import MongoConnection from './Databases/Mongo/connection';
+
 const logger = pino({
   prettyPrint: true,
 });
