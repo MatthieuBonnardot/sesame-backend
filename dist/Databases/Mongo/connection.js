@@ -45,6 +45,10 @@ var MongoConnection = function () { return __awaiter(void 0, void 0, void 0, fun
             case 0: return [4, mongoose_1.connect(MONGO_DB_URI_TEST, {
                     useNewUrlParser: true,
                     useUnifiedTopology: true,
+                }, function (err) {
+                    if (err)
+                        console.error(err);
+                    console.log('success');
                 })];
             case 1:
                 _a.sent();

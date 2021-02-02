@@ -44,7 +44,7 @@ var index_1 = __importDefault(require("./index"));
 var logger = pino_1.default({
     prettyPrint: true,
 });
-var createPerson = function (UID) { return __awaiter(void 0, void 0, void 0, function () {
+var createPerson = function (name) { return __awaiter(void 0, void 0, void 0, function () {
     var error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -53,7 +53,7 @@ var createPerson = function (UID) { return __awaiter(void 0, void 0, void 0, fun
                 return [4, index_1.default("https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/" + process.env.AZURE_PERSONS_GROUP_ID + "/persons", {
                         method: 'POST',
                         body: {
-                            name: UID,
+                            name: name,
                         },
                         headers: {
                             'Ocp-Apim-Subscription-Key': "" + process.env.AZURE_KEY,

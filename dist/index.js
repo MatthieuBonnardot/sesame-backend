@@ -62,12 +62,15 @@ var http = __importStar(require("http"));
 var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var pino_1 = __importDefault(require("pino"));
+require("reflect-metadata");
+var typeorm_1 = require("typeorm");
+var ormconfig_1 = __importDefault(require("./Models/Typeorm/ormconfig"));
+var connection_1 = __importDefault(require("./Databases/Mongo/connection"));
 var status_1 = __importDefault(require("./Routes/status"));
 var door_1 = __importDefault(require("./Routes/door"));
 var group_1 = __importDefault(require("./Routes/group"));
 var user_1 = __importDefault(require("./Routes/user"));
 var azure_1 = __importDefault(require("./Routes/azure"));
-var connection_1 = __importDefault(require("./Databases/Mongo/connection"));
 var logger = pino_1.default({
     prettyPrint: true,
 });
@@ -107,19 +110,22 @@ httpServer.listen(5000, function () { return __awaiter(void 0, void 0, void 0, f
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
+                _a.trys.push([0, 3, , 4]);
                 return [4, connection_1.default];
             case 1:
                 _a.sent();
                 logger.info('Connected to Mongo DB');
+                return [4, typeorm_1.createConnection(ormconfig_1.default)];
+            case 2:
+                _a.sent();
                 logger.info('Connected to SQL DB');
                 logger.info("Listening at http://localhost:" + 5000 + "/");
-                return [3, 3];
-            case 2:
+                return [3, 4];
+            case 3:
                 error_1 = _a.sent();
                 logger.error(error_1.message);
-                return [3, 3];
-            case 3: return [2];
+                return [3, 4];
+            case 4: return [2];
         }
     });
 }); });

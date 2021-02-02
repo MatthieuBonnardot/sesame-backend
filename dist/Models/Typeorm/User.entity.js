@@ -18,11 +18,7 @@ var User = (function () {
     function User() {
     }
     __decorate([
-        typeorm_1.PrimaryGeneratedColumn(),
-        __metadata("design:type", Number)
-    ], User.prototype, "uid", void 0);
-    __decorate([
-        typeorm_1.Column('varchar', { length: 36 }),
+        typeorm_1.PrimaryColumn('varchar', { length: 36 }),
         __metadata("design:type", String)
     ], User.prototype, "aid", void 0);
     __decorate([
