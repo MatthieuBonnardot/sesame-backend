@@ -9,7 +9,7 @@ const config: ConnectionOptions = {
   username: 'postgres',
   // password: process.env.POSTGRES_PASSWORD,
   password: 'password',
-  database: process.env.POSTGRES_DB,
+  database: 'sesame',
   entities: [
     path.join(__dirname, '/*.entity{.ts,.js}'),
   ],
