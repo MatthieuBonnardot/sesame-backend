@@ -5,7 +5,7 @@ const group = express.Router();
 
 group.get('/list', groupController.getGroups);
 group.post('/create', groupController.createGroup);
-group.delete('/delete', groupController.deleteGroup);
-group.put('/update', groupController.updateGroup);
+group.delete('/delete/:id', groupController.deleteGroup);
+group.put('/update/:id', groupController.updateGroup);
 
 export default group;
