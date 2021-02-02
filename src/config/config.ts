@@ -1,0 +1,25 @@
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const config = {
+  server: {
+    hostname: process.env.SERVER_HOSTNAME,
+    port: process.env.SERVER_PORT,
+  },
+  azure: {
+    key: process.env.AZURE_KEY,
+    backup_key: process.env.AZURE_KEY2,
+    enpoint: process.env.AZURE_ENDPOINT,
+    location: process.env.AZURE_LOCATION,
+  },
+  mongo: {
+    uri: process.env.MONGO_DB_URI,
+    test: process.env.MONGO_DB_URI_TEST,
+  },
+  postgres: {
+    uri: process.env.POSTGRES_URI,
+  },
+};
+
+export default config;
