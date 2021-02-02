@@ -4,12 +4,15 @@ import * as http from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
 import pino from 'pino';
+import 'reflect-metadata';
+import { createConnection } from 'typeorm';
+import config from './Models/Typeorm/ormconfig';
+import MongoConnection from './Databases/Mongo/connection';
 import statusRoutes from './Routes/status';
 import doorRoutes from './Routes/door';
 import groupRoutes from './Routes/group';
 import userRoutes from './Routes/user';
 import azureRoutes from './Routes/azure';
-import MongoConnection from './Databases/Mongo/connection';
 
 const logger = pino({
   prettyPrint: true,
@@ -73,6 +76,7 @@ httpServer.listen(5000, async () => {
   try {
     await MongoConnection;
     logger.info('Connected to Mongo DB');
+    await createConnection(config);
     logger.info('Connected to SQL DB');
     logger.info(`Listening at http://localhost:${5000}/`);
   } catch (error) {
