@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable import/no-extraneous-dependencies */
 import * as http from 'http';
 import express from 'express';
@@ -72,7 +73,7 @@ httpServer.listen(5000, async () => {
   try {
     await MongoConnection;
     logger.info('Connected to Mongo DB');
-    // logger.info('Connected to SQL DB');
+    logger.info('Connected to SQL DB');
     logger.info(`Listening at http://localhost:${5000}/`);
   } catch (error) {
     logger.error(error.message);
