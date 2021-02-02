@@ -16,6 +16,10 @@ const createUser = async (
   res: Response,
 ) => {
   try {
+    logger.info('hello');
+    res.send({
+      message: 'pong',
+    });
   } catch (error) {}
 };
 

@@ -6,6 +6,12 @@ const users = express.Router();
 users.get('/list', userController.getUsers);
 users.put('/update', userController.updateUser);
 users.delete('/delete', userController.deleteUser);
-users.post('/create', userController.createUser);
+users.post('/create', (req, res: express.Response) => {
+  console.log('get call');
+  res.json({
+    message: 'success',
+  });
+});
 
+// userController.createUser
 export default users;

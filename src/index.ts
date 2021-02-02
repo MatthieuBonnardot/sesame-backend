@@ -9,27 +9,22 @@ import env from './config/config';
 import 'reflect-metadata';
 import config from './Models/Typeorm/ormconfig';
 import MongoConnection from './Databases/Mongo/connection';
-import statusRoutes from './Routes/status';
-import doorRoutes from './Routes/door';
-import groupRoutes from './Routes/group';
-import userRoutes from './Routes/user';
-import azureRoutes from './Routes/azure';
 
 const logger = pino({
   prettyPrint: true,
 });
 
-const router = express();
+const app = express();
 
 /* Logging the request */
-router.use((req, res, next) => {
+app.use((req, res, next) => {
   logger.info(
     `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}]`,
   );
 
   res.on('finish', () => {
     logger.info(
-      `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}], STATUS - [${req.statusCode}]`,
+      `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}], STATUS - [${res.statusCode}]`,
     );
   });
 
@@ -37,11 +32,11 @@ router.use((req, res, next) => {
 });
 
 /* Parse the request */
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 /* Rules of our API */
-router.use((req, res, next) => {
+app.use((req, res, next) => {
   res.header('Acces-Control-Allow-Origin', '*');
   res.header(
     'Access-Control-Allow-Headers',
@@ -52,28 +47,30 @@ router.use((req, res, next) => {
     res.header('Access-Control-Allow-Methods', 'GET POST PUT DELETE');
     return res.status(200).json({});
   }
-
+  console.log('so far');
+  
   next();
 });
 
 /* Routes */
-router.use('/status', statusRoutes);
-router.use('/door', doorRoutes);
-router.use('/group', groupRoutes);
-router.use('/user', userRoutes);
-router.use('/azure', azureRoutes);
+// router.use('/status', statusRoutes);
+// router.use('/door', doorRoutes);
+// router.use('/group', groupRoutes);
+// router.all('/user/*', userRoutes);
+// router.use('/azure', azureRoutes);
+app.use(router)
 
 /* Error handling */
-router.use((_, res) => {
+app.use((_:any, res: any, __: any, err: any): void => {
+  console.log(err);
   const error = new Error('not found');
-  return res.status(404).json({
+  res.status(404).json({
     message: error.message,
   });
 });
 
 /* Create the server */
-const httpServer = http.createServer(router);
-httpServer.listen(env.server.port, async () => {
+app.listen(env.server.port, async () => {
   try {
     await MongoConnection;
     logger.info('Connected to Mongo DB');
@@ -86,3 +83,7 @@ httpServer.listen(env.server.port, async () => {
     logger.error(error.message);
   }
 });
+
+// (async () => {
+//   [...]
+// })()

@@ -1,4 +1,5 @@
-import dotenv from "dotenv";
+/* eslint-disable import/no-extraneous-dependencies */
+import dotenv from 'dotenv';
 
 dotenv.config();
 
