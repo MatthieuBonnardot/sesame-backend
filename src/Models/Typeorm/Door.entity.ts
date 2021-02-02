@@ -17,6 +17,9 @@ class Door {
   @Column('varchar', { length: 50 })
   public endpoint: string;
 
+  @Column('varchar', { length: 50 })
+  public door_url: string;
+
   @ManyToMany(() => Group, (group: Group) => group.doors)
   public groups: Group[];
 }

@@ -55,7 +55,7 @@ const getTrainingStatus: Function = async () => {
   }
 };
 
-module.exports = {
+export {
   deletePersonsGroup,
   trainPersonsGroup,
   getTrainingStatus,

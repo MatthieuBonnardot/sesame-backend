@@ -8,16 +8,18 @@ const logger = pino({
   prettyPrint: true,
 });
 
-const createPerson: Function = async (name: string): Promise<Object> => {
+const createPerson: Function = async (user: string): Promise<Object> => {
+  console.log(user);
   try {
     return await AzureFetch(
       `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/persons`,
       {
         method: 'POST',
-        body: {
-          name,
-        },
+        body: JSON.stringify({
+          name: user,
+        }),
         headers: {
+          'Content-Type': 'application/json',
           'Ocp-Apim-Subscription-Key': `${env.azure.key}`,
         },
       },
@@ -82,7 +84,7 @@ const deletePerson: Function = async (personId: string) => {
   }
 };
 
-module.exports = {
+export {
   createPerson,
   addFace,
   getFacesPerPerson,
