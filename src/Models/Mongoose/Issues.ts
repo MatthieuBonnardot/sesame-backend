@@ -10,12 +10,12 @@ interface Issue extends Document {
 }
 
 const Issues: Model<Issue> = model(
-  'issues',
+  'Issue',
   new Schema({
     type: { type: String, required: true },
     active: { type: Number, required: true, default: true },
     reportedBy: { type: Number, required: true },
-    createdOn: { type: Date, required: true },
+    createdOn: { type: String, required: false, default: JSON.stringify(new Date().getTime) },
   }),
 );
 

@@ -6,6 +6,7 @@ import * as issueController from '../Controllers/IssueAndLogs/issue.controller';
 const status = express.Router();
 
 status.get('/logs', logController.getLogs);
+status.post('/issues', issueController.createIssue);
 status.get('/issues', issueController.getIssues);
 status.put('/issues', issueController.toggleIssueStatus);
 

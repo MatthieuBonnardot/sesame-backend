@@ -6,7 +6,7 @@ const logger = pino({
   prettyPrint: true,
 });
 
-async function AzureFetch(url: string, options: Object = {}): Promise<Object> {
+async function AzureFetch(url: string, options:any): Promise<Object> {
   try {
     const response = await fetch(url, options);
     const data = await response.json();

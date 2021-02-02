@@ -51,17 +51,7 @@ app.use((req, res, next) => {
   next();
 });
 
-<<<<<<< HEAD
-/* Routes */
-router.get('/', () => console.log('hi🐷'));
-router.use("/status", statusRoutes);
-router.use("/door", doorRoutes);
-router.use("/group", groupRoutes);
-router.use("/user", userRoutes);
-router.use("/azure", azureRoutes);
-=======
 app.use(router);
->>>>>>> 5b6a26c2840d3947a5dae19a844ee7107aade9c8
 
 /* Error handling */
 app.use((_:any, res: any, __: any, err: any): void => {
@@ -72,16 +62,12 @@ app.use((_:any, res: any, __: any, err: any): void => {
 });
 
 /* Create the server */
-<<<<<<< HEAD
-router.listen(env.server.port, async () => {
-=======
 app.listen(env.server.port, async () => {
->>>>>>> 5b6a26c2840d3947a5dae19a844ee7107aade9c8
   try {
     await MongoConnection;
     logger.info('Connected to Mongo DB');
-    await createConnection(config);
-    logger.info('Connected to SQL DB');
+    // await createConnection(config);
+    // logger.info('Connected to SQL DB');
     logger.info(
       `Listening at http://${env.server.hostname}:${env.server.port}/`,
     );
