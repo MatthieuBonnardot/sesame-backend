@@ -11,13 +11,13 @@ class User {
   @PrimaryColumn('varchar', { length: 36 })
   public aid: string;
 
-  @Column('int')
+  @Column('int', { nullable: true })
   public gid: number;
 
-  @Column('varchar', { length: 25 })
+  @Column('varchar', { length: 25, nullable: true })
   public registration_key: string;
 
-  @Column('int')
+  @Column('int', { nullable: true })
   public door_key: number;
 
   @Column('varchar', { length: 50 })
