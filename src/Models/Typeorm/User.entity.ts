@@ -2,16 +2,13 @@ import {
   Column,
   Entity,
   ManyToOne,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
 } from 'typeorm';
 import Group from './Group.entity';
 
 @Entity()
 class User {
-  @PrimaryGeneratedColumn()
-  public uid?: number;
-
-  @Column('varchar', { length: 36 })
+  @PrimaryColumn('varchar', { length: 36 })
   public aid: string;
 
   @Column('int')
