@@ -36,7 +36,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 /* Rules of our API */
-router.use((req, res, next) => {
+router.use((req, res, next): express.Response<any> => {
   res.header('Acces-Control-Allow-Origin', '*');
   res.header(
     'Access-Control-Allow-Headers',
@@ -59,7 +59,7 @@ router.use('/user', userRoutes);
 router.use('/azure', azureRoutes);
 
 /* Error handling */
-router.use((req, res) => {
+router.use((req, res):express.Response<any> => {
   const error = new Error('not found');
   return res.status(404).json({
     message: error.message,
