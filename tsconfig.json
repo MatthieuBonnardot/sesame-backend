@@ -1,13 +1,17 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "target": "ES6",
-    "outDir": "./server/dist"
+    "outDir": "./server/dist",
+    "types": [],
   },
-  "include": ["server/src/**/*.ts", "server/src/**/*.tsx"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "include": ["./server/src/**/*.ts", "./server/src/**/*.tsx"],
+  "exclude": ["**/node_modules", "**/*.spec.ts"]
 }
