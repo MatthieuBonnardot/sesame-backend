@@ -33,20 +33,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv = __importStar(require("dotenv"));
+require("reflect-metadata");
+const typeorm_1 = require("typeorm");
 const pino_1 = __importDefault(require("pino"));
+const ormconfig_1 = __importDefault(require("./Models/Typeorm/ormconfig"));
 const connection_1 = __importDefault(require("./Databases/Mongo/connection"));
-const connection_2 = __importDefault(require("./Databases/sql/connection"));
+const validateEnv_1 = __importDefault(require("./utils/validateEnv"));
 dotenv.config();
+validateEnv_1.default();
 const logger = pino_1.default({
     prettyPrint: true,
 });
 const app = express_1.default();
 const port = process.env.PORT || 4001;
 app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
-    yield connection_1.default;
-    logger.info('Connected to Mongo DB');
-    yield connection_2.default;
-    logger.info('Connected to SQL DB');
-    logger.info(`Listening at http://localhost:${port}/`);
+    try {
+        yield connection_1.default;
+        yield typeorm_1.createConnection(ormconfig_1.default);
+        logger.info('Connected to Mongo DB');
+        logger.info('Connected to typeOrm');
+        logger.info(`Listening at http://localhost:${port}/`);
+    }
+    catch (e) {
+        console.log(e);
+    }
 }));
 //# sourceMappingURL=index.js.map

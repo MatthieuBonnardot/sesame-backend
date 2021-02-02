@@ -1,7 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class Permissions {
+const sequelize_1 = require("sequelize");
+class Permissions extends sequelize_1.Model {
 }
 exports.default = Permissions;
-Permissions.init({});
+Permissions.init({
+    groupId: {
+        type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
+    },
+    doorId: {
+        type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
+    },
+}, {});
 //# sourceMappingURL=permissions.model.js.map

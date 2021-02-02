@@ -15,7 +15,9 @@
     "nodemon": "^2.0.7",
     "pg": "^8.5.1",
     "pino-pretty": "^4.4.0",
+    "reflect-metadata": "^0.1.13",
     "sequelize": "^6.5.0",
+    "typeorm": "^0.2.30",
     "typescript": "^4.1.3"
   },
   "devDependencies": {
