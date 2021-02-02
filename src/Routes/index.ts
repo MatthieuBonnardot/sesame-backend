@@ -7,7 +7,6 @@ import azureRoutes from './azure';
 
 const router = express.Router();
 
-console.log('in router');
 router.use('/status', statusRoutes);
 router.use('/door', doorRoutes);
 router.use('/group', groupRoutes);

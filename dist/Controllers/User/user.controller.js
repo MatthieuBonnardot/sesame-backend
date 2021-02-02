@@ -40,13 +40,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateUser = exports.deleteUser = exports.createUser = exports.getUsers = void 0;
+var typeorm_1 = require("typeorm");
+var User_entity_1 = __importDefault(require("../../Models/Typeorm/User.entity"));
 var pino_1 = __importDefault(require("pino"));
+var mockUser = {
+    "id": 12,
+    "firstname": "Matthieu",
+    "lastname": "Bonnardot",
+    "email": "matthieu.bonnardot@gmail.com",
+    "isActive": true,
+    "group": "Student"
+};
 var logger = pino_1.default({
     prettyPrint: true,
 });
 var getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
+            return [2, typeorm_1.getRepository(User_entity_1.default).find()];
         }
         catch (error) { }
         return [2];
@@ -54,11 +65,21 @@ var getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
 }); };
 exports.getUsers = getUsers;
 var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var newUser, error_1;
     return __generator(this, function (_a) {
-        try {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4, typeorm_1.getRepository(User_entity_1.default).create(mockUser)];
+            case 1:
+                newUser = _a.sent();
+                return [2, typeorm_1.getRepository(User_entity_1.default).save(newUser)];
+            case 2:
+                error_1 = _a.sent();
+                console.log(error_1);
+                return [3, 3];
+            case 3: return [2];
         }
-        catch (error) { }
-        return [2];
     });
 }); };
 exports.createUser = createUser;
