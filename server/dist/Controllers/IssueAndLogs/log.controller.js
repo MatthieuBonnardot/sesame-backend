@@ -18,18 +18,20 @@ const logger = pino_1.default({
     prettyPrint: true,
 });
 const getLogs = (_, res) => __awaiter(void 0, void 0, void 0, function* () {
+    logger.info('GetLogs');
     Logs_1.default.find({}, (err, docs) => {
         if (err) {
-            logger.error(`Error: ${err}`);
+            res.status(501).json({
+                error: err.message,
+            });
         }
         else if (docs.length === 0) {
-            logger.info('The list of issues is empty');
             res.status(200).send('The list of issues is empty');
         }
         else {
-            res.send(docs);
+            res.status(200).send(docs);
         }
     });
 });
-module.exports = { getLogs };
+exports.default = { getLogs };
 //# sourceMappingURL=log.controller.js.map

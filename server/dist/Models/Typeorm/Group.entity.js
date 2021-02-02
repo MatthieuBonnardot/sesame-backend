@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const User_entity_1 = __importDefault(require("./User.entity"));
+const Door_entity_1 = __importDefault(require("./Door.entity"));
 let Group = class Group {
 };
 __decorate([
@@ -40,6 +41,11 @@ __decorate([
     typeorm_1.OneToMany(() => User_entity_1.default, (user) => user.group),
     __metadata("design:type", Array)
 ], Group.prototype, "users", void 0);
+__decorate([
+    typeorm_1.ManyToMany(() => Door_entity_1.default, (door) => door.groups),
+    typeorm_1.JoinTable(),
+    __metadata("design:type", Array)
+], Group.prototype, "doors", void 0);
 Group = __decorate([
     typeorm_1.Entity()
 ], Group);

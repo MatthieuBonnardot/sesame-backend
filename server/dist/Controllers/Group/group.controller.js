@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.updateGroup = exports.deleteGroup = exports.getGroups = exports.createGroup = void 0;
 const pino_1 = __importDefault(require("pino"));
 const logger = pino_1.default({
     prettyPrint: true,
@@ -21,25 +22,23 @@ const getGroups = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) { }
 });
+exports.getGroups = getGroups;
 const updateGroup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
     }
     catch (error) { }
 });
+exports.updateGroup = updateGroup;
 const createGroup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
     }
     catch (error) { }
 });
+exports.createGroup = createGroup;
 const deleteGroup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
     }
     catch (error) { }
 });
-module.exports = {
-    createGroup,
-    getGroups,
-    deleteGroup,
-    updateGroup,
-};
+exports.deleteGroup = deleteGroup;
 //# sourceMappingURL=group.controller.js.map

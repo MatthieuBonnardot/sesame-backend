@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.updateUser = exports.deleteUser = exports.createUser = exports.getUsers = void 0;
 const pino_1 = __importDefault(require("pino"));
 const logger = pino_1.default({
     prettyPrint: true,
@@ -21,25 +22,23 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) { }
 });
+exports.getUsers = getUsers;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
     }
     catch (error) { }
 });
+exports.createUser = createUser;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
     }
     catch (error) { }
 });
+exports.updateUser = updateUser;
 const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
     }
     catch (error) { }
 });
-module.exports = {
-    getUsers,
-    createUser,
-    deleteUser,
-    updateUser,
-};
+exports.deleteUser = deleteUser;
 //# sourceMappingURL=user.controller.js.map

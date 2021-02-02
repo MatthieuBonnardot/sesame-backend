@@ -20,21 +20,21 @@ const getIssues = async (_: any, res: express.Response) => {
 };
 
 const toggleIssueStatus = async (req: express.Request, res: express.Response) => {
-  Issues.findOneAndUpdate(
-    {
-      _id: req.params.UID,
-    },
-    {
-      active: false,
-    },
-    (err: Error, doc: Array<any>) => {
-      if (err) {
-        logger.error(`Error: ${err}`);
-      } else {
-        res.send(doc);
-      }
-    },
-  );
+  // Issues.findOneAndUpdate(
+  //   {
+  //     _id: req.params.UID,
+  //   },
+  //   {
+  //     active: false,
+  //   },
+  //   (err: Error, doc: any) => {
+  //     if (err) {
+  //       logger.error(`Error: ${err}`);
+  //     } else {
+  //       res.send(doc);
+  //     }
+  //   },
+  // );
 };
 
 export {

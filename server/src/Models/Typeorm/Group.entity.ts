@@ -32,7 +32,7 @@ class Group {
   @OneToMany(() => User, (user: User) => user.group)
   public users: User[];
 
-  @ManyToMany(() => Door, (door: Door) => door.users)
+  @ManyToMany(() => Door, (door: Door) => door.groups)
   @JoinTable()
   public doors: Door[];
 }

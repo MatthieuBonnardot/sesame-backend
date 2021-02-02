@@ -50,7 +50,7 @@ const addFace = (personId, octetStream) => __awaiter(void 0, void 0, void 0, fun
         logger.error(error.message);
     }
 });
-const getFacesPerPerson = () => __awaiter(void 0, void 0, void 0, function* () {
+const getFacesPerPerson = (personId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         return yield index_1.default(`https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${process.env.AZURE_PERSONS_GROUP_ID}/persons/${personId}`, {
             method: 'GET',

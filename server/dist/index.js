@@ -31,17 +31,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const http_1 = __importDefault(require("http"));
+const http = __importStar(require("http"));
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const pino_1 = __importDefault(require("pino"));
-const dotenv = __importStar(require("dotenv"));
+const status_1 = __importDefault(require("./Routes/status"));
+const door_1 = __importDefault(require("./Routes/door"));
+const group_1 = __importDefault(require("./Routes/group"));
+const user_1 = __importDefault(require("./Routes/user"));
+const azure_1 = __importDefault(require("./Routes/azure"));
 const connection_1 = __importDefault(require("./Databases/Mongo/connection"));
-dotenv.config();
 const logger = pino_1.default({
     prettyPrint: true,
 });
-const port = process.env.PORT || 4001;
 const router = express_1.default();
 router.use((req, res, next) => {
     logger.info(`METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}]`);
@@ -61,19 +63,24 @@ router.use((req, res, next) => {
     }
     next();
 });
+router.use('/status', status_1.default);
+router.use('/door', door_1.default);
+router.use('/group', group_1.default);
+router.use('/user', user_1.default);
+router.use('/azure', azure_1.default);
 router.use((req, res) => {
     const error = new Error('not found');
     return res.status(404).json({
         message: error.message,
     });
 });
-const httpServer = http_1.default.createServer(router);
-httpServer.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
+const httpServer = http.createServer(router);
+httpServer.listen(5000, () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield connection_1.default;
         logger.info('Connected to Mongo DB');
-        logger.info('Connected to typeOrm');
-        logger.info(`Listening at http://localhost:${port}/`);
+        logger.info('Connected to SQL DB');
+        logger.info(`Listening at http://localhost:${5000}/`);
     }
     catch (error) {
         logger.error(error.message);

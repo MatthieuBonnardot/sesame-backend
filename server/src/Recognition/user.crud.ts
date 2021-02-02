@@ -49,7 +49,7 @@ const addFace: Function = async (
   }
 };
 
-const getFacesPerPerson: Function = async (): Promise<Object> => {
+const getFacesPerPerson: Function = async (personId: string): Promise<Object> => {
   try {
     return await AzureFetch(
       `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${process.env.AZURE_PERSONS_GROUP_ID}/persons/${personId}`,

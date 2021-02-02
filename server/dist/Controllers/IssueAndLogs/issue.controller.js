@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.toggleIssueStatus = exports.getIssues = void 0;
 const pino_1 = __importDefault(require("pino"));
 const Issues_1 = __importDefault(require("../../Models/Mongoose/Issues"));
 const logger = pino_1.default({
@@ -30,22 +31,8 @@ const getIssues = (_, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
     });
 });
+exports.getIssues = getIssues;
 const toggleIssueStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    Issues_1.default.findOneAndUpdate({
-        _id: req.params.UID,
-    }, {
-        active: false,
-    }, (err, doc) => {
-        if (err) {
-            logger.error(`Error: ${err}`);
-        }
-        else {
-            res.send(doc);
-        }
-    });
 });
-module.exports = {
-    getIssues,
-    toggleIssueStatus,
-};
+exports.toggleIssueStatus = toggleIssueStatus;
 //# sourceMappingURL=issue.controller.js.map

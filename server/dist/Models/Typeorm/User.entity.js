@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const Group_entity_1 = __importDefault(require("./Group.entity"));
@@ -51,7 +50,7 @@ __decorate([
 ], User.prototype, "email", void 0);
 __decorate([
     typeorm_1.Column('boolean'),
-    __metadata("design:type", typeof (_a = typeof bool !== "undefined" && bool) === "function" ? _a : Object)
+    __metadata("design:type", Boolean)
 ], User.prototype, "isActive", void 0);
 __decorate([
     typeorm_1.ManyToOne(() => Group_entity_1.default, (group) => group.users),
