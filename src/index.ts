@@ -72,13 +72,13 @@ router.use((req, res) => {
 
 /* Create the server */
 const httpServer = http.createServer(router);
-httpServer.listen(5000, async () => {
+httpServer.listen(5050, async () => {
   try {
     await MongoConnection;
     logger.info('Connected to Mongo DB');
     await createConnection(config);
     logger.info('Connected to SQL DB');
-    logger.info(`Listening at http://localhost:${5000}/`);
+    logger.info(`Listening at http://localhost:${5001}/`);
   } catch (error) {
     logger.error(error.message);
   }
