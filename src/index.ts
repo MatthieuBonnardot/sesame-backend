@@ -1,12 +1,12 @@
 /* eslint-disable consistent-return */
 /* eslint-disable import/no-extraneous-dependencies */
-import * as http from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
 import pino from 'pino';
 import { createConnection } from 'typeorm';
 import env from './config/config';
 import 'reflect-metadata';
+import router from './Routes/index';
 import config from './Models/Typeorm/ormconfig';
 import MongoConnection from './Databases/Mongo/connection';
 
@@ -48,17 +48,11 @@ app.use((req, res, next) => {
     return res.status(200).json({});
   }
   console.log('so far');
-  
+
   next();
 });
 
-/* Routes */
-// router.use('/status', statusRoutes);
-// router.use('/door', doorRoutes);
-// router.use('/group', groupRoutes);
-// router.all('/user/*', userRoutes);
-// router.use('/azure', azureRoutes);
-app.use(router)
+app.use(router);
 
 /* Error handling */
 app.use((_:any, res: any, __: any, err: any): void => {
