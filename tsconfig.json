@@ -4,14 +4,14 @@
     "emitDecoratorMetadata": true,
     "module": "commonjs",
     "esModuleInterop": true,
-    "target": "es6",
+    "target": "es5",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "outDir": "./server/dist",
+    "outDir": "dist",
     "types": [],
   },
-  "include": ["./server/src/**/*.ts", "./server/src/**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["**/node_modules", "**/*.spec.ts"]
 }

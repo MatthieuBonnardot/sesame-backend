@@ -1,7 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "start": "cd server/src nodemon",
+    "start": "cd /dist nodemon",
+    "dev": "ts-node src/index.ts",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "build": "tsc",
@@ -18,7 +19,6 @@
     "pg": "^8.5.1",
     "pino-pretty": "^4.4.0",
     "reflect-metadata": "^0.1.13",
-    "sequelize": "^6.5.0",
     "typeorm": "^0.2.30"
   },
   "devDependencies": {
@@ -48,8 +48,8 @@
     "type": "git",
     "url": "git+https://github.com/MatthieuBonnardot/sesame-backend.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["Typescript", "FR", "JavaScript", "Express", "SQL", "Mongodb"],
+  "author": "Matthieu Bonnardot and Peter French",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MatthieuBonnardot/sesame-backend/issues"
