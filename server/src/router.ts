@@ -1,12 +1,13 @@
 import { Router } from 'express';
-import Door from './Controllers/Door/door.controller';
-import Group from './Controllers/Group/group.controller';
-import Issue from './Controllers/IssueAndLogs/issue.controller';
-import Log from './Controllers/IssueAndLogs/log.controller';
-import User from './Controllers/User/user.controller';
+import { getDoors, createDoor, deleteDoor } from './Controllers/Door/door.controller';
+import * as Group from './Controllers/Group/group.controller';
+import * as Issue from './Controllers/IssueAndLogs/issue.controller';
+import * as Log from './Controllers/IssueAndLogs/log.controller';
+import * as User from './Controllers/User/user.controller';
+
 const router: Router = Router();
 
-//Native endpoints
+// Native endpoints
 // router.get('/api/user/:code');
 // router.put('/api/user/images/:UID');
 // router.get('/api/user/identify/:faceID');
@@ -16,9 +17,9 @@ router.put('/api/user', User.updatedUser);
 router.delete('/api/user', User.deleteUser);
 router.post('/api/user', User.createUser);
 
-router.get('/api/door', Door.getDoors);
-router.post('/api/door', Door.createDoor);
-router.delete('/api/door', Door.deleteDoor);
+router.get('/api/door', getDoors);
+router.post('/api/door', createDoor);
+router.delete('/api/door', deleteDoor);
 
 router.get('/api/logs', Log.getLogs);
 router.get('/api/issues', Issue.getIssues);
