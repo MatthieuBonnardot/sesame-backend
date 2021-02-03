@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable consistent-return */
 /* eslint-disable import/no-extraneous-dependencies */
 import express from 'express';
@@ -52,19 +53,17 @@ app.use((req, res, next) => {
 app.use(router);
 
 /* Error handling */
-app.use((_: any, res: any, __: any, err: any): void => {
+app.use((req: express.Request, res: express.Response) => {
   const error = new Error('not found');
-  res.status(404).json({
+  return res.status(404).json({
     message: error.message,
   });
 });
 
 /* Create the server */
-
 (async () => {
   try {
-    await MongoConnection;
-    logger.info('Connected to Mongo DB');
+    await MongoConnection();
     await createConnection(config);
     logger.info('Connected to SQL DB');
     app.listen(env.server.port, async () => {

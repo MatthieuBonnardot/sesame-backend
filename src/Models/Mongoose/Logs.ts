@@ -1,20 +1,19 @@
 import {
-  model, Schema, Model, Document,
+  model, Schema, Document,
 } from 'mongoose';
 
-interface Log extends Document {
+interface Log {
   enteredBy: Number;
   enteredDoor: Number;
   date: Date;
 }
 
-const Logs: Model<Log> = model(
-  'logs',
-  new Schema({
-    enteredBy: { type: Number, required: true },
-    enteredDoor: { type: Number, required: true },
-    date: { type: Date, required: true },
-  }),
-);
+const logSchema = new Schema({
+  enteredBy: { type: Number, required: true },
+  enteredDoor: { type: Number, required: true },
+  date: { type: String, required: false, default: JSON.stringify(new Date().getTime) },
+});
 
-export default Logs;
+const logModel = model<Log & Document>('Logs', logSchema);
+
+export default logModel;

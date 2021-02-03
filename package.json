@@ -1,5 +1,4 @@
 {
-
   "scripts": {
     "start": "cd /dist nodemon",
     "dev:watch": "ts-node src/index.ts",

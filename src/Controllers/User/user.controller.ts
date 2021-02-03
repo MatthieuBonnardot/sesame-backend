@@ -4,8 +4,6 @@ import { getRepository } from 'typeorm';
 import pino from 'pino';
 import User from '../../Models/Typeorm/User.entity';
 import { createPerson } from '../../Recognition/user.crud';
-import { getTrainingStatus } from '../../Recognition/group.crud';
-import { create } from 'domain';
 
 const logger = pino({
   prettyPrint: true,

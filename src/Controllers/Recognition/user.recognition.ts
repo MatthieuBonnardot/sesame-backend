@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import pino from 'pino';
-import { Request, Response } from 'express';
+import pino from "pino";
+import { Request, Response } from "express";
 
 const logger = pino({
   prettyPrint: true,
