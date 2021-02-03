@@ -19,12 +19,12 @@ const app = express();
 /* Logging the request */
 app.use((req, res, next) => {
   logger.info(
-    `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}]`,
+    `METHOD - [${req.method}], URL - [${req.url}]`,
   );
 
   res.on('finish', () => {
     logger.info(
-      `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}], STATUS - [${res.statusCode}]`,
+      `METHOD - [${req.method}], URL - [${req.url}], STATUS - [${res.statusCode}]`,
     );
   });
 
