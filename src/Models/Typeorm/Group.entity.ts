@@ -15,16 +15,16 @@ class Group {
   public gid?: number;
 
   @Column('varchar', { length: 50 })
-  public group_name: string;
+  public groupName: string;
 
   @Column('varchar', { length: 500 })
   public description: string;
 
   @Column('int')
-  public access_from_hour: number;
+  public accessFromHour: number;
 
   @Column('int')
-  public access_to_hour: number;
+  public accessToHour: number;
 
   // @Column()
   // public group_image: blob;
