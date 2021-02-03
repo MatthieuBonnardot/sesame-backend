@@ -5,29 +5,39 @@ import User from '../../Models/Typeorm/User.entity';
 
 const verifyUserStatus = async (req: Request, res: Response) => {
   try {
-    const firstUser = await getRepository(User).findOne({
-      registrationKey: req.params.code,
+    const list = await await getRepository(User).find({
+      where: { registrationKey: req.params.code },
     });
-    if (!firstUser) res.send(404);
-    else if (firstUser.isActive === true) {
-      res.status(200).send('ACTIVE');
-    } else {
-      res.status(200).send('NOT ACTIVE');
-    }
+
+    const { aid, firstName } = list[0];
+
+    const body = {
+      aid,
+      firstName,
+    };
+
+    if (list.length === 0) res.status(404).send('Not Found');
+    else if (list[0].isActive === false) res.status(200).send(body);
+    else if (list[0].isActive === true) res.status(200).send(false);
   } catch (error) {
     res.sendStatus(501);
   }
 };
 
 const addFaceMappings = async (req: Request, res: Response) => {
-  try {
-    
-  } catch (error) {}
+  // try {
+
+  // } catch (error) {
+
+  // }
 };
 
 const identifyUser = async (req: Request, res: Response) => {
-  try {
-  } catch (error) {}
+  // try {
+
+  // } catch (error) {
+
+  // }
 };
 
 export { verifyUserStatus, addFaceMappings, identifyUser };

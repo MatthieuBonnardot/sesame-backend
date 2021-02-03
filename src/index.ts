@@ -10,6 +10,7 @@ import 'reflect-metadata';
 import router from './Routes/index';
 import config from './Models/Typeorm/ormconfig';
 import MongoConnection from './Databases/Mongo/connection';
+import { trainPersonsGroup, getTrainingStatus } from './Recognition/group.crud';
 
 const logger = pino({
   prettyPrint: true,
@@ -64,8 +65,10 @@ app.use((req: express.Request, res: express.Response) => {
 (async () => {
   try {
     await MongoConnection();
-    await createConnection(config);
-    logger.info('Connected to SQL DB');
+    // await createConnection(config);
+    // logger.info('Connected to SQL DB');
+    logger.info('Launched Training of the model', await trainPersonsGroup());
+    logger.info('Retreiving Training Status',await getTrainingStatus());
     app.listen(env.server.port, async () => {
       logger.info(
         `Listening at http://${env.server.hostname}:${env.server.port}/`,

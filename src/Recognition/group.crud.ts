@@ -25,11 +25,13 @@ const deletePersonsGroup: Function = async () => {
 
 const trainPersonsGroup: Function = async () => {
   try {
-    AzureFetch(
+    return AzureFetch(
       `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/train`,
       {
         method: 'POST',
+        body: '{body}',
         headers: {
+          'Content-Type': 'application/json',
           'Ocp-Apim-Subscription-Key': `${env.azure.key}`,
         },
       },
@@ -41,7 +43,7 @@ const trainPersonsGroup: Function = async () => {
 
 const getTrainingStatus: Function = async () => {
   try {
-    AzureFetch(
+    return AzureFetch(
       `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/training`,
       {
         method: 'GET',

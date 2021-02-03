@@ -14,7 +14,6 @@ const getGroups = async (req: Request, res: Response) => {
     res.send(groups);
   } catch (error) {
     console.log();
-
   }
 };
 

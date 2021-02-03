@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import {Request, Response} from 'express';
+import { Request, Response } from 'express';
 import pino from 'pino';
 
 const logger = pino({
@@ -38,4 +38,6 @@ const deleteDoor = async (
   } catch (err) {}
 };
 
-export { getDoors, updateDoor, createDoor, deleteDoor };
+export {
+  getDoors, updateDoor, createDoor, deleteDoor,
+};
