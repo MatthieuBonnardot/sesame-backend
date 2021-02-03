@@ -4,8 +4,6 @@ import { getRepository } from 'typeorm';
 import pino from 'pino';
 import User from '../../Models/Typeorm/User.entity';
 import { createPerson } from '../../Recognition/user.crud';
-import { getTrainingStatus } from '../../Recognition/group.crud';
-import { create } from 'domain';
 
 const logger = pino({
   prettyPrint: true,
@@ -17,10 +15,10 @@ const getUsers = async (req: Request, res: Response) => {
     res.send(users);
   } catch (error) {
     console.log(error);
+    res.send(500);
   }
 };
 
-//MAKE EMAIL UNIQUE SO CANT MAKE MORE THAN ONE
 const createUser = async (
   req: Request,
   res: Response,
@@ -28,8 +26,6 @@ const createUser = async (
   try {
     const userAID = await createPerson(req.body.first_name);
     req.body.aid = userAID.personId;
-    console.log('user aid', userAID);
-    console.log(req.body.aid);
     const newUser = await getRepository(User).create(req.body);
     await getRepository(User).save(newUser);
     res.send(newUser);
@@ -44,7 +40,13 @@ const updateUser = async (
   res: Response,
 ) => {
   try {
-  } catch (error) {}
+    await getRepository(User).update({ aid: req.params.id }, req.body);
+    const updatedUser = await getRepository(User).findOne(req.params.id);
+    res.send(updatedUser);
+  } catch (error) {
+    console.log('ಠ_ಠ', error);
+    res.send(500);
+  }
 };
 
 const deleteUser = async (
@@ -56,9 +58,13 @@ const deleteUser = async (
     res.sendStatus(204);
   } catch (error) {
     console.log(error);
+    res.send(500);
   }
 };
 
 export {
-  getUsers, createUser, deleteUser, updateUser,
+  getUsers,
+  createUser,
+  deleteUser,
+  updateUser,
 };
