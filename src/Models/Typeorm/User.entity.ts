@@ -26,7 +26,7 @@ class User {
   @Column('varchar', { length: 50 })
   public last_name: string;
 
-  @Column('varchar', { length: 50 })
+  @Column('varchar', { length: 50, unique: true })
   public email: string;
 
   @Column('boolean')

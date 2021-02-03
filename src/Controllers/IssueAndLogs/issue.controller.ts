@@ -8,10 +8,18 @@ const logger = pino({
 });
 
 const createIssue = (req: Request, res: Response) => {
+<<<<<<< HEAD
   Issues.create([req.body]).then((docs) => {
     console.log(docs);
     res.status(200).send(docs);
   });
+=======
+  // Issues.create([req.body]).then((docs, err) => {
+  //   if (err) res.status(err.status).send(err.message);
+  //   console.log(docs);
+  //   res.status(200).send(docs);
+  // });
+>>>>>>> feat: make email unique
 };
 
 const getIssues = async (_: any, res: Response) => {

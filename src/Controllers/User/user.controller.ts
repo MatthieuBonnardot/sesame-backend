@@ -14,26 +14,28 @@ const logger = pino({
 const getUsers = async (req: Request, res: Response) => {
   try {
     const users = await getRepository(User).find();
-    // res.json(users);
     res.send(users);
   } catch (error) {
     console.log(error);
   }
 };
 
+//MAKE EMAIL UNIQUE SO CANT MAKE MORE THAN ONE
 const createUser = async (
   req: Request,
   res: Response,
 ) => {
   try {
     const userAID = await createPerson(req.body.first_name);
-    console.log('returned from azure', userAID);
     req.body.aid = userAID.personId;
+    console.log('user aid', userAID);
+    console.log(req.body.aid);
     const newUser = await getRepository(User).create(req.body);
     await getRepository(User).save(newUser);
     res.send(newUser);
   } catch (error) {
-    console.log(error);
+    console.log('this is the error 🐷', error);
+    res.send(500);
   }
 };
 
@@ -50,7 +52,11 @@ const deleteUser = async (
   res: Response,
 ) => {
   try {
-  } catch (error) {}
+    await getRepository(User).delete(req.params.id);
+    res.sendStatus(204);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export {
