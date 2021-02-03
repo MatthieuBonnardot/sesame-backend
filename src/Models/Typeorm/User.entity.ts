@@ -19,18 +19,18 @@ class User {
   public gid: number;
 
   @Column('varchar', { length: 25, nullable: true })
-  public registration_key: string;
+  public registrationKey: string;
 
   @Column('int', { nullable: true })
-  public door_key: number;
+  public doorKey: number;
 
   @Column('varchar', { length: 50 })
   @IsNotEmpty()
-  public first_name: string;
+  public firstName: string;
 
   @Column('varchar', { length: 50 })
   @IsNotEmpty()
-  public last_name: string;
+  public lastName: string;
 
   @Column('varchar', { length: 50, unique: true })
   @IsEmail()

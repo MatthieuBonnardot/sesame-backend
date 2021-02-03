@@ -12,13 +12,13 @@ class Door {
   public did?: number;
 
   @Column('varchar', { length: 50 })
-  public door_name: string;
+  public doorName: string;
 
   @Column('varchar', { length: 50 })
   public endpoint: string;
 
   @Column('varchar', { length: 50 })
-  public door_url: string;
+  public doorUrl: string;
 
   @ManyToMany(() => Group, (group: Group) => group.doors)
   public groups: Group[];

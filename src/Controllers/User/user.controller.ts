@@ -24,7 +24,7 @@ const createUser = async (
   res: Response,
 ) => {
   try {
-    const userAID = await createPerson(req.body.first_name);
+    const userAID = await createPerson(req.body.firstName);
     req.body.aid = userAID.personId;
     const newUser = await getRepository(User).create(req.body);
     await getRepository(User).save(newUser);
