@@ -4,6 +4,10 @@ import {
   ManyToOne,
   PrimaryColumn,
 } from 'typeorm';
+import {
+  IsEmail,
+  IsNotEmpty,
+} from 'class-validator';
 import Group from './Group.entity';
 
 @Entity()
@@ -21,12 +25,15 @@ class User {
   public door_key: number;
 
   @Column('varchar', { length: 50 })
+  @IsNotEmpty()
   public first_name: string;
 
   @Column('varchar', { length: 50 })
+  @IsNotEmpty()
   public last_name: string;
 
   @Column('varchar', { length: 50, unique: true })
+  @IsEmail()
   public email: string;
 
   @Column('boolean')
