@@ -11,16 +11,23 @@ const logger = pino({
 const getGroups = async (req: Request, res: Response) => {
   try {
     const groups = await getRepository(Group).find();
-    res.send(groups);
+    res.status(200).send(groups);
   } catch (error) {
-    console.log();
+    console.log(error);
+    res.send(500);
   }
 };
 
 const updateGroup = async (req: Request, res: Response) => {
   try {
-
-  } catch (error) {}
+    const gid = Number(req.params.id);
+    await getRepository(Group).update({ gid }, req.body);
+    const updatedGroup = await getRepository(Group).findOne(req.params.id);
+    res.send(updatedGroup);
+  } catch (error) {
+    console.log(error);
+    res.send(500);
+  }
 };
 
 const createGroup = async (req: Request, res: Response) => {
@@ -36,7 +43,13 @@ const createGroup = async (req: Request, res: Response) => {
 
 const deleteGroup = async (req: Request, res: Response) => {
   try {
-  } catch (error) {}
+    const deletedGroup = getRepository(Group).findOne(req.params.id);
+    await getRepository(Group).delete(req.params.id);
+    res.send(deletedGroup);
+  } catch (error) {
+    console.log(error);
+    res.send(500);
+  }
 };
 
 export {

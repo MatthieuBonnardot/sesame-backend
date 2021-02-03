@@ -54,8 +54,9 @@ const deleteUser = async (
   res: Response,
 ) => {
   try {
+    const deletedUser = getRepository(User).findOne(req.params.id);
     await getRepository(User).delete(req.params.id);
-    res.sendStatus(204);
+    res.send(deletedUser);
   } catch (error) {
     console.log(error);
     res.send(500);
