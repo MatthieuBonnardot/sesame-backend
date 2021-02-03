@@ -18,9 +18,7 @@ const app = express();
 
 /* Logging the request */
 app.use((req, res, next) => {
-  logger.info(
-    `METHOD - [${req.method}], URL - [${req.url}]`,
-  );
+  logger.info(`METHOD - [${req.method}], URL - [${req.url}]`);
 
   res.on('finish', () => {
     logger.info(
@@ -54,7 +52,7 @@ app.use((req, res, next) => {
 app.use(router);
 
 /* Error handling */
-app.use((_:any, res: any, __: any, err: any): void => {
+app.use((_: any, res: any, __: any, err: any): void => {
   const error = new Error('not found');
   res.status(404).json({
     message: error.message,
@@ -62,20 +60,19 @@ app.use((_:any, res: any, __: any, err: any): void => {
 });
 
 /* Create the server */
-app.listen(env.server.port, async () => {
+
+(async () => {
   try {
     await MongoConnection;
     logger.info('Connected to Mongo DB');
     await createConnection(config);
     logger.info('Connected to SQL DB');
-    logger.info(
-      `Listening at http://${env.server.hostname}:${env.server.port}/`,
-    );
+    app.listen(env.server.port, async () => {
+      logger.info(
+        `Listening at http://${env.server.hostname}:${env.server.port}/`,
+      );
+    });
   } catch (error) {
     logger.error(error.message);
   }
-});
-
-// (async () => {
-//   [...]
-// })()
+})();
