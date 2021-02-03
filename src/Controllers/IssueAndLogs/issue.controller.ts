@@ -8,8 +8,7 @@ const logger = pino({
 });
 
 const createIssue = (req: Request, res: Response) => {
-  Issues.create([req.body]).then((docs, err) => {
-    if (err) res.status(err.status).send(err.message);
+  Issues.create([req.body]).then((docs) => {
     console.log(docs);
     res.status(200).send(docs);
   });
@@ -17,10 +16,15 @@ const createIssue = (req: Request, res: Response) => {
 
 const getIssues = async (_: any, res: Response) => {
   try {
-    logger.info('entered: GetIssues');
-    const response = await Issues.find();
-    if (response) res.status(200).send(response);
-    else res.status(200).send('No issues found!');
+    Issues.find({}, (err, docs) => {
+      if (err) {
+        logger.info(`Error: ${err}`);
+      } else if (docs.length === 0) {
+        logger.info('message');
+      } else {
+        res.status(200).send(docs);
+      }
+    });
   } catch (error) {
     res.status(501).send(error.message);
   }

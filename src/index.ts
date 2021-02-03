@@ -66,8 +66,8 @@ app.listen(env.server.port, async () => {
   try {
     await MongoConnection;
     logger.info('Connected to Mongo DB');
-    // await createConnection(config);
-    // logger.info('Connected to SQL DB');
+    await createConnection(config);
+    logger.info('Connected to SQL DB');
     logger.info(
       `Listening at http://${env.server.hostname}:${env.server.port}/`,
     );
