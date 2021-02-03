@@ -9,7 +9,7 @@ import Group from './Group.entity';
 @Entity()
 class Door {
   @PrimaryGeneratedColumn()
-  public did?: number;
+  public did: number;
 
   @Column('varchar', { length: 50 })
   public doorName: string;
