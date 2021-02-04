@@ -9,6 +9,16 @@ const logger = pino({
   prettyPrint: true,
 });
 
+const getUserDoors = async (req: Request, res: Response) => {
+  try {
+    const users = await getRepository(User).find();
+    res.send(users);
+  } catch (error) {
+    console.log(error);
+    res.send(500);
+  }
+};
+
 const getUsers = async (req: Request, res: Response) => {
   try {
     const users = await getRepository(User).find();

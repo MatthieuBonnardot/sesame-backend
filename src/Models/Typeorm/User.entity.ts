@@ -15,9 +15,6 @@ class User {
   @PrimaryColumn('varchar', { length: 36 })
   public aid: string;
 
-  @Column('int', { nullable: true })
-  public gid: number;
-
   @Column('varchar', { length: 25, nullable: true })
   public registrationKey: string;
 
