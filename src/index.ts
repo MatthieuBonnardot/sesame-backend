@@ -20,20 +20,56 @@ const app = express();
 
 /* Logging the request */
 app.use((req, res, next) => {
-  logger.info(`METHOD - [${req.method}], URL - [${req.url}]`);
+  logger.info(`[${req.method}] [${req.url}] [${req.hostname}]`);
 
   res.on('finish', () => {
     logger.info(
-      `METHOD - [${req.method}], URL - [${req.url}], STATUS - [${res.statusCode}]`,
+      `[${req.method}] [${req.url}] [${req.hostname}] ==> [${res.statusCode}]`,
     );
   });
 
   next();
 });
 
-/* Parse the request */
-app.use(bodyParser.urlencoded({ extended: false }));
+// const rawBodySaver = (req: any, res: any, buf: any, encoding: any) => {
+//   if (buf && buf.length) {
+//     req.rawBody = buf.toString(encoding || 'utf8');
+//   }
+// };
+
+// app.use((req, res, next) => {
+//   if (req.method === 'POST' || req.method === 'PUT') {
+//     const body: any[] = [];
+//     req.on('data', (data: any) => {
+//       body.push(data);
+//     });
+
+//     req.on('end', () => {
+//       req.body = JSON.stringify(body.concat());
+//       next();
+//     });
+//   } else next();
+// });
+
 app.use(bodyParser.json());
+app.use((req, res, next) => {
+  if (req.url.match(/azure\/dni/) && req.method === 'POST') {
+    console.log('hello');
+    const body: any = [];
+    req
+      .on('data', (chunk) => body.push(chunk))
+      .on('end', () => {
+        req.body = Buffer.concat(body);
+        console.log(req.body);
+        next();
+      });
+  } else next();
+});
+
+/* Parse the request */
+// app.use(bodyParser.urlencoded({ extended: true }));
+
+// app.use(bodyParser.raw());
 
 /* Rules of our API */
 app.use((req, res, next) => {
@@ -65,10 +101,10 @@ app.use((req: express.Request, res: express.Response) => {
 (async () => {
   try {
     await MongoConnection();
-    // await createConnection(config);
-    // logger.info('Connected to SQL DB');
-    logger.info('Launched Training of the model', await trainPersonsGroup());
-    logger.info('Retreiving Training Status',await getTrainingStatus());
+    await createConnection(config);
+    logger.info('Connected to SQL DB');
+    trainPersonsGroup();
+    getTrainingStatus();
     app.listen(env.server.port, async () => {
       logger.info(
         `Listening at http://${env.server.hostname}:${env.server.port}/`,

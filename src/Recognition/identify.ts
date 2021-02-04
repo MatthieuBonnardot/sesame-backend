@@ -1,17 +1,20 @@
 import env from '../config/config';
 import AzureFetch from './index';
 
-const identifyUser = async (faceId: string) => {
+const identify = async (faceId: string) => {
   try {
+    const faceArr = [];
+    faceArr.push(faceId);
+    console.log(faceArr);
     return AzureFetch(
       'https://westeurope.api.cognitive.microsoft.com/face/v1.0/identify',
       {
         method: 'POST',
         body: JSON.stringify({
           personGroupId: env.azure.group_name,
-          faceIds: [faceId],
+          faceIds: faceArr,
           maxNumOfCandidatesReturned: 1,
-          confidenceThreshold: 0.7,
+          confidenceThreshold: 0.6,
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -26,4 +29,4 @@ const identifyUser = async (faceId: string) => {
   }
 };
 
-export default identifyUser;
+export default identify;

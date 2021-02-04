@@ -11,6 +11,7 @@ const logger = pino({
 
 const createIssue = async (req: Request, res: Response) => {
   try {
+    console.log(req.body);
     const issueData: typeof Issues = req.body;
     const createIssue = new Issues(issueData);
     createIssue.save().then((savedIssue) => {

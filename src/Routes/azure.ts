@@ -4,7 +4,8 @@ import * as azureController from '../Controllers/Recognition/user.recognition';
 const azure = express.Router();
 
 azure.get('/register/:code', azureController.verifyUserStatus);
-azure.put('/register/images/:UID', azureController.addFaceMappings);
+azure.put('/register/:UID', azureController.addFaceMappings);
 azure.get('/identify/:faceID', azureController.identifyUser);
+azure.post('/dni/', azureController.detectAndIdentifyUser);
 
 export default azure;

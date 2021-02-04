@@ -31,10 +31,10 @@ const createPerson: Function = async (user: string): Promise<Object> => {
 
 const addFace: Function = async (
   personId: string,
-  octetStream: ArrayBuffer,
+  octetStream: Buffer,
 ) => {
   try {
-    AzureFetch(
+    return AzureFetch(
       `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/persons/${personId}/persistedFaces?detectionModel=detection_03`,
       {
         method: 'POST',
