@@ -31,26 +31,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// const rawBodySaver = (req: any, res: any, buf: any, encoding: any) => {
-//   if (buf && buf.length) {
-//     req.rawBody = buf.toString(encoding || 'utf8');
-//   }
-// };
-
-// app.use((req, res, next) => {
-//   if (req.method === 'POST' || req.method === 'PUT') {
-//     const body: any[] = [];
-//     req.on('data', (data: any) => {
-//       body.push(data);
-//     });
-
-//     req.on('end', () => {
-//       req.body = JSON.stringify(body.concat());
-//       next();
-//     });
-//   } else next();
-// });
-
+/* Parse the request */
 app.use(bodyParser.json());
 app.use((req, res, next) => {
   if (req.url.match(/azure\/dni/) && req.method === 'POST') {
@@ -65,11 +46,6 @@ app.use((req, res, next) => {
       });
   } else next();
 });
-
-/* Parse the request */
-// app.use(bodyParser.urlencoded({ extended: true }));
-
-// app.use(bodyParser.raw());
 
 /* Rules of our API */
 app.use((req, res, next) => {
