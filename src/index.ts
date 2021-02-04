@@ -103,13 +103,8 @@ app.use((req: express.Request, res: express.Response) => {
     await MongoConnection();
     await createConnection(config);
     logger.info('Connected to SQL DB');
-<<<<<<< HEAD
     trainPersonsGroup();
     getTrainingStatus();
-=======
-    logger.info('Launched Training of the model', await trainPersonsGroup());
-    logger.info('Retreiving Training Status',await getTrainingStatus());
->>>>>>> feat: created mock userAuth func
     app.listen(env.server.port, async () => {
       logger.info(
         `Listening at http://${env.server.hostname}:${env.server.port}/`,

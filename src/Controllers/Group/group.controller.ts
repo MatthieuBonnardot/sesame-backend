@@ -47,10 +47,6 @@ const createGroup = async (req: Request, res: Response) => {
   };
   try {
     const newGroup: Group = await getRepository(Group).create(formattedBody);
-    // const doorEntities: Door[] = await Promise.all(doors.map(async (did: Door) => {
-    //   const doorEntity = await getRepository(Door).findOne({ where: { did } });
-    //   return doorEntity;
-    // }));
     const doorEntities: Door[] = await getRepository(Door).findByIds(doors);
     newGroup.doors = doorEntities;
     await getRepository(Group).save(newGroup);
