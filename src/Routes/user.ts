@@ -7,5 +7,6 @@ users.get('/list', userController.getUsers);
 users.put('/update/:id', userController.updateUser);
 users.delete('/delete/:id', userController.deleteUser);
 users.post('/create', userController.createUser);
+users.get('/doors/:id', userController.getUserDoors);
 
 export default users;

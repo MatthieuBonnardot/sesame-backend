@@ -11,7 +11,14 @@ const logger = pino({
 
 const getUserDoors = async (req: Request, res: Response) => {
   try {
-    const users = await getRepository(User).find();
+    const users: User = await getRepository(User).findOne(req.params.id, {
+      relations: [
+        'group',
+        'group.doors',
+      ],
+    });
+    console.log(users);
+
     res.send(users);
   } catch (error) {
     console.log(error);
@@ -78,4 +85,5 @@ export {
   createUser,
   deleteUser,
   updateUser,
+  getUserDoors,
 };

@@ -42,8 +42,6 @@ const createDoor = async (
 ) => {
   try {
     const newDoor = await getRepository(Door).create(req.body);
-    console.log('new door', newDoor);
-
     await getRepository(Door).save(newDoor);
     res.status(200).send(newDoor);
   } catch (error) {

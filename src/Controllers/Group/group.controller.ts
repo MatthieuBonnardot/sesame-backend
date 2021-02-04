@@ -21,9 +21,9 @@ const getGroups = async (req: Request, res: Response) => {
 
 const updateGroup = async (req: Request, res: Response) => {
   try {
-    const gid = Number(req.params.id);
+    const gid: number = Number(req.params.id);
     await getRepository(Group).update({ gid }, req.body);
-    const updatedGroup = await getRepository(Group).findOne(req.params.id);
+    const updatedGroup: Group = await getRepository(Group).findOne(req.params.id);
     res.send(updatedGroup);
   } catch (error) {
     console.log(error);
@@ -46,11 +46,12 @@ const createGroup = async (req: Request, res: Response) => {
     accessToHour,
   };
   try {
-    const newGroup = await getRepository(Group).create(formattedBody);
-    const doorEntities: Door[] = await Promise.all(doors.map(async (did: Door) => {
-      const doorEntity = await getRepository(Door).findOne({ where: { did } });
-      return doorEntity;
-    }));
+    const newGroup: Group = await getRepository(Group).create(formattedBody);
+    // const doorEntities: Door[] = await Promise.all(doors.map(async (did: Door) => {
+    //   const doorEntity = await getRepository(Door).findOne({ where: { did } });
+    //   return doorEntity;
+    // }));
+    const doorEntities: Door[] = await getRepository(Door).findByIds(doors);
     newGroup.doors = doorEntities;
     await getRepository(Group).save(newGroup);
     res.status(200).send(newGroup);
