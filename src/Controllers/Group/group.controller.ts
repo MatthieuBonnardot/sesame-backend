@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import pino from 'pino';
 import { getRepository } from 'typeorm';
 import Group from '../../Models/Typeorm/Group.entity';
+import Door from '../../Models/Typeorm/Door.entity';
 
 const logger = pino({
   prettyPrint: true,
@@ -31,8 +32,26 @@ const updateGroup = async (req: Request, res: Response) => {
 };
 
 const createGroup = async (req: Request, res: Response) => {
+  const {
+    doors,
+    groupName,
+    description,
+    accessFromHour,
+    accessToHour,
+  } = req.body;
+  const formattedBody = {
+    groupName,
+    description,
+    accessFromHour,
+    accessToHour,
+  };
   try {
-    const newGroup = await getRepository(Group).create(req.body);
+    const newGroup = await getRepository(Group).create(formattedBody);
+    const doorEntities: Door[] = await Promise.all(doors.map(async (did: Door) => {
+      const doorEntity = await getRepository(Door).findOne({ where: { did } });
+      return doorEntity;
+    }));
+    newGroup.doors = doorEntities;
     await getRepository(Group).save(newGroup);
     res.status(200).send(newGroup);
   } catch (error) {
