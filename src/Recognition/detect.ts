@@ -3,9 +3,6 @@ import AzureFetch from './index';
 
 const detect = async (octet: Buffer) => {
   try {
-    // const faceArr = [];
-    // faceArr.push(faceId);
-
     const params = 'detect?returnFaceId=true&recognitionModel=recognition_03&detectionModel=detection_02';
     console.log(octet);
     return AzureFetch(
