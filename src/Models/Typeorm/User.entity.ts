@@ -12,7 +12,7 @@ import Group from './Group.entity';
 
 @Entity()
 class User {
-  @PrimaryColumn('varchar', { length: 36, nullable: true })
+  @PrimaryColumn('varchar', { length: 36 })
   public aid: string;
 
   @Column('varchar', { length: 25, nullable: true })
@@ -34,6 +34,7 @@ class User {
   public email: string;
 
   @Column('boolean', {
+    nullable: true,
     default: false,
   })
   public isActive: boolean;

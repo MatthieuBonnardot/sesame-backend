@@ -42,6 +42,7 @@ const createUser = async (
 ) => {
   try {
     const userAID = await createPerson(req.body.firstName);
+    console.log(userAID);
     req.body.aid = userAID.personId;
     const newUser = await getRepository(User).create(req.body);
     await getRepository(User).save(newUser);
