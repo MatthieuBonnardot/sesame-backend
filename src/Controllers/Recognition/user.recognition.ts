@@ -6,7 +6,6 @@ import logsController from '../IssueAndLogs/log.controller';
 import checkAccess from '../../Middleware/checkAccess';
 import { addFace } from '../../Recognition/user.crud';
 import identify from '../../Recognition/identify';
-import detect from '../../Recognition/detect';
 
 const verifyUserStatus = async (req: Request, res: Response) => {
   try {
