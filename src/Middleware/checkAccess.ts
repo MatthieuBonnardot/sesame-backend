@@ -1,7 +1,7 @@
 import { AdvancedConsoleLogger, getRepository } from 'typeorm';
 import User from '../Models/Typeorm/User.entity';
 
-const checkAccess = async (userId: number, doorId: number) => {
+const checkAccess = async (userId: string, doorId: number) => {
   let hasAccess = false;
   try {
     const { group, firstName } = await getRepository(User).findOne(userId, {

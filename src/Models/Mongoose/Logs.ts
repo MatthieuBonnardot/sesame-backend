@@ -3,8 +3,8 @@ import {
 } from 'mongoose';
 
 interface Log {
-  enteredBy: string;
-  enteredDoor: Number;
+  enteredBy: String;
+  enteredDoor: String;
   date: Date;
 }
 

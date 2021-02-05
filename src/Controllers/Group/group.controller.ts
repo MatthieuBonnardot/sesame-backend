@@ -11,7 +11,9 @@ const logger = pino({
 
 const getGroups = async (req: Request, res: Response) => {
   try {
-    const groups = await getRepository(Group).find();
+    const groups = await getRepository(Group).find({
+      relations: ['doors'],
+    });
     res.status(200).send(groups);
   } catch (error) {
     console.log(error);
@@ -20,8 +22,12 @@ const getGroups = async (req: Request, res: Response) => {
 };
 
 const updateGroup = async (req: Request, res: Response) => {
+  const gid: number = Number(req.params.id);
+  const { doors } = req.body;
   try {
-    const gid: number = Number(req.params.id);
+    //get existing group entity
+    //check if doors are updated, add if needed (idk how to delete? maybe replace entire array each time)
+    //update values
     await getRepository(Group).update({ gid }, req.body);
     const updatedGroup: Group = await getRepository(Group).findOne(req.params.id);
     res.send(updatedGroup);
@@ -46,10 +52,13 @@ const createGroup = async (req: Request, res: Response) => {
     accessToHour,
   };
   try {
-    const newGroup: Group = await getRepository(Group).create(formattedBody);
-    const doorEntities: Door[] = await getRepository(Door).findByIds(doors);
-    newGroup.doors = doorEntities;
+    const newGroup: Group = getRepository(Group).create(formattedBody);
+    if (doors.length) {
+      const doorEntities: Door[] = await getRepository(Door).findByIds(doors);
+      newGroup.doors = doorEntities;
+    }
     await getRepository(Group).save(newGroup);
+    newGroup.doors = doors;
     res.status(200).send(newGroup);
   } catch (error) {
     console.log(error);
