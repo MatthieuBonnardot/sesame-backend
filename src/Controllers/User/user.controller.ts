@@ -3,28 +3,12 @@ import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import pino from 'pino';
 import User from '../../Models/Typeorm/User.entity';
+import Group from '../../Models/Typeorm/Group.entity';
 import { createPerson } from '../../Recognition/user.crud';
 
 const logger = pino({
   prettyPrint: true,
 });
-
-const getUserDoors = async (req: Request, res: Response) => {
-  try {
-    const users: User = await getRepository(User).findOne(req.params.id, {
-      relations: [
-        'group',
-        'group.doors',
-      ],
-    });
-    console.log(users);
-
-    res.send(users);
-  } catch (error) {
-    console.log(error);
-    res.send(500);
-  }
-};
 
 const getUsers = async (req: Request, res: Response) => {
   try {
@@ -40,12 +24,31 @@ const createUser = async (
   req: Request,
   res: Response,
 ) => {
+  const {
+    firstName,
+    lastName,
+    email,
+    group,
+  } = req.body;
   try {
-    const userAID = await createPerson(req.body.firstName);
-    console.log(userAID);
-    req.body.aid = userAID.personId;
-    const newUser = await getRepository(User).create(req.body);
+    const { personId } = await createPerson(firstName);
+    const formattedBody: User = {
+      firstName,
+      lastName,
+      email,
+      aid: personId,
+      doorKey: null,
+      registrationKey: null,
+      isActive: false,
+      group: null,
+    };
+    const newUser = getRepository(User).create(formattedBody);
     await getRepository(User).save(newUser);
+    if (group) {
+      const groupEntity = await getRepository(Group).findOne(group);
+      const userEntity = await getRepository(User).findOne(personId);
+      userEntity.group = groupEntity;
+    }
     res.send(newUser);
   } catch (error) {
     console.log('this is the error 🐷', error);
@@ -86,5 +89,4 @@ export {
   createUser,
   deleteUser,
   updateUser,
-  getUserDoors,
 };

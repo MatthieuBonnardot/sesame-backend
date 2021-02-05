@@ -39,7 +39,9 @@ class User {
   })
   public isActive: boolean;
 
-  @ManyToOne(() => Group, (group: Group) => group.users)
+  @ManyToOne(() => Group, (group: Group) => group.users, {
+    cascade: true,
+  })
   public group: Group;
 }
 
