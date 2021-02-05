@@ -13,11 +13,14 @@ const getDoors = async (
   res: Response,
 ) => {
   try {
-    const doors = await getRepository(Door).find();
+    const doors = await getRepository(Door).find({
+      relations: ['groups'],
+    });
     res.send(doors);
   } catch (error) {
-    console.log(error);
-    res.send(500);
+    logger.error(error);
+    res.status(500);
+    res.send(error);
   }
 };
 
@@ -28,11 +31,14 @@ const updateDoor = async (
   try {
     const did = Number(req.params.id);
     await getRepository(Door).update({ did }, req.body);
-    const newDoor = await getRepository(Door).findOne(did);
+    const newDoor = await getRepository(Door).findOne(did, {
+      relations: ['groups'],
+    });
     res.send(newDoor);
   } catch (error) {
-    console.log(error);
-    res.send(500);
+    logger.error(error);
+    res.status(500);
+    res.send(error);
   }
 };
 
@@ -43,10 +49,11 @@ const createDoor = async (
   try {
     const newDoor = await getRepository(Door).create(req.body);
     await getRepository(Door).save(newDoor);
-    res.status(200).send(newDoor);
+    res.send(newDoor);
   } catch (error) {
-    console.log(error);
-    res.send(500);
+    logger.error(error);
+    res.status(500);
+    res.send(error);
   }
 };
 
@@ -59,8 +66,9 @@ const deleteDoor = async (
     await getRepository(Door).delete(req.params.id);
     res.send(deletedDoor);
   } catch (error) {
-    console.log(error);
-    res.send(500);
+    logger.error(error);
+    res.status(500);
+    res.send(error);
   }
 };
 

@@ -12,11 +12,18 @@ const logger = pino({
 
 const getUsers = async (req: Request, res: Response) => {
   try {
-    const users = await getRepository(User).find();
+    const users = await getRepository(User).find({
+      relations: ['group'],
+    });
     res.send(users);
   } catch (error) {
     logger.error(error);
+<<<<<<< HEAD
     res.send(500);
+=======
+    res.status(500);
+    res.send(error);
+>>>>>>> refactor: refactored group and door controllers
   }
 };
 
@@ -51,8 +58,9 @@ const createUser = async (
     }
     res.send(newUser);
   } catch (error) {
-    console.log('this is the error 🐷', error);
-    res.send(500);
+    logger.error(error);
+    res.status(500);
+    res.send(error);
   }
 };
 
@@ -65,8 +73,9 @@ const updateUser = async (
     const updatedUser = await getRepository(User).findOne(req.params.id);
     res.send(updatedUser);
   } catch (error) {
-    console.log('ಠ_ಠ', error);
-    res.send(500);
+    logger.error(error);
+    res.status(500);
+    res.send(error);
   }
 };
 
@@ -79,8 +88,9 @@ const deleteUser = async (
     await getRepository(User).delete(req.params.id);
     res.send(deletedUser);
   } catch (error) {
-    console.log(error);
-    res.send(500);
+    logger.error(error);
+    res.status(500);
+    res.send(error);
   }
 };
 
