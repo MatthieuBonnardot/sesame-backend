@@ -5,6 +5,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import pino from 'pino';
 import { createConnection } from 'typeorm';
+import cors from 'cors';
 import env from './config/config';
 import 'reflect-metadata';
 import router from './Routes/index';
@@ -16,6 +17,7 @@ const logger = pino({
 });
 
 const app = express();
+app.use(cors());
 
 /* Logging the request */
 app.use((req, res, next) => {
