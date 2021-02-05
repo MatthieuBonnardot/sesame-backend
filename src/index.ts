@@ -10,7 +10,6 @@ import 'reflect-metadata';
 import router from './Routes/index';
 import config from './Models/Typeorm/ormconfig';
 import MongoConnection from './Databases/Mongo/connection';
-import { trainPersonsGroup, getTrainingStatus } from './Recognition/group.crud';
 
 const logger = pino({
   prettyPrint: true,
@@ -34,8 +33,7 @@ app.use((req, res, next) => {
 /* Parse the request */
 app.use(bodyParser.json());
 app.use((req, res, next) => {
-  if (req.url.match(/azure\/dni/) && req.method === 'POST') {
-    console.log('hello');
+  if (req.url.match(/azure\/registerUser/) && req.method === 'PUT') {
     const body: any = [];
     req
       .on('data', (chunk) => body.push(chunk))
@@ -63,6 +61,7 @@ app.use((req, res, next) => {
   next();
 });
 
+/* Routing */
 app.use(router);
 
 /* Error handling */
@@ -79,8 +78,6 @@ app.use((req: express.Request, res: express.Response) => {
     await MongoConnection();
     await createConnection(config);
     logger.info('Connected to SQL DB');
-    trainPersonsGroup();
-    getTrainingStatus();
     app.listen(env.server.port, async () => {
       logger.info(
         `Listening at http://${env.server.hostname}:${env.server.port}/`,

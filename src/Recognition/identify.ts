@@ -7,7 +7,7 @@ const identify = async (faceId: string) => {
     faceArr.push(faceId);
     console.log(faceArr);
     return AzureFetch(
-      'https://westeurope.api.cognitive.microsoft.com/face/v1.0/identify',
+      `https://${env.azure.location}.api.cognitive.microsoft.com/face/v1.0/identify`,
       {
         method: 'POST',
         body: JSON.stringify({

@@ -25,9 +25,9 @@ const updateGroup = async (req: Request, res: Response) => {
   const gid: number = Number(req.params.id);
   const { doors } = req.body;
   try {
-    //get existing group entity
-    //check if doors are updated, add if needed (idk how to delete? maybe replace entire array each time)
-    //update values
+    // get existing group entity
+    // check if doors are updated, add if needed (idk how to delete? maybe replace entire array each time)
+    // update values
     await getRepository(Group).update({ gid }, req.body);
     const updatedGroup: Group = await getRepository(Group).findOne(req.params.id);
     res.send(updatedGroup);

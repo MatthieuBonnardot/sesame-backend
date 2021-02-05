@@ -15,7 +15,7 @@ const getUsers = async (req: Request, res: Response) => {
     const users = await getRepository(User).find();
     res.send(users);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     res.send(500);
   }
 };
