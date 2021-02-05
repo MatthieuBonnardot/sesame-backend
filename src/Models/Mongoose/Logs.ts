@@ -4,7 +4,7 @@ import {
 
 interface Log {
   enteredBy: String;
-  enteredDoor: String;
+  enteredDoor: Number;
   date: Date;
 }
 
