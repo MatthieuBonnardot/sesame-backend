@@ -4,7 +4,7 @@ import { getRepository } from 'typeorm';
 import pino from 'pino';
 import User from '../../Models/Typeorm/User.entity';
 import Group from '../../Models/Typeorm/Group.entity';
-import { createPerson } from '../../Recognition/user.crud';
+import { createPerson, deletePerson } from '../../Recognition/user.crud';
 
 const logger = pino({
   prettyPrint: true,
@@ -18,12 +18,8 @@ const getUsers = async (req: Request, res: Response) => {
     res.send(users);
   } catch (error) {
     logger.error(error);
-<<<<<<< HEAD
-    res.send(500);
-=======
     res.status(500);
     res.send(error);
->>>>>>> refactor: refactored group and door controllers
   }
 };
 
@@ -85,6 +81,7 @@ const deleteUser = async (
   try {
     const deletedUser = getRepository(User).findOne(req.params.id);
     await getRepository(User).delete(req.params.id);
+    await deletePerson(req.params.id);
     res.send(deletedUser);
   } catch (error) {
     logger.error(error);

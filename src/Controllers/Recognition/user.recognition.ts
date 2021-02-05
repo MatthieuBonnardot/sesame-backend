@@ -63,15 +63,19 @@ const identifyUser = async (req: Request, res: Response) => {
     const { faceID, DID } = req.params;
     const azureResponse: any = await identify(faceID);
     const { personId } = azureResponse[0].candidates[0];
+    console.log('personID -> ', personId);
+    console.log(DID);
     const checked: AccessControl = await checkAccess(personId, Number(DID));
     if (checked.access) {
       logsController.internalLogCreation({
         enteredBy: personId,
         enteredDoor: DID,
       });
-      console.log(checked);
       res.send(checked);
-    } else res.status(404).send(checked);
+    } else {
+      console.log('reco:', checked);
+      res.send(checked);
+    }
   } catch (error) {
     logger.error(error);
     res.sendStatus(500);

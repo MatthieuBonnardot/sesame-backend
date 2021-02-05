@@ -11,11 +11,7 @@ interface Log {
 const logSchema = new Schema({
   enteredBy: { type: String, required: true },
   enteredDoor: { type: Number, required: true },
-<<<<<<< HEAD
-  date: { type: String, required: false, default: new Date().toLocaleDateString() },
-=======
   date: { type: String, required: false, default: new Date().toLocaleDateString()},
->>>>>>> fix: ts linting errors
 });
 
 const logModel = model<Log & Document>('Logs', logSchema);

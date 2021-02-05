@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import pino from 'pino';
 import { createConnection } from 'typeorm';
 import cors from 'cors';
+import { getTrainingStatus, trainPersonsGroup } from './Recognition/group.crud';
 import env from './config/config';
 import 'reflect-metadata';
 import router from './Routes/index';
@@ -80,6 +81,8 @@ app.use((req: express.Request, res: express.Response) => {
     await MongoConnection();
     await createConnection(config);
     logger.info('Connected to SQL DB');
+    trainPersonsGroup();
+    getTrainingStatus();
     app.listen(env.server.port, async () => {
       logger.info(
         `Listening at http://${env.server.hostname}:${env.server.port}/`,

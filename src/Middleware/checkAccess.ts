@@ -4,15 +4,17 @@ import User from '../Models/Typeorm/User.entity';
 const checkAccess = async (userId: string, doorId: number) => {
   let hasAccess = false;
   try {
-    const { group, firstName } = await getRepository(User).findOne(userId, {
+    const user = await getRepository(User).findOne(userId, {
       relations: ['group', 'group.doors'],
     });
-    console.log('logging', firstName);
-    group.doors.forEach((door) => {
+    console.log(user);
+    console.log('logging', user.firstName);
+    user.group.doors.forEach((door) => {
       if (door.did === doorId) hasAccess = true;
     });
+    console.log(hasAccess);
     return ({
-      firstName,
+      firstName: user.firstName,
       access: hasAccess,
     });
   } catch (error) {
