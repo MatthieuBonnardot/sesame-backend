@@ -52,6 +52,8 @@ const updateGroup = async (req: Request, res: Response) => {
       updatedGroup.doors = [];
       const doorEntity = await getRepository(Door).findByIds(doors);
       updatedGroup.doors = doorEntity;
+      console.log('3rd', updatedGroup.doors);
+      getRepository(Group).save(updatedGroup);
     }
     getRepository(Group).save(updatedGroup);
     updatedGroup.doors = doors;
