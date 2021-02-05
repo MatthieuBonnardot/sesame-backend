@@ -3,7 +3,11 @@ import {
 } from 'mongoose';
 
 interface Log {
+<<<<<<< HEAD
   enteredBy: string;
+=======
+  enteredBy: String;
+>>>>>>> features/controllers
   enteredDoor: Number;
   date: Date;
 }

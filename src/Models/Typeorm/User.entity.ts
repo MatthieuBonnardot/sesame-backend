@@ -34,11 +34,14 @@ class User {
   public email: string;
 
   @Column('boolean', {
+    nullable: true,
     default: false,
   })
   public isActive: boolean;
 
-  @ManyToOne(() => Group, (group: Group) => group.users)
+  @ManyToOne(() => Group, (group: Group) => group.users, {
+    cascade: true,
+  })
   public group: Group;
 }
 
