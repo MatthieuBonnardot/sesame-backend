@@ -46,11 +46,12 @@ const createUser = async (
       group: null,
     };
     const newUser = getRepository(User).create(formattedBody);
+    await getRepository(User).save(newUser);
     if (group) {
       const groupEntity = await getRepository(Group).findOne(group);
-      newUser.group = groupEntity;
+      const userEntity = await getRepository(User).findOne(personId);
+      userEntity.group = groupEntity;
     }
-    await getRepository(User).save(newUser);
     res.send(newUser);
   } catch (error) {
     logger.error(error);
