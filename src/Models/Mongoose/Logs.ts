@@ -3,19 +3,15 @@ import {
 } from 'mongoose';
 
 interface Log {
-<<<<<<< HEAD
-  enteredBy: string;
-=======
-  enteredBy: String;
->>>>>>> features/controllers
+  enteredBy: Number;
   enteredDoor: Number;
   date: Date;
 }
 
 const logSchema = new Schema({
-  enteredBy: { type: String, required: true },
+  enteredBy: { type: Number, required: true },
   enteredDoor: { type: Number, required: true },
-  date: { type: String, required: false, default: new Date().toLocaleDateString()},
+  date: { type: String, required: false, default: JSON.stringify(new Date().getTime) },
 });
 
 const logModel = model<Log & Document>('Logs', logSchema);
