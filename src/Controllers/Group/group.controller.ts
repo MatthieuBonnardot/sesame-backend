@@ -45,9 +45,7 @@ const updateGroup = async (req: Request, res: Response) => {
     accessToHour,
   };
   try {
-    const isGroup = await getRepository(Group).update({ gid }, formattedBody);
-    console.log('1st', isGroup);
-
+    await getRepository(Group).update({ gid }, formattedBody);
     const updatedGroup: Group = await getRepository(Group).findOne(gid);
     if (doors.length) {
       updatedGroup.doors = [];

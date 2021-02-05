@@ -64,9 +64,16 @@ const updateUser = async (
   req: Request,
   res: Response,
 ) => {
+  const aid: string = req.params.id;
+  const { group, ...formattedBody } = req.body;
   try {
-    await getRepository(User).update({ aid: req.params.id }, req.body);
-    const updatedUser = await getRepository(User).findOne(req.params.id);
+    if (Object.keys(formattedBody).length) await getRepository(User).update({ aid }, formattedBody);
+    const updatedUser = await getRepository(User).findOne(aid);
+    if (group) {
+      const groupEntity = await getRepository(Group).findOne(group);
+      updatedUser.group = groupEntity;
+    }
+    getRepository(User).save(updatedUser);
     res.send(updatedUser);
   } catch (error) {
     logger.error(error);
