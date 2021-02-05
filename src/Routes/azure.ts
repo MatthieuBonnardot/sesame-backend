@@ -5,7 +5,6 @@ const azure = express.Router();
 
 azure.get('/register/:code', azureController.verifyUserStatus);
 azure.put('/register/:UID', azureController.addFaceMappings);
-azure.get('/identify/:faceID', azureController.identifyUser);
-azure.post('/dni/', azureController.detectAndIdentifyUser);
+azure.get('/identify/:DID/:faceID', azureController.identifyUser);
 
 export default azure;

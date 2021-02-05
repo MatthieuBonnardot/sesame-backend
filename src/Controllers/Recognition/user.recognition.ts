@@ -2,6 +2,8 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import User from '../../Models/Typeorm/User.entity';
+import logsController from '../IssueAndLogs/log.controller';
+import checkAccess from '../../Middleware/checkAccess';
 import { addFace } from '../../Recognition/user.crud';
 import identify from '../../Recognition/identify';
 import detect from '../../Recognition/detect';
@@ -35,8 +37,8 @@ const addFaceMappings = async (req: Request, res: Response) => {
 
     images.forEach(async (face: ArrayBuffer) => {
       console.log(face);
-      // const status = await addFace(req.params.code, face);
-      // console.log(status);
+      const status = await addFace(req.params.code, face);
+      console.log(status);
     });
 
     res.send('ok');
@@ -47,33 +49,18 @@ const addFaceMappings = async (req: Request, res: Response) => {
 
 const identifyUser = async (req: Request, res: Response) => {
   try {
-    const start = Date.now();
-    const azureResponse: any = await identify(req.params.faceID);
-    const aid = azureResponse[0].candidates[0].personId;
-    const user = await getRepository(User).find({ where: { aid } });
-    console.log(Date.now() - start);
-    res.send(user);
-  } catch (error) {
-    res.sendStatus(500);
-  }
-};
-
-const detectAndIdentifyUser = async (req: any, res: Response) => {
-  try {
-    const start = Date.now();
-    console.log(req.body);
-    const response: any = await detect(req.body);
-    console.log(response[0]?.faceId);
-    const faceID = response[0]?.faceId;
+    const { faceID, DID } = req.params;
     const azureResponse: any = await identify(faceID);
-    console.log(azureResponse);
-    const aid = azureResponse[0]?.candidates[0]?.personId;
-    const user = await getRepository(User).find({ where: { aid } });
-    console.log(Date.now() - start);
-    console.log(user);
-    res.send(user);
+    const { personId } = azureResponse[0].candidates[0];
+    console.log(personId, DID);
+    if (checkAccess(personId, Number(DID))) {
+      logsController.internalLogCreation({
+        enteredBy: personId,
+        enteredDoor: DID,
+      });
+      res.send(true);
+    } else res.status(404).send(false);
   } catch (error) {
-    console.log(error.message);
     res.sendStatus(500);
   }
 };
@@ -82,5 +69,4 @@ export {
   verifyUserStatus,
   addFaceMappings,
   identifyUser,
-  detectAndIdentifyUser,
 };
