@@ -57,7 +57,7 @@ const updateUser = async (
   const userTable = getRepository(User);
   try {
     if (Object.keys(formattedBody).length) await userTable.update({ aid }, formattedBody);
-    const updatedUser = await userTable.findOne(aid);
+    const updatedUser: User = await userTable.findOne(aid);
     if (group) {
       const groupEntity = await getRepository(Group).findOne(group);
       updatedUser.group = groupEntity;
