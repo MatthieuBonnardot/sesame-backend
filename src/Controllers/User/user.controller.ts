@@ -30,7 +30,7 @@ const createUser = async (
   const { group, ...formattedBody } = req.body;
   const userTable = getRepository(User);
   try {
-    const { personId } = await createPerson(formattedBody.firstName);
+    const { personId } = await createPerson(formattedBody.email);
     formattedBody.aid = personId;
     const newUser = userTable.create(formattedBody);
     await userTable.save(newUser);
@@ -38,6 +38,7 @@ const createUser = async (
       const groupEntity = await getRepository(Group).findOne(group);
       const userEntity = await userTable.findOne(personId);
       userEntity.group = groupEntity;
+      await userTable.save(userEntity);
     }
     res.send(newUser);
   } catch (error) {

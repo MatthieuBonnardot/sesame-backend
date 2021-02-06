@@ -8,15 +8,15 @@ const logger = pino({
   prettyPrint: true,
 });
 
-const createPerson: Function = async (user: string): Promise<Object> => {
-  console.log(user);
+//change email back to user
+const createPerson: Function = async (email: string): Promise<Object> => {
   try {
     return await AzureFetch(
       `https://${env.azure.location}.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/persons`,
       {
         method: 'POST',
         body: JSON.stringify({
-          name: user,
+          name: email,
         }),
         headers: {
           'Content-Type': 'application/json',
