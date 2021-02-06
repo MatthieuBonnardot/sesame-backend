@@ -3,16 +3,13 @@ import AzureFetch from './index';
 
 const identify = async (faceId: string) => {
   try {
-    const faceArr = [];
-    faceArr.push(faceId);
-    console.log(faceArr);
     return AzureFetch(
       `https://${env.azure.location}.api.cognitive.microsoft.com/face/v1.0/identify`,
       {
         method: 'POST',
         body: JSON.stringify({
           personGroupId: env.azure.group_name,
-          faceIds: faceArr,
+          faceIds: [faceId],
           maxNumOfCandidatesReturned: 1,
           confidenceThreshold: 0.6,
         }),

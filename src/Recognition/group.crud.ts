@@ -40,6 +40,7 @@ const trainPersonsGroup: Function = async () => {
 
     logger.info(training);
   } catch (error) {
+    logger.error(error);
   }
 };
 
