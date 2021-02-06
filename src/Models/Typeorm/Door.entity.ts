@@ -22,7 +22,7 @@ class Door {
   @Column('varchar', { length: 50 })
   public endPoint: string;
 
-  @Column('varchar', { length: 50, nullable: true })
+  @Column('varchar', { length: 250, nullable: true })
   public doorUrl: string;
 
   @ManyToMany(() => Group, (group: Group) => group.doors)

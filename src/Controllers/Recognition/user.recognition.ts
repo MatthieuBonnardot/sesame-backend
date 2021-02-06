@@ -46,13 +46,8 @@ const addFaceMappings = async (req: Request, res: Response) => {
   try {
     console.log(req.body);
     console.log(req.params.UID);
-    const { image } = req.body;
-
-    await addFace(req.params.code, image).then(() => {
-      trainPersonsGroup();
-      getTrainingStatus();
-    });
-    res.send(`User: ${req.params.UID} has successfully been added a face`);
+    const response = await addFace(req.params.UID, req.body);
+    res.send(response);
   } catch (error) {
     res.sendStatus(500);
   }
@@ -67,6 +62,7 @@ const identifyUser = async (req: Request, res: Response) => {
         arg: 'User is unknown',
       });
     } else {
+      console.log(azureResponse);
       const { personId } = azureResponse[0].candidates[0];
       const checked: AccessControl = await checkAccess(personId, Number(DID));
       if (checked.access) {

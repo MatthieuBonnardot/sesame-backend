@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 /* Parse the request */
 app.use(bodyParser.json());
 app.use((req, res, next) => {
-  if (req.url.match(/azure\/registerUser/) && req.method === 'PUT') {
+  if (req.url.match(/azure\/register/) && req.method === 'PUT') {
     const body: any = [];
     req
       .on('data', (chunk) => body.push(chunk))
