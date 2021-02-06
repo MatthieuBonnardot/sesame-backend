@@ -22,38 +22,16 @@ const getGroups = async (req: Request, res: Response) => {
   }
 };
 
-/*
-I have changed the update group to update the params first (assuming it wont update
-  props that it doesnt contain). I then check if doors were passes, if yes, remove
-  all previous doors and pass in the door array of doors. This means admin will have
-  to pass ALL the doors that group has access to each time they want to update it.
-*/
 const updateGroup = async (req: Request, res: Response) => {
   const gid: number = Number(req.params.id);
-  const {
-    doors,
-    groupName,
-    description,
-    accessFromHour,
-    accessToHour,
-  } = req.body;
-  const formattedBody = {
-    gid,
-    groupName,
-    description,
-    accessFromHour,
-    accessToHour,
-  };
+  const { doors, ...formattedBody } = req.body;
   try {
-    // await getRepository(Group).update({ gid }, formattedBody);
+    await getRepository(Group).update({ gid }, formattedBody);
     const updatedGroup: Group = await getRepository(Group).findOne(gid);
-    updatedGroup
     if (doors.length) {
       updatedGroup.doors = [];
       const doorEntity = await getRepository(Door).findByIds(doors);
       updatedGroup.doors = doorEntity;
-      console.log('3rd', updatedGroup.doors);
-      getRepository(Group).save(updatedGroup);
     }
     getRepository(Group).save(updatedGroup);
     updatedGroup.doors = doors;

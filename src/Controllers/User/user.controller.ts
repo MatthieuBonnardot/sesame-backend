@@ -27,30 +27,18 @@ const createUser = async (
   req: Request,
   res: Response,
 ) => {
-  const {
-    firstName,
-    lastName,
-    email,
-    group,
-  } = req.body;
+  const { group, ...formattedBody } = req.body;
+  const userTable = getRepository(User);
   try {
-    const { personId } = await createPerson(firstName);
-    const formattedBody: User = {
-      firstName,
-      lastName,
-      email,
-      aid: personId,
-      doorKey: null,
-      registrationKey: null,
-      isActive: false,
-      group: null,
-    };
-    const newUser = getRepository(User).create(formattedBody);
+    const { personId } = await createPerson(formattedBody.firstName);
+    formattedBody.aid = personId;
+    const newUser = userTable.create(formattedBody);
+    await userTable.save(newUser);
     if (group) {
       const groupEntity = await getRepository(Group).findOne(group);
-      newUser.group = groupEntity;
+      const userEntity = await userTable.findOne(personId);
+      userEntity.group = groupEntity;
     }
-    await getRepository(User).save(newUser);
     res.send(newUser);
   } catch (error) {
     logger.error(error);
@@ -63,9 +51,17 @@ const updateUser = async (
   req: Request,
   res: Response,
 ) => {
+  const aid: string = req.params.id;
+  const { group, ...formattedBody } = req.body;
+  const userTable = getRepository(User);
   try {
-    await getRepository(User).update({ aid: req.params.id }, req.body);
-    const updatedUser = await getRepository(User).findOne(req.params.id);
+    if (Object.keys(formattedBody).length) await userTable.update({ aid }, formattedBody);
+    const updatedUser = await userTable.findOne(aid);
+    if (group) {
+      const groupEntity = await getRepository(Group).findOne(group);
+      updatedUser.group = groupEntity;
+    }
+    userTable.save(updatedUser);
     res.send(updatedUser);
   } catch (error) {
     logger.error(error);
@@ -78,9 +74,10 @@ const deleteUser = async (
   req: Request,
   res: Response,
 ) => {
+  const userTable = getRepository(User);
   try {
-    const deletedUser = getRepository(User).findOne(req.params.id);
-    await getRepository(User).delete(req.params.id);
+    const deletedUser = userTable.findOne(req.params.id);
+    await userTable.delete(req.params.id);
     await deletePerson(req.params.id);
     res.send(deletedUser);
   } catch (error) {
