@@ -62,7 +62,9 @@ const deleteDoor = async (
   res: Response,
 ) => {
   try {
-    const deletedDoor = getRepository(Door).findOne(req.params.id);
+    const deletedDoor = getRepository(Door).findOne(req.params.id, {
+      relations: ['groups'],
+    });
     await getRepository(Door).delete(req.params.id);
     res.send(deletedDoor);
   } catch (error) {

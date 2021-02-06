@@ -25,15 +25,16 @@ const getGroups = async (req: Request, res: Response) => {
 const updateGroup = async (req: Request, res: Response) => {
   const gid: number = Number(req.params.id);
   const { doors, ...formattedBody } = req.body;
+  const groupTable = getRepository(Group);
   try {
-    await getRepository(Group).update({ gid }, formattedBody);
-    const updatedGroup: Group = await getRepository(Group).findOne(gid);
+    await groupTable.update({ gid }, formattedBody);
+    const updatedGroup: Group = await groupTable.findOne(gid);
     if (doors.length) {
       updatedGroup.doors = [];
       const doorEntity = await getRepository(Door).findByIds(doors);
       updatedGroup.doors = doorEntity;
     }
-    getRepository(Group).save(updatedGroup);
+    groupTable.save(updatedGroup);
     updatedGroup.doors = doors;
     res.send(updatedGroup);
   } catch (error) {
@@ -44,6 +45,7 @@ const updateGroup = async (req: Request, res: Response) => {
 };
 
 const createGroup = async (req: Request, res: Response) => {
+  const groupTable = getRepository(Group);
   const {
     doors,
     groupName,
@@ -58,12 +60,12 @@ const createGroup = async (req: Request, res: Response) => {
     accessToHour,
   };
   try {
-    const newGroup: Group = getRepository(Group).create(formattedBody);
+    const newGroup: Group = groupTable.create(formattedBody);
     if (doors.length) {
       const doorEntities: Door[] = await getRepository(Door).findByIds(doors);
       newGroup.doors = doorEntities;
     }
-    await getRepository(Group).save(newGroup);
+    await groupTable.save(newGroup);
     newGroup.doors = doors;
     res.send(newGroup);
   } catch (error) {
@@ -74,9 +76,10 @@ const createGroup = async (req: Request, res: Response) => {
 };
 
 const deleteGroup = async (req: Request, res: Response) => {
+  const groupTable = getRepository(Group);
   try {
-    const deletedGroup = getRepository(Group).findOne(req.params.id);
-    await getRepository(Group).delete(req.params.id);
+    const deletedGroup = groupTable.findOne(req.params.id);
+    await groupTable.delete(req.params.id);
     res.send(deletedGroup);
   } catch (error) {
     logger.error(error);

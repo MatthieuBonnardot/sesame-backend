@@ -8,7 +8,6 @@ const logger = pino({
   prettyPrint: true,
 });
 
-//change email back to user
 const createPerson: Function = async (email: string): Promise<Object> => {
   try {
     return await AzureFetch(
