@@ -19,8 +19,9 @@ const getLogs = async (_: Request, res: Response) => {
 
 const createLog = async (req: Request, res: Response) => {
   try {
-    const logData: typeof Logs = req.body;
-    const createLog = new Logs(logData);
+    const newLog: typeof Logs = req.body;
+
+    const createLog = new Logs(newLog);
     createLog.save().then((savedLog) => {
       res.status(200).send(savedLog);
     });
@@ -31,8 +32,17 @@ const createLog = async (req: Request, res: Response) => {
   }
 };
 
+const internalLogCreation = async (body: any) => {
+  try {
+    console.log(body);
+    Logs.create(body);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const findLogsById = async (req: Request, res: Response) => {
-  const userId: number = Number(req.params.id);
+  const userId: string = req.params.id;
   Logs.find({ enteredBy: userId }, (err: Error, docs: Array<any>) => {
     if (err) {
       res.status(501).json({
@@ -46,4 +56,6 @@ const findLogsById = async (req: Request, res: Response) => {
   });
 };
 
-export default { getLogs, createLog, findLogsById };
+export default {
+  getLogs, createLog, findLogsById, internalLogCreation,
+};

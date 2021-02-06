@@ -11,23 +11,35 @@ const logger = pino({
 
 const getGroups = async (req: Request, res: Response) => {
   try {
-    const groups = await getRepository(Group).find();
-    res.status(200).send(groups);
+    const groups = await getRepository(Group).find({
+      relations: ['doors'],
+    });
+    res.send(groups);
   } catch (error) {
-    console.log(error);
-    res.send(500);
+    logger.error(error);
+    res.status(500);
+    res.send(error);
   }
 };
 
 const updateGroup = async (req: Request, res: Response) => {
+  const gid: number = Number(req.params.id);
+  const { doors, ...formattedBody } = req.body;
   try {
-    const gid: number = Number(req.params.id);
-    await getRepository(Group).update({ gid }, req.body);
-    const updatedGroup: Group = await getRepository(Group).findOne(req.params.id);
+    await getRepository(Group).update({ gid }, formattedBody);
+    const updatedGroup: Group = await getRepository(Group).findOne(gid);
+    if (doors.length) {
+      updatedGroup.doors = [];
+      const doorEntity = await getRepository(Door).findByIds(doors);
+      updatedGroup.doors = doorEntity;
+    }
+    getRepository(Group).save(updatedGroup);
+    updatedGroup.doors = doors;
     res.send(updatedGroup);
   } catch (error) {
-    console.log(error);
-    res.send(500);
+    logger.error(error);
+    res.status(500);
+    res.send(error);
   }
 };
 
@@ -46,14 +58,18 @@ const createGroup = async (req: Request, res: Response) => {
     accessToHour,
   };
   try {
-    const newGroup: Group = await getRepository(Group).create(formattedBody);
-    const doorEntities: Door[] = await getRepository(Door).findByIds(doors);
-    newGroup.doors = doorEntities;
+    const newGroup: Group = getRepository(Group).create(formattedBody);
+    if (doors.length) {
+      const doorEntities: Door[] = await getRepository(Door).findByIds(doors);
+      newGroup.doors = doorEntities;
+    }
     await getRepository(Group).save(newGroup);
-    res.status(200).send(newGroup);
+    newGroup.doors = doors;
+    res.send(newGroup);
   } catch (error) {
-    console.log(error);
-    res.send(500);
+    logger.error(error);
+    res.status(500);
+    res.send(error);
   }
 };
 
@@ -63,8 +79,9 @@ const deleteGroup = async (req: Request, res: Response) => {
     await getRepository(Group).delete(req.params.id);
     res.send(deletedGroup);
   } catch (error) {
-    console.log(error);
-    res.send(500);
+    logger.error(error);
+    res.status(500);
+    res.send(error);
   }
 };
 

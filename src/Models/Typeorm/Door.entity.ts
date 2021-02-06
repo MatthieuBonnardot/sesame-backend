@@ -7,6 +7,7 @@ import {
 import {
   IsNotEmpty,
 } from 'class-validator';
+// eslint-disable-next-line import/no-cycle
 import Group from './Group.entity';
 
 @Entity()

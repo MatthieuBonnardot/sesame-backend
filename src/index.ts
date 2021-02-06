@@ -5,18 +5,20 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import pino from 'pino';
 import { createConnection } from 'typeorm';
+import cors from 'cors';
+import { getTrainingStatus, trainPersonsGroup } from './Recognition/group.crud';
 import env from './config/config';
 import 'reflect-metadata';
 import router from './Routes/index';
 import config from './Models/Typeorm/ormconfig';
 import MongoConnection from './Databases/Mongo/connection';
-import { trainPersonsGroup, getTrainingStatus } from './Recognition/group.crud';
 
 const logger = pino({
   prettyPrint: true,
 });
 
 const app = express();
+app.use(cors());
 
 /* Logging the request */
 app.use((req, res, next) => {
@@ -34,8 +36,7 @@ app.use((req, res, next) => {
 /* Parse the request */
 app.use(bodyParser.json());
 app.use((req, res, next) => {
-  if (req.url.match(/azure\/dni/) && req.method === 'POST') {
-    console.log('hello');
+  if (req.url.match(/azure\/registerUser/) && req.method === 'PUT') {
     const body: any = [];
     req
       .on('data', (chunk) => body.push(chunk))
@@ -63,6 +64,7 @@ app.use((req, res, next) => {
   next();
 });
 
+/* Routing */
 app.use(router);
 
 /* Error handling */

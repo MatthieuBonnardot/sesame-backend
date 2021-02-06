@@ -3,7 +3,6 @@
 import pino from 'pino';
 import AzureFetch from './index';
 import env from '../config/config';
-import status from '../Routes/status';
 
 const logger = pino({
   prettyPrint: true,
@@ -41,13 +40,14 @@ const trainPersonsGroup: Function = async () => {
 
     logger.info(training);
   } catch (error) {
+    logger.error(error);
   }
 };
 
 const getTrainingStatus: Function = async () => {
   try {
     const status = await AzureFetch(
-      `https://westeurope.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/training`,
+      `https://${env.azure.location}.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/training`,
       {
         method: 'GET',
         headers: {
