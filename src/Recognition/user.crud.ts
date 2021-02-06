@@ -38,9 +38,7 @@ const addFace: Function = async (
       `https://${env.azure.location}.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/persons/${personId}/persistedFaces?detectionModel=detection_03`,
       {
         method: 'POST',
-        body: {
-          octetStream,
-        },
+        body: octetStream,
         headers: {
           'content-type': 'application/octet-stream',
           'Ocp-Apim-Subscription-Key': `${env.azure.key}`,
