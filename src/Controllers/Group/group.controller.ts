@@ -28,16 +28,12 @@ const updateGroup = async (req: Request, res: Response) => {
   const groupTable = getRepository(Group);
   try {
     if (Object.keys(formattedBody).length !== 0) {
-      console.log('in update body');
       await groupTable.update({ gid }, formattedBody);
     }
     const updatedGroup: Group = await groupTable.findOne(gid);
-    if (doors.length) {
-      console.log('in update doors with', updatedGroup);
-      updatedGroup.doors = [];
+    if (doors) {
       const doorEntity = await getRepository(Door).findByIds(doors);
       updatedGroup.doors = doorEntity;
-      console.log('updatedGroup after making door relations', updatedGroup);
     }
     await groupTable.save(updatedGroup);
     updatedGroup.doors = doors;
@@ -83,7 +79,7 @@ const createGroup = async (req: Request, res: Response) => {
 const deleteGroup = async (req: Request, res: Response) => {
   const groupTable = getRepository(Group);
   try {
-    const deletedGroup = groupTable.findOne(req.params.id);
+    const deletedGroup = await groupTable.findOne(req.params.id);
     await groupTable.delete(req.params.id);
     res.send(deletedGroup);
   } catch (error) {
