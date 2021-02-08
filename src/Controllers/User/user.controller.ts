@@ -4,7 +4,7 @@ import { getRepository } from 'typeorm';
 import pino from 'pino';
 import User from '../../Models/Typeorm/User.entity';
 import Group from '../../Models/Typeorm/Group.entity';
-import { createPerson, deletePerson } from '../../Recognition/user.crud';
+import azureService from '../../Recognition/azure.method';
 
 const logger = pino({
   prettyPrint: true,
@@ -23,14 +23,13 @@ const getUsers = async (req: Request, res: Response) => {
   }
 };
 
-const createUser = async (
-  req: Request,
-  res: Response,
-) => {
+const createUser = async (req: Request, res: Response) => {
   const { group, ...formattedBody } = req.body;
   const userTable = getRepository(User);
   try {
-    const { personId } = await createPerson(formattedBody.email);
+    const { personId } = await azureService('USER', 'CREATE', {
+      email: formattedBody.email,
+    });
     formattedBody.aid = personId;
     const newUser = userTable.create(formattedBody);
     await userTable.save(newUser);
@@ -48,10 +47,7 @@ const createUser = async (
   }
 };
 
-const updateUser = async (
-  req: Request,
-  res: Response,
-) => {
+const updateUser = async (req: Request, res: Response) => {
   const aid: string = req.params.id;
   const { group, ...formattedBody } = req.body;
   const userTable = getRepository(User);
@@ -71,15 +67,12 @@ const updateUser = async (
   }
 };
 
-const deleteUser = async (
-  req: Request,
-  res: Response,
-) => {
+const deleteUser = async (req: Request, res: Response) => {
   const userTable = getRepository(User);
   try {
     const deletedUser = userTable.findOne(req.params.id);
     await userTable.delete(req.params.id);
-    await deletePerson(req.params.id);
+    await azureService('USER', 'DELETE', { personId: req.params.id });
     res.send(deletedUser);
   } catch (error) {
     logger.error(error);
@@ -89,8 +82,5 @@ const deleteUser = async (
 };
 
 export {
-  getUsers,
-  createUser,
-  deleteUser,
-  updateUser,
+  getUsers, createUser, deleteUser, updateUser,
 };

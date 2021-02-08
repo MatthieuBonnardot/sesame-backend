@@ -2,7 +2,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import pino from 'pino';
 import { Request, Response } from 'express';
-import { send } from 'process';
 import Issues from '../../Models/Mongoose/Issues';
 
 const logger = pino({
