@@ -6,12 +6,12 @@ import bodyParser from 'body-parser';
 import pino from 'pino';
 import { createConnection } from 'typeorm';
 import cors from 'cors';
-import { getTrainingStatus, trainPersonsGroup } from './Recognition/group.crud';
 import env from './config/config';
 import 'reflect-metadata';
 import router from './Routes/index';
 import config from './Models/Typeorm/ormconfig';
 import MongoConnection from './Databases/Mongo/connection';
+import azureService from './Recognition/azure.method';
 
 const logger = pino({
   prettyPrint: true,
@@ -81,8 +81,8 @@ app.use((req: express.Request, res: express.Response) => {
     await MongoConnection();
     await createConnection(config);
     logger.info('Connected to SQL DB');
-    trainPersonsGroup();
-    getTrainingStatus();
+    await azureService('GROUP', 'TRAIN', {});
+    await azureService('GROUP', 'STATUS', {});
     app.listen(env.server.port, async () => {
       logger.info(
         `Listening at http://${env.server.hostname}:${env.server.port}/`,
