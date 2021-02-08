@@ -4,58 +4,47 @@ import { Request, Response } from 'express';
 import Logs from '../../Models/Mongoose/Logs';
 
 const getLogs = async (_: Request, res: Response) => {
-  Logs.find({}, (err: Error, docs: Array<any>) => {
-    if (err) {
-      res.status(501).json({
-        error: err.message,
-      });
-    } else if (docs.length === 0) {
-      res.status(200).send('The list of issues is empty');
-    } else {
-      res.status(200).send(docs);
-    }
-  });
+  try {
+    Logs.find().then((logs) => {
+      if (logs.length > 0) res.send(logs);
+      else res.send('No logs found');
+    });
+  } catch (error) {
+    res.send(500);
+  }
 };
 
 const createLog = async (req: Request, res: Response) => {
   try {
-    const newLog: typeof Logs = req.body;
-
-    const createLog = new Logs(newLog);
+    const createLog = new Logs(req.body);
     createLog.save().then((savedLog) => {
       res.status(200).send(savedLog);
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: 'an error occurred', errorMessage: error.message });
+    res.send(500);
   }
 };
 
 const internalLogCreation = async (body: any) => {
-  try {
-    console.log(body);
-    Logs.create(body);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const findLogsById = async (req: Request, res: Response) => {
-  const userId: string = req.params.id;
-  Logs.find({ enteredBy: userId }, (err: Error, docs: Array<any>) => {
-    if (err) {
-      res.status(501).json({
-        error: err.message,
-      });
-    } else if (docs.length === 0) {
-      res.status(200).send(`The list of log for ${userId} is empty`);
-    } else {
-      res.status(200).send(docs);
-    }
+  Logs.create(body).then((savedLog) => {
+    console.log(savedLog);
   });
 };
 
+const findLogsById = async (req: Request, res: Response) => {
+  try {
+    Logs.find({ enteredBy: req.params.id }).then((logs) => {
+      if (logs.length > 0) res.send(logs);
+      else res.send(`No logs found for ${req.params.id}`);
+    });
+  } catch (error) {
+    res.send(500);
+  }
+};
+
 export default {
-  getLogs, createLog, findLogsById, internalLogCreation,
+  getLogs,
+  createLog,
+  findLogsById,
+  internalLogCreation,
 };

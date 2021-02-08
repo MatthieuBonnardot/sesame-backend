@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Request, Response } from "express";
-import Issues from "../../Models/Mongoose/Issues";
+import { Request, Response } from 'express';
+import Issues from '../../Models/Mongoose/Issues';
 
 const createIssue = async (req: Request, res: Response) => {
   try {
@@ -12,7 +12,7 @@ const createIssue = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json({ error: "an error occurred", errorMessage: error.message });
+      .json({ error: 'an error occurred', errorMessage: error.message });
   }
 };
 
@@ -20,7 +20,7 @@ const getIssues = async (_: any, res: Response) => {
   try {
     Issues.find().then((issues) => res.send(issues));
   } catch (error) {
-    res.status(500).json({ error: "an error occurred" });
+    res.status(500).json({ error: 'an error occurred' });
   }
 };
 
@@ -29,7 +29,7 @@ const toggleIssueStatus = async (req: Request, res: Response) => {
     await Issues.findOneAndUpdate(
       { _id: req.params.id },
       { active: false },
-      { new: true }
+      { new: true },
     ).then((updatedIssue) => res.send(updatedIssue));
   } catch (error) {
     res.status(501).send(error.message);
@@ -43,4 +43,6 @@ const deleteIssue = async (req: Request, res: Response) => {
   });
 };
 
-export { createIssue, getIssues, toggleIssueStatus, deleteIssue };
+export {
+  createIssue, getIssues, toggleIssueStatus, deleteIssue,
+};
