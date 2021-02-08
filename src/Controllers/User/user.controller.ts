@@ -5,6 +5,7 @@ import pino from 'pino';
 import User from '../../Models/Typeorm/User.entity';
 import Group from '../../Models/Typeorm/Group.entity';
 import azureService from '../../Recognition/azure.method';
+import sendActivationEmail from '../../Authentication/ActivationEmail/sendActivationEmail';
 
 const logger = pino({
   prettyPrint: true,
@@ -39,6 +40,7 @@ const createUser = async (req: Request, res: Response) => {
       userEntity.group = groupEntity;
       await userTable.save(userEntity);
     }
+    sendActivationEmail(newUser);
     res.send(newUser);
   } catch (error) {
     logger.error(error);

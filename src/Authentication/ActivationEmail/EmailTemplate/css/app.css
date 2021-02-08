@@ -1,0 +1,296 @@
+body {
+  width: 100% !important;
+  min-width: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  margin: 0;
+  margin: 0;
+  padding: 0;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+img {
+  outline: none;
+  text-decoration: none;
+  -ms-interpolation-mode: bicubic;
+  width: auto;
+  max-width: 100%;
+  clear: both;
+  display: block;
+}
+
+center {
+  width: 100%;
+  min-width: 580px;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+  border-collapse: collapse !important;
+}
+
+table,
+tr,
+td,
+th {
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  vertical-align: top;
+  text-align: left;
+}
+
+@media only screen {
+  html {
+    min-height: 100%;
+    background: #f3f3f3;
+  }
+}
+
+table.body {
+  background: #f3f3f3;
+  height: 100%;
+  width: 100%;
+}
+
+table.container {
+  background: #fff;
+  width: 580px;
+  margin: 0 auto;
+  margin: 0 auto;
+  text-align: inherit;
+}
+
+table.row {
+  padding: 0;
+  width: 100%;
+  position: relative;
+}
+
+table.spacer {
+  width: 100%;
+}
+table.spacer td {
+  mso-line-height-rule: exactly;
+}
+
+table.container table.row {
+  display: table;
+}
+
+th.columns {
+  margin: 0 auto;
+  margin: 0 auto;
+  padding-left: 30px;
+  padding-bottom: 16px;
+}
+
+th.columns.last {
+  padding-right: 30px;
+}
+
+th.columns table {
+  width: 100%;
+}
+th.columns table.button {
+  width: auto;
+}
+
+th.large-12 {
+  width: 550px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+th.large-12.first {
+  padding-left: 30px;
+}
+
+th.large-12.last {
+  padding-right: 30px;
+}
+
+th.large-12 center {
+  min-width: 490px;
+}
+
+th.expander {
+  visibility: hidden;
+  width: 0;
+  padding: 0 !important;
+}
+
+img.float-center {
+  margin: 0 auto;
+  margin: 0 auto;
+  float: none;
+  text-align: center;
+}
+
+table.float-center {
+  margin: 0 auto;
+  margin: 0 auto;
+  float: none;
+  text-align: center;
+}
+
+body,
+table.body,
+td,
+th {
+  color: #0a0a0a;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  margin: 0;
+  margin: 0;
+  text-align: left;
+  line-height: 1.3;
+}
+
+body,
+table.body,
+td,
+th {
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+a {
+  color: #b00e23;
+  text-decoration: none;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  padding: 0;
+  text-align: left;
+  line-height: 1.3;
+}
+a:hover {
+  color: #810a1a;
+}
+a:active {
+  color: #810a1a;
+}
+a:visited {
+  color: #b00e23;
+}
+
+span.preheader {
+  display: none !important;
+  visibility: hidden;
+  mso-hide: all !important;
+  font-size: 1px;
+  color: #f3f3f3;
+  line-height: 1px;
+  max-height: 0px;
+  max-width: 0px;
+  opacity: 0;
+  overflow: hidden;
+}
+
+table.button {
+  width: auto;
+  margin: 0 0 16px 0;
+  margin: 0 0 16px 0;
+}
+table.button table td {
+  text-align: left;
+  color: #b00e23;
+  background: #fff;
+  border: 2px solid #b00e23;
+}
+table.button table td a {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  color: #b00e23;
+  text-decoration: none;
+  text-align: left;
+  display: inline-block;
+  padding: 8px 16px 8px 16px;
+  border: 0 solid #fff;
+  border-radius: 3px;
+}
+
+table.button:hover table tr td a,
+table.button:active table tr td a,
+table.button table tr td a:visited {
+  color: #b00e23;
+}
+
+table.button:hover table td,
+table.button:visited table td,
+table.button:active table td {
+  background: #e6e6e6;
+  color: #b00e23;
+}
+
+table.button:hover table a,
+table.button:visited table a,
+table.button:active table a {
+  border: 0 solid #e6e6e6;
+}
+
+@media only screen and (max-width: 610px) {
+  table.body img {
+    width: auto;
+    height: auto;
+  }
+  table.body center {
+    min-width: 0 !important;
+  }
+  table.body .container {
+    width: 95% !important;
+  }
+  table.body .columns {
+    height: auto !important;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+  th.small-12 {
+    display: inline-block !important;
+    width: 100% !important;
+  }
+}
+
+body,
+html,
+.body {
+  background: #181a1d !important;
+}
+
+#logo {
+  width: 150px;
+}
+
+.text-row {
+  background-color: #e8e8e8;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 30px;
+}
+
+.code {
+  font-size: 50px;
+}
