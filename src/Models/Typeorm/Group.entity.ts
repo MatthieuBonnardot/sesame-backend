@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import {
   Column,
   Entity,
@@ -27,9 +28,11 @@ class Group {
   public accessToHour: number;
 
   // @Column()
-  // public group_image: blob;
+  // public group_image: string;
 
-  @OneToMany(() => User, (user: User) => user.group)
+  @OneToMany(() => User, (user: User) => user.group, {
+    onDelete: 'CASCADE',
+  })
   public users: User[];
 
   @ManyToMany(() => Door, (door: Door) => door.groups, {
