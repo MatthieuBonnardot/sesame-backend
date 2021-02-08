@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { Request, Response } from 'express';
 import pino from 'pino';
-import { getRepository, Repository } from 'typeorm';
+import { getRepository } from 'typeorm';
 import Group from '../../Models/Typeorm/Group.entity';
 import Door from '../../Models/Typeorm/Door.entity';
 
