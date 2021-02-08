@@ -41,6 +41,7 @@ class User {
   public isActive: boolean;
 
   @ManyToOne(() => Group, (group: Group) => group.users, {
+    onUpdate: 'CASCADE',
     cascade: true,
   })
   public group: Group;

@@ -70,9 +70,14 @@ const updateUser = async (req: Request, res: Response) => {
 const deleteUser = async (req: Request, res: Response) => {
   const userTable = getRepository(User);
   try {
-    const deletedUser = userTable.findOne(req.params.id);
+    const deletedUser = await userTable.findOne(req.params.id);
     await userTable.delete(req.params.id);
+<<<<<<< HEAD
     await azureService('USER', 'DELETE', { personId: req.params.id });
+=======
+    await deletePerson(req.params.id);
+    console.log('deleted user pre res.send', deletedUser);
+>>>>>>> fix: update user/group return the updated entity
     res.send(deletedUser);
   } catch (error) {
     logger.error(error);

@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { Request, Response } from 'express';
 import pino from 'pino';
-import { getRepository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import Group from '../../Models/Typeorm/Group.entity';
 import Door from '../../Models/Typeorm/Door.entity';
 
@@ -27,14 +27,19 @@ const updateGroup = async (req: Request, res: Response) => {
   const { doors, ...formattedBody } = req.body;
   const groupTable = getRepository(Group);
   try {
-    await groupTable.update({ gid }, formattedBody);
+    if (Object.keys(formattedBody).length !== 0) {
+      console.log('in update body');
+      await groupTable.update({ gid }, formattedBody);
+    }
     const updatedGroup: Group = await groupTable.findOne(gid);
     if (doors.length) {
+      console.log('in update doors with', updatedGroup);
       updatedGroup.doors = [];
       const doorEntity = await getRepository(Door).findByIds(doors);
       updatedGroup.doors = doorEntity;
+      console.log('updatedGroup after making door relations', updatedGroup);
     }
-    groupTable.save(updatedGroup);
+    await groupTable.save(updatedGroup);
     updatedGroup.doors = doors;
     res.send(updatedGroup);
   } catch (error) {
