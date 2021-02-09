@@ -6,7 +6,7 @@ import User from '../../Models/Typeorm/User.entity';
 
 const sendActivationEmail = async (userObject: any) => {
   const { firstName, email, aid } = userObject;
-  const token = String(Math.floor(Math.random() * 1000000));
+  const token = String(Math.floor(Math.random() * 100000));
   const dirPath = path.join(__dirname, '/EmailTemplate/emailTemplate.html');
 
   let data = fs.readFileSync(dirPath, {
@@ -27,7 +27,7 @@ const sendActivationEmail = async (userObject: any) => {
     },
   });
 
-  const update = await getRepository(User).update(aid, { registrationKey: token });
+  const updatedUser = await getRepository(User).update(aid, { registrationKey: token });
   const send = await transporter.sendMail({
     from: 'info@playground-area.com',
     to: email,
@@ -35,8 +35,8 @@ const sendActivationEmail = async (userObject: any) => {
     text: 'Your invitation to sesame',
     html: data,
   });
-  console.log('update user', update);
-  console.log('sending email', send);
+
+  if (send.rejected.length || updatedUser.affected === 0) return false;
   return true;
 };
 

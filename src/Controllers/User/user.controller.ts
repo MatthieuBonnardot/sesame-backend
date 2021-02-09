@@ -6,6 +6,7 @@ import User from '../../Models/Typeorm/User.entity';
 import Group from '../../Models/Typeorm/Group.entity';
 import azureService from '../../Recognition/azure.method';
 import sendActivationEmail from '../../Authentication/ActivationEmail/sendActivationEmail';
+import { encrypt } from '../../Middleware/encryption';
 
 const logger = pino({
   prettyPrint: true,
@@ -25,8 +26,9 @@ const getUsers = async (req: Request, res: Response) => {
 };
 
 const createUser = async (req: Request, res: Response) => {
-  const { group, ...formattedBody } = req.body;
   const userTable = getRepository(User);
+  const { group, ...formattedBody } = req.body;
+  formattedBody.doorKey = encrypt(formattedBody.doorKey);
   try {
     const { personId } = await azureService('USER', 'CREATE', {
       email: formattedBody.email,

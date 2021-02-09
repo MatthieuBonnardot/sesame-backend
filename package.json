@@ -10,6 +10,7 @@
   "dependencies": {
     "@types/es6-shim": "^0.31.41",
     "@types/mongoose": "^5.10.3",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "class-validator": "^0.13.1",
     "cors": "^2.8.5",
@@ -24,6 +25,7 @@
     "typeorm": "^0.2.30"
   },
   "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
     "@types/bluebird": "^3.5.33",
     "@types/body-parser": "^1.19.0",
     "@types/cors": "^2.8.9",
