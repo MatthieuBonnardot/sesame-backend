@@ -7,11 +7,11 @@ const logger = pino({
   prettyPrint: true,
 });
 
-const { uri } = env.mongo;
+const { test } = env.mongo;
 
 const MongoConnection = async () => {
   await connect(
-    uri,
+    test,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

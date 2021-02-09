@@ -58,6 +58,7 @@ const createGroup = async (req: Request, res: Response) => {
     accessFromHour,
     accessToHour,
   };
+  // const { doors, ...formattedBody } = req.body;
   try {
     const newGroup: Group = groupTable.create(formattedBody);
     if (doors.length) {
