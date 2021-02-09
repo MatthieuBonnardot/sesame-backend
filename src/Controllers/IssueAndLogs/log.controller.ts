@@ -10,7 +10,7 @@ const getLogs = async (_: Request, res: Response) => {
       else res.send('No logs found');
     });
   } catch (error) {
-    res.send(500);
+    res.sendStatus(500);
   }
 };
 
@@ -21,7 +21,7 @@ const createLog = async (req: Request, res: Response) => {
       res.status(200).send(savedLog);
     });
   } catch (error) {
-    res.send(500);
+    res.sendStatus(500);
   }
 };
 
@@ -38,7 +38,7 @@ const findLogsById = async (req: Request, res: Response) => {
       else res.send(`No logs found for ${req.params.id}`);
     });
   } catch (error) {
-    res.send(500);
+    res.sendStatus(500);
   }
 };
 

@@ -19,8 +19,7 @@ const getUsers = async (req: Request, res: Response) => {
     res.send(users);
   } catch (error) {
     logger.error(error);
-    res.status(500);
-    res.send(error);
+    res.sendStatus(500);
   }
 };
 
@@ -44,8 +43,7 @@ const createUser = async (req: Request, res: Response) => {
     res.send(newUser);
   } catch (error) {
     logger.error(error);
-    res.status(500);
-    res.send(error);
+    res.sendStatus(500);
   }
 };
 
@@ -64,8 +62,7 @@ const updateUser = async (req: Request, res: Response) => {
     res.send(updatedUser);
   } catch (error) {
     logger.error(error);
-    res.status(500);
-    res.send(error);
+    res.sendStatus(500);
   }
 };
 
@@ -78,8 +75,7 @@ const deleteUser = async (req: Request, res: Response) => {
     res.send(deletedUser);
   } catch (error) {
     logger.error(error);
-    res.status(500);
-    res.send(error);
+    res.sendStatus(500);
   }
 };
 

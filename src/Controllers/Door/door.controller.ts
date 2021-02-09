@@ -17,8 +17,7 @@ const getDoors = async (req: Request, res: Response) => {
     res.send(doors);
   } catch (error) {
     logger.error(error);
-    res.status(500);
-    res.send(error);
+    res.sendStatus(500);
   }
 };
 
@@ -32,8 +31,7 @@ const updateDoor = async (req: Request, res: Response) => {
     res.send(newDoor);
   } catch (error) {
     logger.error(error);
-    res.status(500);
-    res.send(error);
+    res.sendStatus(500);
   }
 };
 
@@ -44,8 +42,7 @@ const createDoor = async (req: Request, res: Response) => {
     res.send(newDoor);
   } catch (error) {
     logger.error(error);
-    res.status(500);
-    res.send(error);
+    res.sendStatus(500);
   }
 };
 

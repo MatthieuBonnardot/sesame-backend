@@ -18,7 +18,7 @@ const MongoConnection = async () => {
       useFindAndModify: true,
     },
     (err) => {
-      if (err) console.error(err);
+      if (err) logger.error(err);
       logger.info('Connected to Mongo DB');
     },
   );

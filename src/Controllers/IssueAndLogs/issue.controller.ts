@@ -10,9 +10,7 @@ const createIssue = async (req: Request, res: Response) => {
       res.status(200).send(savedIssue);
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: 'an error occurred', errorMessage: error.message });
+    res.sendStatus(500);
   }
 };
 
@@ -32,7 +30,7 @@ const toggleIssueStatus = async (req: Request, res: Response) => {
       { new: true },
     ).then((updatedIssue) => res.send(updatedIssue));
   } catch (error) {
-    res.status(501).send(error.message);
+    res.sendStatus(500);
   }
 };
 

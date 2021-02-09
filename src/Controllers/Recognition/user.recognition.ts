@@ -5,7 +5,7 @@ import { getRepository } from 'typeorm';
 import User from '../../Models/Typeorm/User.entity';
 import logsController from '../IssueAndLogs/log.controller';
 import checkAccess from '../../Middleware/checkAccess';
-import { openDoor } from '../Door/door.controller';
+// import { openDoor } from '../Door/door.controller';
 import azureService from '../../Recognition/azure.method';
 
 const logger = pino({
@@ -27,13 +27,13 @@ const verifyUserStatus = async (req: Request, res: Response) => {
     if (list.length === 0) res.status(404).send('Not Found');
     else if (list[0].isActive === true) res.status(200).send(false);
     else if (list[0].isActive === false) {
-      res.status(200).send({
+      res.send({
         aid: list[0].aid,
         firstName: list[0].firstName,
       });
     }
   } catch (error) {
-    res.sendStatus(501);
+    res.sendStatus(500);
   }
 };
 
@@ -80,7 +80,6 @@ const identifyUser = async (req: Request, res: Response) => {
           enteredBy: personId,
           enteredDoor: DID,
         });
-        console.log(checked.doorKey);
         // await openDoor(checked.doorKey);
       }
       res.send(checked);
@@ -96,8 +95,6 @@ const identifyUserWithCode = async (req: Request, res: Response) => {
     const user = await getRepository(User).find({
       where: { doorKey: req.params.code },
     });
-
-    console.log(user);
 
     if (user.length <= 0) {
       res.send({

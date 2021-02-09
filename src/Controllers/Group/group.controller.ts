@@ -17,8 +17,7 @@ const getGroups = async (req: Request, res: Response) => {
     res.send(groups);
   } catch (error) {
     logger.error(error);
-    res.status(500);
-    res.send(error);
+    res.sendStatus(500);
   }
 };
 
@@ -40,8 +39,7 @@ const updateGroup = async (req: Request, res: Response) => {
     res.send(updatedGroup);
   } catch (error) {
     logger.error(error);
-    res.status(500);
-    res.send(error);
+    res.sendStatus(500);
   }
 };
 
@@ -71,8 +69,7 @@ const createGroup = async (req: Request, res: Response) => {
     res.send(newGroup);
   } catch (error) {
     logger.error(error);
-    res.status(500);
-    res.send(error);
+    res.sendStatus(500);
   }
 };
 
@@ -84,8 +81,7 @@ const deleteGroup = async (req: Request, res: Response) => {
     res.send(deletedGroup);
   } catch (error) {
     logger.error(error);
-    res.status(500);
-    res.send(error);
+    res.sendStatus(500);
   }
 };
 
