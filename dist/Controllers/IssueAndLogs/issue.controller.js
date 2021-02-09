@@ -39,33 +39,65 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.toggleIssueStatus = exports.getIssues = void 0;
-var pino_1 = __importDefault(require("pino"));
+exports.deleteIssue = exports.toggleIssueStatus = exports.getIssues = exports.createIssue = void 0;
 var Issues_1 = __importDefault(require("../../Models/Mongoose/Issues"));
-var logger = pino_1.default({
-    prettyPrint: true,
-});
+var createIssue = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var createIssue_1;
+    return __generator(this, function (_a) {
+        try {
+            createIssue_1 = new Issues_1.default(req.body);
+            createIssue_1.save().then(function (savedIssue) {
+                res.status(200).send(savedIssue);
+            });
+        }
+        catch (error) {
+            res.sendStatus(500);
+        }
+        return [2];
+    });
+}); };
+exports.createIssue = createIssue;
 var getIssues = function (_, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        Issues_1.default.find({}, function (err, docs) {
-            if (err) {
-                logger.error("Error: " + err);
-            }
-            else if (docs.length === 0) {
-                logger.info('Empty list of issues');
-            }
-            else {
-                res.send(docs);
-            }
-        });
+        try {
+            Issues_1.default.find().then(function (issues) { return res.send(issues); });
+        }
+        catch (error) {
+            res.status(500).json({ error: 'an error occurred' });
+        }
         return [2];
     });
 }); };
 exports.getIssues = getIssues;
 var toggleIssueStatus = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var error_1;
     return __generator(this, function (_a) {
-        return [2];
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4, Issues_1.default.findOneAndUpdate({ _id: req.params.id }, { active: false }, { new: true }).then(function (updatedIssue) { return res.send(updatedIssue); })];
+            case 1:
+                _a.sent();
+                return [3, 3];
+            case 2:
+                error_1 = _a.sent();
+                res.sendStatus(500);
+                return [3, 3];
+            case 3: return [2];
+        }
     });
 }); };
 exports.toggleIssueStatus = toggleIssueStatus;
+var deleteIssue = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        Issues_1.default.findByIdAndDelete(req.params.id).then(function (successResponse) {
+            if (successResponse)
+                res.send(req.params.id + " has successfully been deleted");
+            else
+                res.sendStatus(404);
+        });
+        return [2];
+    });
+}); };
+exports.deleteIssue = deleteIssue;
 //# sourceMappingURL=issue.controller.js.map

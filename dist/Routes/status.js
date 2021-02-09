@@ -27,7 +27,11 @@ var log_controller_1 = __importDefault(require("../Controllers/IssueAndLogs/log.
 var issueController = __importStar(require("../Controllers/IssueAndLogs/issue.controller"));
 var status = express_1.default.Router();
 status.get('/logs', log_controller_1.default.getLogs);
+status.post('/logs', log_controller_1.default.createLog);
+status.get('/logs/:id', log_controller_1.default.findLogsById);
+status.post('/issues', issueController.createIssue);
 status.get('/issues', issueController.getIssues);
-status.put('/issues', issueController.toggleIssueStatus);
+status.put('/issues/:id', issueController.toggleIssueStatus);
+status.delete('/issues/:id', issueController.deleteIssue);
 exports.default = status;
 //# sourceMappingURL=status.js.map

@@ -27,6 +27,7 @@ var doorController = __importStar(require("../Controllers/Door/door.controller")
 var door = express_1.default.Router();
 door.get('/list', doorController.getDoors);
 door.post('/create', doorController.createDoor);
-door.delete('/delete', doorController.deleteDoor);
+door.put('/update/:id', doorController.updateDoor);
+door.delete('/delete/:id', doorController.deleteDoor);
 exports.default = door;
 //# sourceMappingURL=door.js.map

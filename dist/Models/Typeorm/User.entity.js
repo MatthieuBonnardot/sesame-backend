@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var typeorm_1 = require("typeorm");
+var class_validator_1 = require("class-validator");
 var Group_entity_1 = __importDefault(require("./Group.entity"));
 var User = (function () {
     function User() {
@@ -22,35 +23,40 @@ var User = (function () {
         __metadata("design:type", String)
     ], User.prototype, "aid", void 0);
     __decorate([
-        typeorm_1.Column('int'),
+        typeorm_1.Column('varchar', { length: 25, nullable: true }),
+        __metadata("design:type", String)
+    ], User.prototype, "registrationKey", void 0);
+    __decorate([
+        typeorm_1.Column('int', { nullable: true }),
         __metadata("design:type", Number)
-    ], User.prototype, "gid", void 0);
-    __decorate([
-        typeorm_1.Column('varchar', { length: 25 }),
-        __metadata("design:type", String)
-    ], User.prototype, "registration_key", void 0);
-    __decorate([
-        typeorm_1.Column('int'),
-        __metadata("design:type", Number)
-    ], User.prototype, "door_key", void 0);
+    ], User.prototype, "doorKey", void 0);
     __decorate([
         typeorm_1.Column('varchar', { length: 50 }),
+        class_validator_1.IsNotEmpty(),
         __metadata("design:type", String)
-    ], User.prototype, "first_name", void 0);
+    ], User.prototype, "firstName", void 0);
     __decorate([
         typeorm_1.Column('varchar', { length: 50 }),
+        class_validator_1.IsNotEmpty(),
         __metadata("design:type", String)
-    ], User.prototype, "last_name", void 0);
+    ], User.prototype, "lastName", void 0);
     __decorate([
-        typeorm_1.Column('varchar', { length: 50 }),
+        typeorm_1.Column('varchar', { length: 50, unique: true }),
+        class_validator_1.IsEmail(),
         __metadata("design:type", String)
     ], User.prototype, "email", void 0);
     __decorate([
-        typeorm_1.Column('boolean'),
+        typeorm_1.Column('boolean', {
+            nullable: true,
+            default: false,
+        }),
         __metadata("design:type", Boolean)
     ], User.prototype, "isActive", void 0);
     __decorate([
-        typeorm_1.ManyToOne(function () { return Group_entity_1.default; }, function (group) { return group.users; }),
+        typeorm_1.ManyToOne(function () { return Group_entity_1.default; }, function (group) { return group.users; }, {
+            onUpdate: 'CASCADE',
+            cascade: true,
+        }),
         __metadata("design:type", Group_entity_1.default)
     ], User.prototype, "group", void 0);
     User = __decorate([

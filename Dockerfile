@@ -5,7 +5,6 @@ WORKDIR /usr/src/app
 COPY package*.json .env ./
 
 RUN npm install
-
 RUN npm install -g typescript
 
 COPY . .

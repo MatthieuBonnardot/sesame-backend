@@ -27,7 +27,7 @@ var groupController = __importStar(require("../Controllers/Group/group.controlle
 var group = express_1.default.Router();
 group.get('/list', groupController.getGroups);
 group.post('/create', groupController.createGroup);
-group.delete('/delete', groupController.deleteGroup);
-group.put('/update', groupController.updateGroup);
+group.delete('/delete/:id', groupController.deleteGroup);
+group.put('/update/:id', groupController.updateGroup);
 exports.default = group;
 //# sourceMappingURL=group.js.map

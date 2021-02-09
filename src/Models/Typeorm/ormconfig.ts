@@ -4,8 +4,7 @@ import env from '../../config/config';
 
 const config: ConnectionOptions = {
   type: 'postgres',
-  url: env.postgres.uri_admin,
-  // password: 'password',
+  url: env.postgres.uri,
   entities: [
     path.join(__dirname, '/*.entity{.ts,.js}'),
   ],

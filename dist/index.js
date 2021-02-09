@@ -1,23 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -58,95 +39,92 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var http = __importStar(require("http"));
 var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var pino_1 = __importDefault(require("pino"));
-<<<<<<< HEAD
-var config_1 = __importDefault(require("./config/config"));
-require("reflect-metadata");
-=======
->>>>>>> 5b6a26c2840d3947a5dae19a844ee7107aade9c8
 var typeorm_1 = require("typeorm");
+var cors_1 = __importDefault(require("cors"));
 var config_1 = __importDefault(require("./config/config"));
 require("reflect-metadata");
+var router_1 = __importDefault(require("./Routes/router"));
 var ormconfig_1 = __importDefault(require("./Models/Typeorm/ormconfig"));
 var connection_1 = __importDefault(require("./Databases/Mongo/connection"));
-var status_1 = __importDefault(require("./Routes/status"));
-var door_1 = __importDefault(require("./Routes/door"));
-var group_1 = __importDefault(require("./Routes/group"));
-var user_1 = __importDefault(require("./Routes/user"));
-var azure_1 = __importDefault(require("./Routes/azure"));
+var azure_method_1 = __importDefault(require("./Recognition/azure.method"));
 var logger = pino_1.default({
     prettyPrint: true,
 });
-var router = express_1.default();
-router.use(function (req, res, next) {
-    logger.info("METHOD - [" + req.method + "], URL - [" + req.url + "], IP - [" + req.socket.remoteAddress + "]");
-    res.on("finish", function () {
-        logger.info("METHOD - [" + req.method + "], URL - [" + req.url + "], IP - [" + req.socket.remoteAddress + "], STATUS - [" + req.statusCode + "]");
+var app = express_1.default();
+app.use(cors_1.default());
+app.use(function (req, res, next) {
+    logger.info("[" + req.method + "] [" + req.url + "] [" + req.hostname + "]");
+    res.on('finish', function () {
+        logger.info("[" + req.method + "] [" + req.url + "] [" + req.hostname + "] ==> [" + res.statusCode + "]");
     });
     next();
 });
-router.use(body_parser_1.default.urlencoded({ extended: false }));
-router.use(body_parser_1.default.json());
-router.use(function (req, res, next) {
-    res.header("Acces-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    if (req.method === "OPTIONS") {
-        res.header("Access-Control-Allow-Methods", "GET POST PUT DELETE");
+app.use(body_parser_1.default.json());
+app.use(function (req, res, next) {
+    if (req.url.match(/azure\/register/) && req.method === 'PUT') {
+        var body_1 = [];
+        req
+            .on('data', function (chunk) { return body_1.push(chunk); })
+            .on('end', function () {
+            req.body = Buffer.concat(body_1);
+            console.log(req.body);
+            next();
+        });
+    }
+    else
+        next();
+});
+app.use(function (req, res, next) {
+    res.header('Acces-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    if (req.method === 'OPTIONS') {
+        res.header('Access-Control-Allow-Methods', 'GET POST PUT DELETE');
         return res.status(200).json({});
     }
     next();
 });
-<<<<<<< HEAD
-router.use("/status", status_1.default);
-router.use("/door", door_1.default);
-router.use("/group", group_1.default);
-router.use("/user", user_1.default);
-router.use("/azure", azure_1.default);
-router.use(function (req, res) {
-    var error = new Error("not found");
-=======
-router.use('/status', status_1.default);
-router.use('/door', door_1.default);
-router.use('/group', group_1.default);
-router.use('/user', user_1.default);
-router.use('/azure', azure_1.default);
-router.use(function (_, res) {
+app.use(router_1.default);
+app.use(function (req, res) {
     var error = new Error('not found');
->>>>>>> 5b6a26c2840d3947a5dae19a844ee7107aade9c8
     return res.status(404).json({
         message: error.message,
     });
 });
-var httpServer = http.createServer(router);
-httpServer.listen(config_1.default.server.port, function () { return __awaiter(void 0, void 0, void 0, function () {
+(function () { return __awaiter(void 0, void 0, void 0, function () {
     var error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 3, , 4]);
-                return [4, connection_1.default];
+                _a.trys.push([0, 5, , 6]);
+                return [4, connection_1.default()];
             case 1:
                 _a.sent();
-                logger.info("Connected to Mongo DB");
                 return [4, typeorm_1.createConnection(ormconfig_1.default)];
             case 2:
                 _a.sent();
-<<<<<<< HEAD
-                logger.info("Connected to SQL DB");
-=======
                 logger.info('Connected to SQL DB');
->>>>>>> 5b6a26c2840d3947a5dae19a844ee7107aade9c8
-                logger.info("Listening at http://" + config_1.default.server.hostname + ":" + config_1.default.server.port + "/");
-                return [3, 4];
+                return [4, azure_method_1.default('GROUP', 'TRAIN', {})];
             case 3:
+                _a.sent();
+                return [4, azure_method_1.default('GROUP', 'STATUS', {})];
+            case 4:
+                _a.sent();
+                app.listen(config_1.default.server.port, function () { return __awaiter(void 0, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                        logger.info("Listening at http://" + config_1.default.server.hostname + ":" + config_1.default.server.port + "/");
+                        return [2];
+                    });
+                }); });
+                return [3, 6];
+            case 5:
                 error_1 = _a.sent();
                 logger.error(error_1.message);
-                return [3, 4];
-            case 4: return [2];
+                return [3, 6];
+            case 6: return [2];
         }
     });
-}); });
+}); })();
 //# sourceMappingURL=index.js.map
