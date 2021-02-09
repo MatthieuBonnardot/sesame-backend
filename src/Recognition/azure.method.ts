@@ -31,10 +31,11 @@ async function azureService(
   params: AzureServiceParameters,
 ): Promise<any> {
   try {
+    const url = `https://${env.azure.location}.api.cognitive.microsoft.com/face/v1.0`;
     switch (action) {
       case 'IDENTIFY':
         return AzureFetch(
-          `https://${env.azure.location}.api.cognitive.microsoft.com/face/v1.0/identify`,
+          `${url}/identify`,
           {
             method: 'POST',
             body: JSON.stringify({
@@ -54,7 +55,7 @@ async function azureService(
         switch (subAction) {
           case 'CREATE':
             return await AzureFetch(
-              `https://${env.azure.location}.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/persons`,
+              `${url}/persongroups/${env.azure.group_name}/persons`,
               {
                 method: 'POST',
                 body: JSON.stringify({
@@ -69,7 +70,7 @@ async function azureService(
 
           case 'FACE':
             return AzureFetch(
-              `https://${env.azure.location}.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/persons/${params.personId}/persistedFaces?detectionModel=detection_03`,
+              `${url}/persongroups/${env.azure.group_name}/persons/${params.personId}/persistedFaces?detectionModel=detection_03`,
               {
                 method: 'POST',
                 body: params.octetStream,
@@ -82,7 +83,7 @@ async function azureService(
 
           case 'DELETE':
             AzureFetch(
-              `https://${env.azure.location}.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/persons/${params.personId}`,
+              `${url}/persongroups/${env.azure.group_name}/persons/${params.personId}`,
               {
                 method: 'DELETE',
                 headers: {
@@ -102,7 +103,7 @@ async function azureService(
         switch (subAction) {
           case 'DELETE':
             await AzureFetch(
-              `https://${env.azure.location}.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}`,
+              `${url}/persongroups/${env.azure.group_name}`,
               {
                 method: 'DELETE',
                 headers: {
@@ -114,7 +115,7 @@ async function azureService(
 
           case 'TRAIN':
             await AzureFetch(
-              `https://${env.azure.location}.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/train`,
+              `${url}/persongroups/${env.azure.group_name}/train`,
               {
                 method: 'POST',
                 body: '',
@@ -128,7 +129,7 @@ async function azureService(
 
           case 'STATUS':
             await AzureFetch(
-              `https://${env.azure.location}.api.cognitive.microsoft.com/face/v1.0/persongroups/${env.azure.group_name}/training`,
+              `${url}/persongroups/${env.azure.group_name}/training`,
               {
                 method: 'GET',
                 headers: {

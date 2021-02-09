@@ -8,7 +8,7 @@ import { createConnection } from 'typeorm';
 import cors from 'cors';
 import env from './config/config';
 import 'reflect-metadata';
-import router from './Routes/index';
+import router from './Routes/router';
 import config from './Models/Typeorm/ormconfig';
 import MongoConnection from './Databases/Mongo/connection';
 import azureService from './Recognition/azure.method';

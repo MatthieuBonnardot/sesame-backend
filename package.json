@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "cd /dist nodemon",
+    "start": "cd /dist node index.js",
     "dev:watch": "ts-node src/index.ts",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
