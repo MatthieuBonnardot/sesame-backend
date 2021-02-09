@@ -64,13 +64,12 @@ const identifyUser = async (req: Request, res: Response) => {
       personId: faceID,
     });
 
-    const { personId } = azureResponse[0].candidates[0];
-
-    if (!personId) {
+    if (!azureResponse[0]?.candidates[0]?.personId) {
       res.send({
         arg: 'User is unknown',
       });
     } else {
+      const { personId } = azureResponse[0].candidates[0];
       const checked: AccessControl = await checkAccess(
         personId,
         Number(DID),
