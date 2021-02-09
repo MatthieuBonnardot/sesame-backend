@@ -11,7 +11,7 @@ interface Log {
 const logSchema = new Schema({
   enteredBy: { type: String, required: true },
   enteredDoor: { type: Number, required: true },
-  date: { type: String, required: false, default: new Date().toLocaleString() },
+  date: { type: String, required: false, default: new Date().toISOString() },
 });
 
 const logModel = model<Log & Document>('Logs', logSchema);
