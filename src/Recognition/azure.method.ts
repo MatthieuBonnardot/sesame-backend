@@ -41,7 +41,7 @@ async function azureService(
               personGroupId: env.azure.group_name,
               faceIds: [params.personId],
               maxNumOfCandidatesReturned: 1,
-              confidenceThreshold: 0.6,
+              confidenceThreshold: 0.8,
             }),
             headers: {
               'Content-Type': 'application/json',
