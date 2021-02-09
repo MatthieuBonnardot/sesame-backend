@@ -39,7 +39,7 @@ async function azureService(
             method: 'POST',
             body: JSON.stringify({
               personGroupId: env.azure.group_name,
-              faceIds: [params.faceId],
+              faceIds: [params.personId],
               maxNumOfCandidatesReturned: 1,
               confidenceThreshold: 0.6,
             }),

@@ -5,6 +5,7 @@ import { getRepository } from 'typeorm';
 import User from '../../Models/Typeorm/User.entity';
 import logsController from '../IssueAndLogs/log.controller';
 import checkAccess from '../../Middleware/checkAccess';
+import { openDoor } from '../Door/door.controller';
 import azureService from '../../Recognition/azure.method';
 
 const logger = pino({
@@ -14,6 +15,7 @@ const logger = pino({
 interface AccessControl {
   firstName: string;
   access: boolean;
+  doorKey: number;
 }
 
 const verifyUserStatus = async (req: Request, res: Response) => {
@@ -62,20 +64,25 @@ const identifyUser = async (req: Request, res: Response) => {
       personId: faceID,
     });
 
-    if (azureResponse[0].candidates.length <= 0) {
+    const { personId } = azureResponse[0].candidates[0];
+
+    if (!personId) {
       res.send({
         arg: 'User is unknown',
       });
     } else {
       const checked: AccessControl = await checkAccess(
-        azureResponse[0].candidates[0],
+        personId,
         Number(DID),
       );
+
       if (checked.access) {
         logsController.internalLogCreation({
-          enteredBy: azureResponse[0].candidates[0],
+          enteredBy: personId,
           enteredDoor: DID,
         });
+        console.log(checked.doorKey);
+        // await openDoor(checked.doorKey);
       }
       res.send(checked);
     }
@@ -85,4 +92,39 @@ const identifyUser = async (req: Request, res: Response) => {
   }
 };
 
-export { verifyUserStatus, addFaceMappings, identifyUser };
+const identifyUserWithCode = async (req: Request, res: Response) => {
+  try {
+    const user = await getRepository(User).find({
+      where: { doorKey: req.params.code },
+    });
+
+    console.log(user);
+
+    if (user.length <= 0) {
+      res.send({
+        arg: 'User is unknown',
+      });
+    }
+    const checked: AccessControl = await checkAccess(
+      user[0].aid,
+      Number(req.params.DID),
+    );
+    if (checked.access) {
+      logsController.internalLogCreation({
+        enteredBy: user[0].aid,
+        enteredDoor: req.params.DID,
+      });
+    }
+    // await openDoor(checked.doorKey);
+    res.send(checked);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+};
+
+export {
+  verifyUserStatus,
+  addFaceMappings,
+  identifyUser,
+  identifyUserWithCode,
+};
