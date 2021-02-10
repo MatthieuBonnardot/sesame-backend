@@ -39,6 +39,8 @@ const sendActivationEmail = async (userObject: any) => {
   });
 
   if (send.rejected.length || updatedUser.affected === 0) return false;
+  console.log(userObject);
+
   return true;
 };
 
