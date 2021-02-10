@@ -39,8 +39,11 @@ const createUser = async (req: Request, res: Response) => {
       userEntity.group = groupEntity;
       await userTable.save(userEntity);
     }
+    const returnUser = await getRepository(User).findOne(personId, {
+      relations: ['group'],
+    });
     sendActivationEmail(newUser);
-    res.send(newUser);
+    res.send(returnUser);
   } catch (error) {
     logger.error(error);
     res.sendStatus(500);
