@@ -1,6 +1,6 @@
 
 <p align="center">
- <img src="./SesameBackendwLogo.png" style="display:flex; justify-self:center; align-self: flex-start;">
+ <img src="./Backend.png" style="display:flex; justify-self:center; align-self: flex-start;">
 </p>
 <img src="https://img.shields.io/github/languages/top/MatthieuBonnardot/sesame-backend" style="display:flex; justify-self:center; align-self: flex-start;">
 
