@@ -24,6 +24,10 @@ Finally, a docker file is setup so you can also run the following:
 
 ` docker build <Your docker image name> .`
 
+and
+
+`docker run -it -p 5000:5005 <Your docker image name>`
+
 ## Dependencies
     "body-parser": "^1.19.0",
     "class-validator": "^0.13.1",
