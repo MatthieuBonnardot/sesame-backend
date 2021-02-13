@@ -39,36 +39,157 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.identifyUser = exports.addFaceMappings = exports.verifyUserStatus = void 0;
+exports.identifyUserWithCode = exports.identifyUser = exports.addFaceMappings = exports.verifyUserStatus = void 0;
 var pino_1 = __importDefault(require("pino"));
+var typeorm_1 = require("typeorm");
+var User_entity_1 = __importDefault(require("../../Models/Typeorm/User.entity"));
+var log_controller_1 = __importDefault(require("../IssueAndLogs/log.controller"));
+var checkAccess_1 = __importDefault(require("../../Middleware/checkAccess"));
+var azure_method_1 = __importDefault(require("../../Recognition/azure.method"));
 var logger = pino_1.default({
     prettyPrint: true,
 });
 var verifyUserStatus = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var list, error_1;
     return __generator(this, function (_a) {
-        try {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4, typeorm_1.getRepository(User_entity_1.default).find({
+                        where: { registrationKey: req.params.code },
+                    })];
+            case 1:
+                list = _a.sent();
+                if (list.length === 0)
+                    res.status(404).send('Not Found');
+                else if (list[0].isActive === true)
+                    res.status(200).send(false);
+                else if (list[0].isActive === false) {
+                    res.send({
+                        aid: list[0].aid,
+                        firstName: list[0].firstName,
+                    });
+                }
+                return [3, 3];
+            case 2:
+                error_1 = _a.sent();
+                res.sendStatus(500);
+                return [3, 3];
+            case 3: return [2];
         }
-        catch (error) { }
-        return [2];
     });
 }); };
 exports.verifyUserStatus = verifyUserStatus;
 var addFaceMappings = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, response, error_2;
     return __generator(this, function (_a) {
-        try {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 5, , 6]);
+                return [4, typeorm_1.getRepository(User_entity_1.default).findOne(req.params.UID)];
+            case 1:
+                user = _a.sent();
+                return [4, azure_method_1.default('USER', 'FACE', {
+                        personId: req.params.UID,
+                        octetStream: req.body,
+                    })];
+            case 2:
+                response = _a.sent();
+                if (!(user && response)) return [3, 4];
+                return [4, typeorm_1.getRepository(User_entity_1.default).update(req.params.UID, { isActive: true })];
+            case 3:
+                _a.sent();
+                res.send({
+                    message: response,
+                    doorkey: user.doorKey,
+                });
+                _a.label = 4;
+            case 4: return [3, 6];
+            case 5:
+                error_2 = _a.sent();
+                res.sendStatus(500);
+                return [3, 6];
+            case 6: return [2];
         }
-        catch (error) { }
-        return [2];
     });
 }); };
 exports.addFaceMappings = addFaceMappings;
 var identifyUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        try {
+    var _a, faceID, DID, azureResponse, personId, checked, error_3;
+    var _b, _c;
+    return __generator(this, function (_d) {
+        switch (_d.label) {
+            case 0:
+                _d.trys.push([0, 5, , 6]);
+                _a = req.params, faceID = _a.faceID, DID = _a.DID;
+                return [4, azure_method_1.default('IDENTIFY', '', {
+                        personId: faceID,
+                    })];
+            case 1:
+                azureResponse = _d.sent();
+                if (!!((_c = (_b = azureResponse[0]) === null || _b === void 0 ? void 0 : _b.candidates[0]) === null || _c === void 0 ? void 0 : _c.personId)) return [3, 2];
+                res.send({
+                    arg: 'User is unknown',
+                });
+                return [3, 4];
+            case 2:
+                personId = azureResponse[0].candidates[0].personId;
+                return [4, checkAccess_1.default(personId, Number(DID))];
+            case 3:
+                checked = _d.sent();
+                if (checked.access) {
+                    log_controller_1.default.internalLogCreation({
+                        enteredBy: personId,
+                        enteredDoor: DID,
+                    });
+                }
+                res.send(checked);
+                _d.label = 4;
+            case 4: return [3, 6];
+            case 5:
+                error_3 = _d.sent();
+                logger.error(error_3);
+                res.sendStatus(500);
+                return [3, 6];
+            case 6: return [2];
         }
-        catch (error) { }
-        return [2];
     });
 }); };
 exports.identifyUser = identifyUser;
+var identifyUserWithCode = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, checked, error_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                return [4, typeorm_1.getRepository(User_entity_1.default).find({
+                        where: { doorKey: req.params.code },
+                    })];
+            case 1:
+                user = _a.sent();
+                if (user.length <= 0) {
+                    res.send({
+                        arg: 'User is unknown',
+                    });
+                }
+                return [4, checkAccess_1.default(user[0].aid, Number(req.params.DID))];
+            case 2:
+                checked = _a.sent();
+                if (checked.access) {
+                    log_controller_1.default.internalLogCreation({
+                        enteredBy: user[0].aid,
+                        enteredDoor: req.params.DID,
+                    });
+                }
+                res.send(checked);
+                return [3, 4];
+            case 3:
+                error_4 = _a.sent();
+                res.sendStatus(500);
+                return [3, 4];
+            case 4: return [2];
+        }
+    });
+}); };
+exports.identifyUserWithCode = identifyUserWithCode;
 //# sourceMappingURL=user.recognition.js.map

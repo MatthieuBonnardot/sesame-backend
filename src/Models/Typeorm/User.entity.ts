@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import {
   Column,
   Entity,
@@ -8,7 +9,6 @@ import {
   IsEmail,
   IsNotEmpty,
 } from 'class-validator';
-// eslint-disable-next-line import/no-cycle
 import Group from './Group.entity';
 
 @Entity()
@@ -41,6 +41,7 @@ class User {
   public isActive: boolean;
 
   @ManyToOne(() => Group, (group: Group) => group.users, {
+    onUpdate: 'CASCADE',
     cascade: true,
   })
   public group: Group;

@@ -39,36 +39,128 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteDoor = exports.createDoor = exports.getDoors = void 0;
+exports.openDoor = exports.deleteDoor = exports.createDoor = exports.updateDoor = exports.getDoors = void 0;
+var node_fetch_1 = __importDefault(require("node-fetch"));
 var pino_1 = __importDefault(require("pino"));
+var typeorm_1 = require("typeorm");
+var Door_entity_1 = __importDefault(require("../../Models/Typeorm/Door.entity"));
 var logger = pino_1.default({
     prettyPrint: true,
 });
 var getDoors = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var doors, error_1;
     return __generator(this, function (_a) {
-        try {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4, typeorm_1.getRepository(Door_entity_1.default).find({
+                        relations: ['groups'],
+                    })];
+            case 1:
+                doors = _a.sent();
+                res.send(doors);
+                return [3, 3];
+            case 2:
+                error_1 = _a.sent();
+                logger.error(error_1);
+                res.sendStatus(500);
+                return [3, 3];
+            case 3: return [2];
         }
-        catch (err) { }
-        return [2];
     });
 }); };
 exports.getDoors = getDoors;
-var createDoor = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+var updateDoor = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var did, newDoor, error_2;
     return __generator(this, function (_a) {
-        try {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                did = Number(req.params.id);
+                return [4, typeorm_1.getRepository(Door_entity_1.default).update({ did: did }, req.body)];
+            case 1:
+                _a.sent();
+                return [4, typeorm_1.getRepository(Door_entity_1.default).findOne(did, {
+                        relations: ['groups'],
+                    })];
+            case 2:
+                newDoor = _a.sent();
+                res.send(newDoor);
+                return [3, 4];
+            case 3:
+                error_2 = _a.sent();
+                logger.error(error_2);
+                res.sendStatus(500);
+                return [3, 4];
+            case 4: return [2];
         }
-        catch (err) { }
-        return [2];
+    });
+}); };
+exports.updateDoor = updateDoor;
+var createDoor = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var newDoor, error_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                return [4, typeorm_1.getRepository(Door_entity_1.default).create(req.body)];
+            case 1:
+                newDoor = _a.sent();
+                return [4, typeorm_1.getRepository(Door_entity_1.default).save(newDoor)];
+            case 2:
+                _a.sent();
+                res.send(newDoor);
+                return [3, 4];
+            case 3:
+                error_3 = _a.sent();
+                logger.error(error_3);
+                res.sendStatus(500);
+                return [3, 4];
+            case 4: return [2];
+        }
     });
 }); };
 exports.createDoor = createDoor;
 var deleteDoor = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var deletedDoor, error_4;
     return __generator(this, function (_a) {
-        try {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                deletedDoor = typeorm_1.getRepository(Door_entity_1.default).findOne(req.params.id, {
+                    relations: ['groups'],
+                });
+                return [4, typeorm_1.getRepository(Door_entity_1.default).delete(req.params.id)];
+            case 1:
+                _a.sent();
+                res.send(deletedDoor);
+                return [3, 3];
+            case 2:
+                error_4 = _a.sent();
+                logger.error(error_4);
+                res.status(500);
+                res.send(error_4);
+                return [3, 3];
+            case 3: return [2];
         }
-        catch (err) { }
-        return [2];
     });
 }); };
 exports.deleteDoor = deleteDoor;
+var openDoor = function (code) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        try {
+            node_fetch_1.default('https://door.codeworks.me/api/key/open', {
+                method: 'POST',
+                headers: {
+                    code: "" + code,
+                },
+            });
+        }
+        catch (error) {
+            logger.error(error);
+        }
+        return [2];
+    });
+}); };
+exports.openDoor = openDoor;
 //# sourceMappingURL=door.controller.js.map

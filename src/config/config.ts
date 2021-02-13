@@ -21,6 +21,11 @@ const config = {
   },
   postgres: {
     uri: process.env.POSTGRES_URI,
+    uri_admin: process.env.POSTGRES_URI_ADMIN,
+  },
+  email: {
+    user: process.env.EMAIL_USER,
+    password: process.env.EMAIL_PASSWORD,
   },
 };
 

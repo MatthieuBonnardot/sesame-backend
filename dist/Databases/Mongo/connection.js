@@ -40,17 +40,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = require("mongoose");
+var pino_1 = __importDefault(require("pino"));
 var config_1 = __importDefault(require("../../config/config"));
+var logger = pino_1.default({
+    prettyPrint: true,
+});
+var test = config_1.default.mongo.test;
 var MongoConnection = function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4, mongoose_1.connect(config_1.default.mongo.uri, {
+            case 0: return [4, mongoose_1.connect(test, {
                     useNewUrlParser: true,
                     useUnifiedTopology: true,
+                    useFindAndModify: true,
                 }, function (err) {
                     if (err)
-                        console.error(err);
-                    console.log('success');
+                        logger.error(err);
+                    logger.info('Connected to Mongo DB');
                 })];
             case 1:
                 _a.sent();

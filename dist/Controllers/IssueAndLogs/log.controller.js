@@ -39,29 +39,71 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var pino_1 = __importDefault(require("pino"));
 var Logs_1 = __importDefault(require("../../Models/Mongoose/Logs"));
-var logger = pino_1.default({
-    prettyPrint: true,
-});
 var getLogs = function (_, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var logs, error_1;
     return __generator(this, function (_a) {
-        logger.info('GetLogs');
-        Logs_1.default.find({}, function (err, docs) {
-            if (err) {
-                res.status(501).json({
-                    error: err.message,
-                });
-            }
-            else if (docs.length === 0) {
-                res.status(200).send('The list of issues is empty');
-            }
-            else {
-                res.status(200).send(docs);
-            }
-        });
-        return [2];
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4, Logs_1.default.find()];
+            case 1:
+                logs = _a.sent();
+                res.send(logs);
+                return [3, 3];
+            case 2:
+                error_1 = _a.sent();
+                res.sendStatus(500);
+                return [3, 3];
+            case 3: return [2];
+        }
     });
 }); };
-exports.default = { getLogs: getLogs };
+var internalLogCreation = function (body) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
+    return [2, Logs_1.default.create(body)];
+}); }); };
+var createLog = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var log, error_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4, Logs_1.default.create(req.body)];
+            case 1:
+                log = _a.sent();
+                res.send(log);
+                return [3, 3];
+            case 2:
+                error_2 = _a.sent();
+                res.sendStatus(500);
+                return [3, 3];
+            case 3: return [2];
+        }
+    });
+}); };
+var findLogsById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var logs, error_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4, Logs_1.default.find({ enteredBy: req.params.id })];
+            case 1:
+                logs = _a.sent();
+                res.send(logs);
+                return [3, 3];
+            case 2:
+                error_3 = _a.sent();
+                res.sendStatus(500);
+                return [3, 3];
+            case 3: return [2];
+        }
+    });
+}); };
+exports.default = {
+    getLogs: getLogs,
+    createLog: createLog,
+    findLogsById: findLogsById,
+    internalLogCreation: internalLogCreation,
+};
 //# sourceMappingURL=log.controller.js.map

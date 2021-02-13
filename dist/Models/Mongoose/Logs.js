@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = require("mongoose");
-var Logs = mongoose_1.model('logs', new mongoose_1.Schema({
-    enteredBy: { type: Number, required: true },
+var logSchema = new mongoose_1.Schema({
+    enteredBy: { type: String, required: true },
     enteredDoor: { type: Number, required: true },
-    date: { type: Date, required: true },
-}));
-exports.default = Logs;
+    date: { type: String, required: false, default: new Date() },
+});
+var logModel = mongoose_1.model('Logs', logSchema);
+exports.default = logModel;
 //# sourceMappingURL=Logs.js.map

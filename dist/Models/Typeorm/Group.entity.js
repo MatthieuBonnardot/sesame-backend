@@ -25,7 +25,7 @@ var Group = (function () {
     __decorate([
         typeorm_1.Column('varchar', { length: 50 }),
         __metadata("design:type", String)
-    ], Group.prototype, "group_name", void 0);
+    ], Group.prototype, "groupName", void 0);
     __decorate([
         typeorm_1.Column('varchar', { length: 500 }),
         __metadata("design:type", String)
@@ -33,17 +33,21 @@ var Group = (function () {
     __decorate([
         typeorm_1.Column('int'),
         __metadata("design:type", Number)
-    ], Group.prototype, "access_from_hour", void 0);
+    ], Group.prototype, "accessFromHour", void 0);
     __decorate([
         typeorm_1.Column('int'),
         __metadata("design:type", Number)
-    ], Group.prototype, "access_to_hour", void 0);
+    ], Group.prototype, "accessToHour", void 0);
     __decorate([
-        typeorm_1.OneToMany(function () { return User_entity_1.default; }, function (user) { return user.group; }),
+        typeorm_1.OneToMany(function () { return User_entity_1.default; }, function (user) { return user.group; }, {
+            onDelete: 'CASCADE',
+        }),
         __metadata("design:type", Array)
     ], Group.prototype, "users", void 0);
     __decorate([
-        typeorm_1.ManyToMany(function () { return Door_entity_1.default; }, function (door) { return door.groups; }),
+        typeorm_1.ManyToMany(function () { return Door_entity_1.default; }, function (door) { return door.groups; }, {
+            cascade: true,
+        }),
         typeorm_1.JoinTable(),
         __metadata("design:type", Array)
     ], Group.prototype, "doors", void 0);

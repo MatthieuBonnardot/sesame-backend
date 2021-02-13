@@ -26,8 +26,8 @@ var express_1 = __importDefault(require("express"));
 var userController = __importStar(require("../Controllers/User/user.controller"));
 var users = express_1.default.Router();
 users.get('/list', userController.getUsers);
-users.put('/update', userController.updateUser);
-users.delete('/delete', userController.deleteUser);
+users.put('/update/:id', userController.updateUser);
+users.delete('/delete/:id', userController.deleteUser);
 users.post('/create', userController.createUser);
 exports.default = users;
 //# sourceMappingURL=user.js.map

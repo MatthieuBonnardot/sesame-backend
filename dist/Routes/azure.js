@@ -26,7 +26,8 @@ var express_1 = __importDefault(require("express"));
 var azureController = __importStar(require("../Controllers/Recognition/user.recognition"));
 var azure = express_1.default.Router();
 azure.get('/register/:code', azureController.verifyUserStatus);
-azure.put('/register/images/:UID', azureController.addFaceMappings);
-azure.get('/identify/:faceID', azureController.identifyUser);
+azure.put('/register/:UID', azureController.addFaceMappings);
+azure.get('/identify/:DID/:faceID', azureController.identifyUser);
+azure.get('/code/:DID/:code', azureController.identifyUserWithCode);
 exports.default = azure;
 //# sourceMappingURL=azure.js.map

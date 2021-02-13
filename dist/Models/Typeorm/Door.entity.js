@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var typeorm_1 = require("typeorm");
+var class_validator_1 = require("class-validator");
 var Group_entity_1 = __importDefault(require("./Group.entity"));
 var Door = (function () {
     function Door() {
@@ -23,12 +24,17 @@ var Door = (function () {
     ], Door.prototype, "did", void 0);
     __decorate([
         typeorm_1.Column('varchar', { length: 50 }),
+        class_validator_1.IsNotEmpty(),
         __metadata("design:type", String)
-    ], Door.prototype, "door_name", void 0);
+    ], Door.prototype, "doorName", void 0);
     __decorate([
         typeorm_1.Column('varchar', { length: 50 }),
         __metadata("design:type", String)
-    ], Door.prototype, "endpoint", void 0);
+    ], Door.prototype, "endPoint", void 0);
+    __decorate([
+        typeorm_1.Column('varchar', { length: 250, nullable: true }),
+        __metadata("design:type", String)
+    ], Door.prototype, "doorUrl", void 0);
     __decorate([
         typeorm_1.ManyToMany(function () { return Group_entity_1.default; }, function (group) { return group.doors; }),
         __metadata("design:type", Array)
